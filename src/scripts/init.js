@@ -1,4 +1,6 @@
-function init() {
+import * as THREE from 'three';
+
+export function init() {
   container = document.getElementById('container');
 
   // PerspectiveCamera( fov, aspect, near, far )

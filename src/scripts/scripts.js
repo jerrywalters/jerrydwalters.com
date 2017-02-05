@@ -1,11 +1,7 @@
-var courageContainer, stoveContainer, broomContainer;
-var camera, scene, raycaster, renderer;
+import * as THREE from 'three';
 
-// declare objects that exist
-var courage;
-var sthugh;
+var camera, scene, raycaster, renderer;
 var stove;
-var broom;
 var models = [];
 
 var mouseX = 0, mouseY = 0;
