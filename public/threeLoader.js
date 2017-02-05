@@ -1,9 +1,9 @@
-import * as THREE from 'three';
-import OBJLoader from 'three-obj-loader';
-OBJLoader(THREE);
+// import * as THREE from 'three';
+// import OBJLoader from 'three-obj-loader';
+// OBJLoader(THREE);
 
 export function loadErUp() {
-    var camera, scene, raycaster, renderer;
+var camera, scene, raycaster, renderer;
 
 var container;
 var stove;
@@ -178,5 +178,5 @@ function render() {
 init();
 animate();
 }
-window.onload = loadErUp;
+window.onload = loadErUp();
 

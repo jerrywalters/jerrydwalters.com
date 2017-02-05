@@ -17,6 +17,7 @@ class Three extends Component {
   
     return (
       <div id="container">
+        hi
       </div>
     )
   }
@@ -143,7 +144,7 @@ class Three extends Component {
 
       var loader = new THREE.ImageLoader(manager);
       loader.load(
-        '../objects/textures/purple.jpg',
+        '../object/textures/purple.jpg',
         // function when resource is added
         function(image) {
           // do stuff with it
@@ -164,6 +165,7 @@ class Three extends Component {
         function(obj) {
           obj.traverse(function(child) {
             if(child instanceof THREE.Mesh) {
+               child.material.map = texture;
             }
           });
           // add object to scene
@@ -172,10 +174,12 @@ class Three extends Component {
           obj.position.z = 43;
           models.push(obj);
           scene.add(obj);
-
+          console.log('scene:', scene)
           stove = obj;
+
           console.log('models:', models)
           console.log('loaded up', stove);
+
         },
         // function called when download progresses
         // in this case defined globally
