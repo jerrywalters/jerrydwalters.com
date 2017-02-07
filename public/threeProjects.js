@@ -41,13 +41,24 @@ function onMouseMove(event) {
 
 }
 
+// define some dirty action right here in public
+const OPEN__PROJECT = 'OPEN__PROJECT';
+
+function openProject() {
+  return {
+    type: OPEN__PROJECT
+  }
+}
+
+// on click dispatch said dirty action and update my state
 function onClick(event) {
   raycaster.setFromCamera( mouse, camera );
   var intersects = raycaster.intersectObjects(models, true);
-  if (intersects.length > 0) {
-    $(".project-single").toggleClass('slideIn');
+  window.store.dispatch(openProject());
+  // if (intersects.length > 0) {
+  //   $(".project-single").toggleClass('slideIn');
 
-  }
+  // }
 }
 
 function animate() {

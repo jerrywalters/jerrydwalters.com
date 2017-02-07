@@ -5,8 +5,7 @@ import ChatContainer from './ChatContainer'
 
 const App = () => (
   <div className="App">
-  sup
-    {/*<Three />*/}
+    <ChatContainer />
   </div>
 )
 

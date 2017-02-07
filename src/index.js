@@ -7,6 +7,8 @@ import './index.css';
 
 const store = configureStore();
 
+window.store = store;
+
 render(
   <Provider store={store}>
     <App />
