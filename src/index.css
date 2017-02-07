@@ -3,14 +3,175 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+/* RESET MY DUDES */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Chat Styles*/
+
+.chat-header--client {
+    width: 100%;
+    background-color: #9e66ff;
+    height: 40px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    position: relative;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    padding: 0 .5rem;
+}
+.uncle-icon {
+    background-color: deepskyblue;
+    content: '';
+    height: 25px;
+    width: 25px;
+    /*border: solid 1px darkslateblue;*/
+    border-radius: 20px;
+}
+.uncle-name {
+    color: white;
+    font-family: 'Helvetica', "sans-serif";
+    font-weight: 200;
+    font-size: .9em;
+    margin-left: .5rem;
+}
+.uncle-status {
+    position: absolute;
+    right: 10px;
+    content: '';
+    background-color: greenyellow;
+    /*background-color: transparent;
+    border: 1px solid greenyellow;*/
+    height: 8px;
+    width: 8px;
+    border-radius: 5px;
+}
 .chat-window {
-  padding: 2rem;
-  width: 290px;
-  height: 400px;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: #f7f7ff;
-  border-radius: 5px;
-  box-shadow: 1px 3px 8px 0px rgba(90, 84, 133,0.2);
+    width: 290px;
+    height: 400px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f7f7ff;
+    border-radius: 5px;
+    box-shadow: 1px 3px 8px 0px rgba(90, 84, 133,0.2); 
+}
+.messages-container {
+   box-shadow: inset 0px 3px 4px 0px rgba(0,0,0,0.14); 
+}
+.client-messages {
+    padding: .75rem .75rem;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    max-height: 325px;
+}
+.client-messages::-webkit-scrollbar { 
+    display: none; 
+}
+
+.client-messages__item {
+    padding: .35rem 1rem;
+    margin-bottom: .7rem;
+    border-radius: 6px;
+    max-width: 70%;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: .8em;
+    line-height: 1.25em;
+}
+.client-messages__item--client {
+    margin-left: auto;
+    background-color: #ff457e;
+    color: #fff;
+}
+.client-messages__item--uncle {
+    margin-right: auto;
+    background-color: #e0e0eb;
+}
+
+/* chat form */
+.chat-form {
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    background-color: #ffdafa;
+    padding: 1rem 1rem .5rem 1rem;
+    display: flex;
+}
+.chat-form__input {
+    width: 80%;
+    background: transparent;
+    border: none;
+    font-size: .9em;
+    padding-bottom: .1rem;
+    color: #ccc;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 0px 0px #000;
+}
+.chat-form__input:focus {
+    outline: none;
+}
+.chat-form__submit {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
+}
+.chat-form--client {
+    background-color:  #fff;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: .6rem .8rem .6rem 1rem;
+    font-size: .85em;
 }

@@ -1,25 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import ChatMessages from './ChatMessages';
 
-const Chat = ({ sendMessage, messages, isUncleOnline }) => {
-  // sets message to input value and sends it
-  function formSubmit(e){
-    e.preventDefault();
-    const input = document.getElementById('chat__input').value;
-    console.log('input : ', input)
-    sendMessage(input);
-    document.getElementById('chat__input').value = '';
+export default class Chat extends Component {
+  constructor(props){
+    super(props)
   }
-  return (
-    <div className="chat-window">
-      <p>online:{(isUncleOnline === true) ? 'online' : 'offline'}</p>
-      <form onSubmit={(e) => formSubmit(e)}>
-        <input id="chat__input" type="text"></input>
-        <input type="submit" ></input>
-      </form>
-      <ChatMessages messages={messages}/>
-    </div>
-)}
 
-export default Chat;
+  componentDidUpdate() {
+    const messageList = document.getElementsByClassName('client-messages');
+    if(messageList) {
+      messageList[0].scrollTop = messageList[0].scrollHeight;
+    }
+  }
+
+  render() {
+    const { sendMessage, location, isUncleOnline, messages } = this.props;
+
+    function formSubmit(e){
+      e.preventDefault();
+      const input = document.getElementById('chat__input').value;
+      sendMessage(input);
+      document.getElementById('chat__input').value = '';
+    }
+    return (
+      <div className="chat-window">
+        <header className="chat-header--client">
+            <div className="uncle-icon"></div>
+            <h3 className="uncle-name">Uncle Jerry</h3>
+            <span className="uncle-status">{(isUncleOnline === true) ? 'online' : 'offline'}</span>
+        </header>   
+        <ChatMessages messages={messages}/>
+        <form className="chat-form chat-form--client" onSubmit={(e) => formSubmit(e)}>
+          <input className="chat-form__input"id="chat__input" type="text"></input>
+          <input className="chat-form__submit" type="submit" ></input>
+        </form>
+      </div>
+    )
+  }
+}
