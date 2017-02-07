@@ -35,18 +35,17 @@ function onMouseMove(event) {
 
 	// calculate mouse position in normalized device coordinates
 	// (-1 to +1) for both components
-
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
 }
 
 // define some dirty action right here in public
 const OPEN__PROJECT = 'OPEN__PROJECT';
 
 function openProject() {
+  window.browserHistory.push('/project')
   return {
-    type: OPEN__PROJECT
+    type: OPEN__PROJECT,
   }
 }
 
@@ -54,12 +53,11 @@ function openProject() {
 function onClick(event) {
   raycaster.setFromCamera( mouse, camera );
   var intersects = raycaster.intersectObjects(models, true);
-  window.store.dispatch(openProject());
-  // if (intersects.length > 0) {
-  //   $(".project-single").toggleClass('slideIn');
-
-  // }
+  if (intersects.length > 0) {
+    window.store.dispatch(openProject());
+  }
 }
+
 
 function animate() {
   // from WebGL, this works like setInterval but stops running when you switch tabs!

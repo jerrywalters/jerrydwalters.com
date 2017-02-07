@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../App.css';
 
-import ChatContainer from './ChatContainer'
-
-const App = () => (
-  <div className="App">
-    <ChatContainer />
-  </div>
-)
+class App extends Component {
+  render() {
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    );
+  }
+}
 
 export default App;
