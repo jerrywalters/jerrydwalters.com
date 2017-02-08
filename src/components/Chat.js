@@ -10,7 +10,7 @@ export default class Chat extends Component {
   componentDidUpdate() {
     const messageList = document.getElementsByClassName('client-messages');
     if(messageList) {
-      messageList[0].scrollTop = messageList[0].scrollHeight;
+      messageList[0].scrollTop = messageList[0].scrollHeight; 
     }
   }
 

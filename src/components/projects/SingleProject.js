@@ -5,10 +5,10 @@ const SingleProject = () => {
     function backHome() {
         browserHistory.push('/')
     }
+    document.addEventListener("click", backHome);
     return (
         <div>
-        MILORD!
-        <button onClick={e => backHome(e)}>GO BACK MILORD</button>
+        MILORD
         </div>
     )
 }
