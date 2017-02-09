@@ -15,7 +15,12 @@ export default class Chat extends Component {
   }
 
   render() {
-    const { sendMessage, location, isUncleOnline, messages } = this.props;
+    const { sendMessage, location, isUncleOnline, messages, isChatOpen } = this.props;
+
+    const chatClasses = classNames({
+      'chat-window': true,
+      'hidden' : !isChatOpen
+    });
 
     function formSubmit(e){
       e.preventDefault();
@@ -23,8 +28,11 @@ export default class Chat extends Component {
       sendMessage(input);
       document.getElementById('chat__input').value = '';
     }
+
+    console.log('isChatOpen', isChatOpen)
+    
     return (
-      <div className="chat-window">
+      <div className={chatClasses}>
         <header className="chat-header--client">
             <div className="uncle-icon"></div>
             <h3 className="uncle-name">Uncle Jerry</h3>

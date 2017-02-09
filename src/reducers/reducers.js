@@ -1,8 +1,19 @@
-import { SEND__MESSAGE, ADD__NEW__MESSAGE, ADD__UNCLE__STATUS} from '../actions'
+import { SEND__MESSAGE, 
+         ADD__NEW__MESSAGE,
+         ADD__UNCLE__STATUS,
+         TOGGLE_CHAT
+        } from '../actions'
+
 const OPEN__PROJECT = 'OPEN__PROJECT';
 
 const rootReducer = (state = {}, action) => {
   switch (action.type) {
+    case TOGGLE_CHAT:
+    return Object.assign({}, state, {
+      chat: {
+        isChatOpen: !state.chat.isChatOpen,
+      }
+    });
     case ADD__NEW__MESSAGE:
       return Object.assign({}, state, {
         messages: [...state.messages, action.message]

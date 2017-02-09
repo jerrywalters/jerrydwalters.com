@@ -20,7 +20,6 @@ render(
     <Router history={browserHistory}>
       <Route path='/' component={App}>
         <Route path='project' component={SingleProject} />
-        <Route path='chat' component={ChatContainer} />
       </Route>
     </Router>
   </Provider>,

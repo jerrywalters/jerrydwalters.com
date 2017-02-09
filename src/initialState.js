@@ -1,5 +1,8 @@
 const initialState = {
-  messages: []
+  messages: [],
+  chat: {
+    isChatOpen: false
+  }
 }
 
 export default initialState

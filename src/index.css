@@ -98,11 +98,14 @@ table {
     width: 290px;
     height: 400px;
     position: absolute;
-    bottom: 20px;
+    bottom: 50px;
     right: 20px;
     background-color: #f7f7ff;
     border-radius: 5px;
     box-shadow: 1px 3px 8px 0px rgba(90, 84, 133,0.2); 
+}
+.hidden {
+    display: none;
 }
 .messages-container {
    box-shadow: inset 0px 3px 4px 0px rgba(0,0,0,0.14); 
@@ -140,6 +143,16 @@ table {
 }
 
 /* chat form */
+.chat-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    content: 'open';
+    height: 20px;
+    width: 20px;
+    background-color: blue;
+    border-radius: 10px;
+}
 .chat-form {
     width: 100%;
     box-sizing: border-box;
@@ -174,4 +187,44 @@ table {
     border-bottom-right-radius: 5px;
     padding: .6rem .8rem .6rem 1rem;
     font-size: .85em;
+}
+
+/* Projects */
+.project-single {
+	background-color: blue;
+	height: 100px;
+	color: #fff;
+	opacity: .9;
+	z-index: 20;
+	position: absolute;
+	top: 0;
+	/*-ms-transform: translateX(calc(200%)); 
+  -webkit-transform: translateX(calc(200%])); 
+	transform: translateX(calc(200%));*/
+	transition: 0.5s;
+	width: 92%;
+	height: 100vh;
+	display: flex;
+}
+.project-images {
+	display: flex;
+	align-items: center;
+	padding-top: 4rem;
+	overflow-y: scroll;
+	flex-direction: column;
+	width: 60%;
+}
+.project-image__single {
+	width: 60%;
+	margin-bottom: 10%;
+}
+.project-about {
+	padding: 3%;
+	width: 35%;
+	background-color: salmon;
+}
+.slide-in {
+	-ms-transform: translateX(9%);
+	-webkit-transform: translateX(9%); 
+	transform: translateX(9%);
 }

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import Chat from './Chat';
 
-import { sendMessage } from '../actions'
+import { sendMessage, toggleChat } from '../actions'
 
 const mapStateToProps = (state) => {
   return {
+    isChatOpen: state.chat.isChatOpen,
     messages: state.messages,
     isUncleOnline: state.isUncleOnline
   }
@@ -14,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     sendMessage: (message) => {
       dispatch(sendMessage(message));
+    },
+    toggleChat: () => {
+      dispatch(toggleChat());
     }
   }
 }

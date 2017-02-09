@@ -1,9 +1,11 @@
 import firebaseDb, { getUserId } from '../firebaseDb';
 import { fullName } from '../nameGenerator'
 
-export const SEND__MESSAGE = 'SEND__MESSAGE';
 export const ADD__NEW__MESSAGE = 'ADD__NEW__MESSAGE';
 export const ADD__UNCLE__STATUS = 'ADD__UNCLE__STATUS';
+
+export const TOGGLE_CHAT = 'TOGGLE_CHAT';
+export const SEND__MESSAGE = 'SEND__MESSAGE';
 
 export function addNewMessage(message){
   return {
@@ -17,6 +19,12 @@ export function addUncleStatus(isUncleOnline) {
     type: ADD__UNCLE__STATUS,
     isUncleOnline
   }
+}
+
+export function toggleChat() {
+    return {
+        type: TOGGLE_CHAT,
+    }
 }
 
 // pushes message to firebase
