@@ -54,7 +54,14 @@ table {
 	border-spacing: 0;
 }
 
+#container {
+    max-height: 100vh;
+
+    overflow: hidden;
+}
+
 /* Chat Styles*/
+
 
 .chat-header--client {
     width: 100%;
@@ -152,6 +159,7 @@ table {
     width: 20px;
     background-color: blue;
     border-radius: 10px;
+    cursor: pointer;
 }
 .chat-form {
     width: 100%;

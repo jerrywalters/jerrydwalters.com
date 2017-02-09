@@ -26,9 +26,9 @@ function onWindowResize() {
 
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
-
   renderer.setSize(window.innerWidth, window.innerHeight);
-
+  stove.position.y = window.innerHeight/380;
+  stove.position.x = window.innerWidth/350;
 }
 
 function onMouseMove(event) {
@@ -84,7 +84,7 @@ function render() {
     if (intersects.length > 0) {
       console.log('intersecting!');
       // intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
-      intersects[ 0 ].object.rotation.y += 2 * Math.PI / 180;
+      intersects[ 0 ].object.rotation.y += 2 * Math.PI / 180; 
     }
     // this works too but idk why
   	// for ( var i = 0; i < intersects.length; i++ ) {

@@ -6,7 +6,7 @@ import { Router, Route, browserHistory, IndexRoute, IndexRedirect } from 'react-
 import './index.css';
 
 import App from './components/App';
-import SingleProject from './components/projects/SingleProject';
+import SingleProject from './components/Project/SingleProject';
 import ChatContainer from './components/ChatContainer';
 
 const store = configureStore();
