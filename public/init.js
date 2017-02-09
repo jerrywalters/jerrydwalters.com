@@ -66,7 +66,7 @@ function init() {
         }
       });
       // add object to scene
-      obj.position.y = window.innerHeight/380;
+      obj.position.y = window.innerHeight/500;
       obj.position.x = window.innerWidth/350;
       console.log('obj position', obj.position.x)
       obj.position.z = 43;

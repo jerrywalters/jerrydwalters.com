@@ -27,7 +27,7 @@ function onWindowResize() {
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  stove.position.y = window.innerHeight/380;
+  stove.position.y = window.innerHeight/500;
   stove.position.x = window.innerWidth/350;
 }
 
