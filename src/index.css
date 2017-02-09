@@ -206,9 +206,9 @@ table {
 	z-index: 20;
 	position: absolute;
 	top: 0;
-	/*-ms-transform: translateX(calc(200%)); 
-  -webkit-transform: translateX(calc(200%])); 
-	transform: translateX(calc(200%));*/
+	-ms-transform: translateX(calc(200%)); 
+    -webkit-transform: translateX(calc(200%])); 
+	transform: translateX(calc(200%));
 	transition: 0.5s;
 	width: 92%;
 	height: 100vh;
@@ -235,4 +235,5 @@ table {
 	-ms-transform: translateX(9%);
 	-webkit-transform: translateX(9%); 
 	transform: translateX(9%);
+    transition: 0.5s;
 }

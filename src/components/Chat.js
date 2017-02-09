@@ -28,8 +28,6 @@ export default class Chat extends Component {
       sendMessage(input);
       document.getElementById('chat__input').value = '';
     }
-
-    console.log('isChatOpen', isChatOpen)
     
     return (
       <div className={chatClasses}>

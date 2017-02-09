@@ -2,8 +2,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from './store'
-import { Router, Route, browserHistory, IndexRoute, IndexRedirect } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute, IndexRedirect, location } from 'react-router';
 import './index.css';
+
+// import { slideIn } from '../components/'
 
 import App from './components/App';
 import SingleProject from './components/Project/SingleProject';
@@ -18,9 +20,8 @@ window.browserHistory = browserHistory;
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path='/' component={App}>
-        <Route path='project' component={SingleProject} />
-      </Route>
+      <Route path='/' component={App} />
+      <Route path='project' component={App} />
     </Router>
   </Provider>,
   mountApp

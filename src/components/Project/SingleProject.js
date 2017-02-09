@@ -1,14 +1,17 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
+import classNames from 'classnames';
 import dickPic from '../../images/dickpic.png';
 
 const SingleProject = () => {
-    function backHome() {
-        browserHistory.push('/')
-    }
-    document.addEventListener("click", backHome);
+
+    const projectClasses = classNames({
+      'project-single': true,
+      'slide-in' : location.pathname==='/project'
+    });
+
     return (
-        <div className="project-single slide-in">
+        <div className={projectClasses}>
             <section className="project-about">
                 <h2 className="project-about__heading--primary">Lame Project</h2>
                 <a className="project-about__link">www.gavinfoster.com</a>
