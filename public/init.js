@@ -68,11 +68,11 @@ function init() {
       // add object to scene
       obj.position.y = window.innerHeight/500;
       obj.position.x = window.innerWidth/350;
-      console.log('obj position', obj.position.x)
       obj.position.z = 43;
 
-      var bbox = new THREE.BoxHelper( obj, 0xffff00 );
+      var bbox = new THREE.BoxHelper( obj, 0x552200 );
       bbox.material.visible = false;
+
       obj.name = 'stove'
       bbox.name = 'stove'
       scene.add(obj);
@@ -184,7 +184,6 @@ function init() {
   //   // also defined globally
   //   onError
   // );
-
 
   //
   renderer = new THREE.WebGLRenderer();
