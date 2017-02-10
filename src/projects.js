@@ -1,12 +1,12 @@
-// import images here
+import dickPic from './images/dickpic.png';
 
-const projects = [
+export const projects = [
     {
-        name: 'portfolio',
-        links: ,
-        description: ,
-        images:,
+        name: 'Rick and Morty',
+        links: 'www.github.com/jerrywalters',
+        description: 'HEY HEY HEY MILORD HERE IS A GOD DAMN DESCRIPTION!',
+        images: [
+            dickPic
+        ]
     }
 ]
-
-export default projects;

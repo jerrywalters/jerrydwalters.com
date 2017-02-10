@@ -3,8 +3,9 @@ import { browserHistory } from 'react-router';
 import classNames from 'classnames';
 import dickPic from '../../images/dickpic.png';
 
-const SingleProject = () => {
+import { projects } from '../../projects.js';
 
+const SingleProject = () => {
     const projectClasses = classNames({
       'project-single': true,
       'slide-in' : location.pathname==='/project'
@@ -13,7 +14,7 @@ const SingleProject = () => {
     return (
         <div className={projectClasses}>
             <section className="project-about">
-                <h2 className="project-about__heading--primary">Lame Project</h2>
+                <h2 className="project-about__heading--primary">{projects[0].name}</h2>
                 <a className="project-about__link">www.gavinfoster.com</a>
                 <h3 className="project-about__heading--secondary">Technology</h3>
                 <p className="project-about__body">used some sicc tech brah</p>
