@@ -16,6 +16,7 @@ export default class Chat extends Component {
 
   render() {
     const { sendMessage, location, isUncleOnline, messages, isChatOpen } = this.props;
+    console.log('chat props', this.props)
 
     const chatClasses = classNames({
       'chat-window': true,

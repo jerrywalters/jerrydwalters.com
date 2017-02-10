@@ -4,7 +4,7 @@ import '../App.css';
 
 import ChatButton from './ChatButtonContainer';
 import ChatContainer from './ChatContainer';
-import Project from './Project/Project'
+import Project from './Project/ProjectContainer'
 
 function backHome() {
   if(location.pathname === '/project') {

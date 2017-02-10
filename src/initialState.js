@@ -2,6 +2,9 @@ const initialState = {
   messages: [],
   chat: {
     isChatOpen: false
+  },
+  currentProject: {
+    images: []
   }
 }
 

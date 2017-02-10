@@ -231,8 +231,8 @@ body {
 	flex-direction: column;
 	width: 60%;
 }
-.project-image__single {
-	width: 60%;
+.project-images__single {
+	max-width: 60%;
 	margin-bottom: 10%;
 }
 .project-about {

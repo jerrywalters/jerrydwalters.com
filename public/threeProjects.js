@@ -13,6 +13,7 @@ function openProject(projectName) {
     project: projects[projects.findIndex(project => project.name === projectName)]
   }
 }
+
 // on click dispatch said dirty action and update my state
 function onClick(event) {
   raycaster.setFromCamera( mouse, camera );
@@ -20,7 +21,7 @@ function onClick(event) {
   if (intersects.length > 0) {
     const projectName = intersects[0].object.projectName;
     window.store.dispatch(openProject(projectName));
-  }
+  } else if (intersects.length <= 0)  window.browserHistory.push('/')
 }
 
 // Three
@@ -81,7 +82,6 @@ function render() {
       });
       let intersectedObject = models[modelIndex];
       intersects.position = intersectedObject.position;
-      console.log('model', intersectedObject);
       intersectedObject.rotation.y += 2 * Math.PI / 180; 
     }
   renderer.render(scene, camera);
