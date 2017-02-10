@@ -25,14 +25,19 @@ export default class Chat extends Component {
     const statusClasses = classNames({
       'uncle-status' : true,
       'uncle-status--online' : isUncleOnline,
-      'uncle-status--offline' : !isUncleOnline,
+      'uncle-status--offline' : !isUncleOnline
     })
 
     function formSubmit(e){
       e.preventDefault();
-      const input = document.getElementById('chat__input').value;
-      sendMessage(input);
-      document.getElementById('chat__input').value = '';
+      const input = document.getElementById('chat__input').value.trim();;
+      if(!input || input === ' ') {
+        document.getElementById('chat__input').value = '';
+        return
+      } else {
+        sendMessage(input);
+        document.getElementById('chat__input').value = '';
+      }
     }
     
     return (
@@ -44,8 +49,8 @@ export default class Chat extends Component {
         </header>   
         <ChatMessages messages={messages}/>
         <form className="chat-form chat-form--client" onSubmit={(e) => formSubmit(e)}>
-          <input className="chat-form__input"id="chat__input" type="text"></input>
-          <input className="chat-form__submit" type="submit" ></input>
+          <input className="chat-form__input" id="chat__input" type="text" autoComplete="off"></input>
+          <input className="chat-form__submit" type="submit"></input>
         </form>
       </div>
     )
