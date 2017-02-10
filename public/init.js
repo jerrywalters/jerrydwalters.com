@@ -75,6 +75,7 @@ function init() {
 
       obj.name = 'stove'
       bbox.name = 'stove'
+      bbox.projectName = 'portfolio-admin'
       scene.add(obj);
       scene.add(bbox);
       models.push(obj);

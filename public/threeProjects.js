@@ -5,18 +5,21 @@ var camera, scene, raycaster, renderer;
 // define some dirty action right here in public
 const OPEN__PROJECT = 'OPEN__PROJECT';
 
-function openProject() {
-  window.browserHistory.push('/project')
+function openProject(projectName) {
+  window.browserHistory.push(`/project/${projectName}`)
+  let projects = window.projects;
   return {
     type: OPEN__PROJECT,
+    project: projects[projects.findIndex(project => project.name === projectName)]
   }
 }
 // on click dispatch said dirty action and update my state
 function onClick(event) {
   raycaster.setFromCamera( mouse, camera );
-  var intersects = raycaster.intersectObjects(boxes, true);
+  var intersects = raycaster.intersectObjects(boxes, true); 
   if (intersects.length > 0) {
-    window.store.dispatch(openProject());
+    const projectName = intersects[0].object.projectName;
+    window.store.dispatch(openProject(projectName));
   }
 }
 

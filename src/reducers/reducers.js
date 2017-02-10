@@ -20,7 +20,7 @@ const rootReducer = (state = {}, action) => {
       });
     case OPEN__PROJECT:
       return Object.assign({}, state, {
-        words: 'hey milord!'
+        currentProject: action.project
       })
     case ADD__UNCLE__STATUS:
       return Object.assign({}, state, {
