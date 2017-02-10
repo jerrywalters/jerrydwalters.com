@@ -97,12 +97,18 @@ body {
     position: absolute;
     right: 10px;
     content: '';
-    background-color: greenyellow;
-    /*background-color: transparent;
-    border: 1px solid greenyellow;*/
+    /*background-color: greenyellow;*/
+    /*border: 1px solid greenyellow;*/
     height: 8px;
     width: 8px;
     border-radius: 5px;
+    transition: all 0.3s;
+}
+.uncle-status--online {
+     background-color: greenyellow;
+}
+.uncle-status--offline {
+     background-color: orangered;
 }
 .chat-window {
     width: 290px;

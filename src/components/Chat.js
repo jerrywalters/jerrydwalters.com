@@ -22,6 +22,12 @@ export default class Chat extends Component {
       'hidden' : !isChatOpen
     });
 
+    const statusClasses = classNames({
+      'uncle-status' : true,
+      'uncle-status--online' : isUncleOnline,
+      'uncle-status--offline' : !isUncleOnline,
+    })
+
     function formSubmit(e){
       e.preventDefault();
       const input = document.getElementById('chat__input').value;
@@ -34,7 +40,7 @@ export default class Chat extends Component {
         <header className="chat-header--client">
             <div className="uncle-icon"></div>
             <h3 className="uncle-name">Uncle Jerry</h3>
-            <span className="uncle-status">{(isUncleOnline === true) ? 'online' : 'offline'}</span>
+            <span className={statusClasses}></span>
         </header>   
         <ChatMessages messages={messages}/>
         <form className="chat-form chat-form--client" onSubmit={(e) => formSubmit(e)}>
