@@ -56,8 +56,6 @@ table {
 
 #container {
     max-height: 100vh;
-
-    overflow: hidden;
 }
 
 /* Chat Styles*/
@@ -245,4 +243,62 @@ body {
 	-webkit-transform: translateX(9%); 
 	transform: translateX(9%);
     transition: 0.5s;
+}
+
+/* Header */
+
+.header {
+	background-color: #e1f1ff;
+	height: 300px;
+	color: #0c1d00;
+	opacity: 0.9;
+	z-index: 99;
+	position: relative;
+	-ms-transform: translateY(calc(-100%)); /* IE 9 */
+	-webkit-transform: translateY(calc(-100%)); /* Safari */
+	transform: translateY(calc(-100%));
+	transition: 0.5s;
+}
+.header__top {
+	background: rgba(255,0,255,.5);
+	opacity: 0.85;
+	height: 300px;
+	z-index: 11;
+}
+/*.header__bottom {
+	background: rgba(0,0,0,0);
+	height: 40px;
+	color: white;
+	padding: 1rem;
+}*/
+.header:hover {
+	-ms-transform: translateY(0); /* IE 9 */
+	-webkit-transform: translateY(0); /* Safari */
+	transform: translateY(0);
+}
+.header--stuck:hover {
+    -ms-transform: translateY(-100%); /* IE 9 */
+	-webkit-transform: translateY(-100%); /* Safari */
+	transform: translateY(-100%);
+}
+
+
+.header::after, .header--stuck::after {
+	height: 0px;
+	width: 100%;
+	padding: 1rem;
+	opacity: 1;
+	display: flex;
+	content: url('./images/lemon-purple.svg');
+	color: white;
+	position: absolute;
+	z-index: 11;
+}
+
+/* dont let header push canvas down */
+canvas {
+	background-color: #fff;
+	-ms-transform: translateY(-300px); /* IE 9 */
+	-webkit-transform: translateY(-300px); /* Safari */
+	transform: translateY(-300px);
 }
