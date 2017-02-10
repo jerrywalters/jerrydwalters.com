@@ -62,6 +62,9 @@ table {
 
 /* Chat Styles*/
 
+body {
+    overflow: hidden;
+}
 
 .chat-header--client {
     width: 100%;

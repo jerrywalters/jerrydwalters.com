@@ -20,7 +20,7 @@ class App extends Component {
   render(props) {
     console.log('location: ', this.props.location);
     return (
-      <div>
+      <div className="app">
         <ChatContainer />
         <ChatButton />
         <Project location={this.props.location} />

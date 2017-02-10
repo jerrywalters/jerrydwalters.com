@@ -7,6 +7,7 @@ var sthugh;
 var stove;
 var broom;
 var models = [];
+var boxes = [];
 
 var mouseX = 0, mouseY = 0;
 
@@ -80,11 +81,18 @@ function render() {
   	raycaster.setFromCamera( mouse, camera );
 
   	// calculate objects intersecting the picking ray
-  	var intersects = raycaster.intersectObjects(models, true);
+  	var intersects = raycaster.intersectObjects(boxes, true);
     if (intersects.length > 0) {
-      console.log('intersecting!');
+      console.log('intersecting!', intersects[0]);
+      console.log('hey', intersects[0].object.name)
       // intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
-      intersects[ 0 ].object.rotation.y += 2 * Math.PI / 180; 
+      let boxName = intersects[0].object.name;
+      let modelIndex = models.findIndex(function(model) {
+        return model.name === boxName;
+      });
+      let intersectedObject = models[modelIndex];
+      console.log('model', intersectedObject);
+      intersectedObject.rotation.y += 2 * Math.PI / 180; 
     }
     // this works too but idk why
   	// for ( var i = 0; i < intersects.length; i++ ) {

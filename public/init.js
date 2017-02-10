@@ -70,8 +70,15 @@ function init() {
       obj.position.x = window.innerWidth/350;
       console.log('obj position', obj.position.x)
       obj.position.z = 43;
-      models.push(obj);
+
+      var bbox = new THREE.BoxHelper( obj, 0xffff00 );
+      bbox.material.visible = false;
+      obj.name = 'stove'
+      bbox.name = 'stove'
       scene.add(obj);
+      scene.add(bbox);
+      models.push(obj);
+      boxes.push(bbox);
 
       stove = obj;
     },
@@ -127,8 +134,17 @@ function init() {
       // add object to scene
       obj.position.y = -8;
       obj.position.x = 0;
-      models.push(obj);
+
+      var bbox = new THREE.BoxHelper( obj, 0xffff00 );
+      bbox.material.visible = false;
+      console.log('bbox', bbox);
+      obj.name = 'courage'
+      bbox.name = 'courage'
+      bbox.material.visible = false;
       scene.add(obj);
+      scene.add(bbox);
+      models.push(obj);
+      boxes.push(bbox);
 
       courage = obj;
     },
