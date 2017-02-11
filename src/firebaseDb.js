@@ -73,21 +73,22 @@ function checkOnline(conversationId) {
 // set isUncleOnline state
 function setUncleOnline(data) {
   const conversation = data.val();
+  console.log('convooo', conversation);
   let isUncleOnline = conversation.isUncleOnline;
-  let isTyping = conversation.isClientTyping;
-  store.dispatch(addUncleStatus(isUncleOnline, isTyping));
+  let uncleIsTyping = conversation.uncleIsTyping;
+  console.log('conversation', conversation);
+  store.dispatch(addUncleStatus(isUncleOnline, uncleIsTyping));
 }
 
 // set isUncleOnline state on load
 db.ref('conversations/').limitToLast(1).on('child_added', function(data) {
   setUncleOnline(data);
-  console.log('uncle is coming online');
 });
 
 // set isUncleOnline state whenever it changes in db
-db.ref('conversations/').limitToLast(1).on('child_changed', function(data) {
+db.ref('conversations/').on('child_changed', function(data) {
   setUncleOnline(data);
-  console.log('uncle is coming online');
+  console.log('changed');
 });
 
 

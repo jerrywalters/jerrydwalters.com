@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     isChatOpen: state.chat.isChatOpen,
     messages: state.messages,
-    isUncleOnline: state.isUncleOnline
+    isUncleOnline: state.isUncleOnline,
+    uncleIsTyping: state.uncleIsTyping
   }
 }
 

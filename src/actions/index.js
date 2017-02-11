@@ -15,27 +15,27 @@ export function addNewMessage(message){
   }
 }
 
-export function addUncleStatus(isUncleOnline, isTyping) {
+export function addUncleStatus(isUncleOnline, uncleIsTyping) {
   return {
     type: ADD__UNCLE__STATUS,
     isUncleOnline, 
-    isTyping
+    uncleIsTyping
   }
 }
 
 export function updateIsTyping(typing){
-    firebaseDb.ref(`conversations/${getUserId()}`).update({
-        clientIsTyping: typing
-    });
-    return {
-        type: UPDATE__IS__TYPING,
-    }
+  firebaseDb.ref(`conversations/${getUserId()}`).update({
+    clientIsTyping: typing
+  });
+  return {
+    type: UPDATE__IS__TYPING,
+  }
 }
 
 export function toggleChat() {
-    return {
-        type: TOGGLE_CHAT,
-    }
+  return {
+    type: TOGGLE_CHAT,
+  }
 }
 
 // pushes message to firebase

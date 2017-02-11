@@ -194,6 +194,8 @@ body {
     font-weight: 300;
     font-size: 1em;
     line-height: 1.25em;
+    overflow-y: scroll;
+    max-height: 120px;
 }
 .chat-form__input:focus {
     outline: none;

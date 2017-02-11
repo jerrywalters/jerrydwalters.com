@@ -24,7 +24,7 @@ const rootReducer = (state = {}, action) => {
       })
     case ADD__UNCLE__STATUS:
       return Object.assign({}, state, {
-        isTyping: action.isTyping,
+        uncleIsTyping: action.uncleIsTyping,
         isUncleOnline: action.isUncleOnline
       });
    default:

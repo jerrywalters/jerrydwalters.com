@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import ChatMessages from './ChatMessages';
 
+
 export default class Chat extends Component {
   constructor(props){
     super(props)
@@ -14,21 +15,6 @@ export default class Chat extends Component {
     if(messageList) {
       messageList[0].scrollTop = messageList[0].scrollHeight; 
     }
-  }
-
-  handleKeyPress() {
-    var isTypingTimeout;
-    var isTyping = false;
-    var debounceTime = 1500;
-    var updateIsTyping = this.updateIsTyping;
-    var input = document.getElementById('chat-form__textarea');
-    updateIsTyping(true);
-    if (isTypingTimeout !== undefined) {
-      clearTimeout(isTypingTimeout);
-    }
-    isTypingTimeout = setTimeout(function() {
-      updateIsTyping(false);
-    }, debounceTime);
   }
 
   formSubmit(inputText){
@@ -58,8 +44,16 @@ export default class Chat extends Component {
   }
 
   render() {
-    const { sendMessage, location, isUncleOnline, messages, isChatOpen } = this.props;
-    console.log('chat props', this.props)
+    const { sendMessage, location, isUncleOnline, uncleIsTyping, messages, isChatOpen, updateIsTyping } = this.props;
+    let isTypingTimeout;
+
+    function isClientTyping() {
+      if (isTypingTimeout !== undefined) clearTimeout(isTypingTimeout);
+      updateIsTyping(true);
+      isTypingTimeout = setTimeout(function() {
+        updateIsTyping(false);
+      }, 2000);
+    }
 
     const chatClasses = classNames({
       'chat-window': true,
@@ -79,14 +73,14 @@ export default class Chat extends Component {
             <h3 className="uncle-name">Uncle Jerry</h3>
             <span className={statusClasses}></span>
         </header>   
-        <ChatMessages messages={messages}/>
+        <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
         <form className="chat-form chat-form--client">
           <div contentEditable="true" 
               placeholder="message uncle" 
               className="chat-form__input" 
               id="chat__input" 
               onKeyDown={(e) => this.handleTyping(e)}
-              onKeyPress={() => this.handleKeyPress()}>
+              onKeyPress={() => isClientTyping()}>
           </div>
           <input className="chat-form__submit" 
                  type="submit" 
