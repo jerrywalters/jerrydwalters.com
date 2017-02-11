@@ -100,27 +100,70 @@ body {
 }
 .client-messages__item--isTyping {
     margin-right: auto;
+    content: ' ';
     background-color: #e0e0eb;
     visibility: visible;
     opacity: 1;
-    padding: .35rem 1rem;
-    width: 16px;
-    height: auto;
     transition: all 0.3s;
+    width: 28px;
+    min-height: 16px;
+    display: flex;
+    justify-content: center;
+    padding: .5rem .5rem .2rem .5rem;;
 }
 .client-messages__item--isNotTyping {
     visibility: hidden;
     opacity: 0;
     height: 0;
-    transition: all 0.3s;
+    width: 0;
+    /*transition: all 0.3s;*/
 }
-.client-messages__item--isTyping:after {
+
+/* isTyping animation */
+.client-messages__item--isTyping span {
+    visibility: inherit;
+    display: inline-block;
+    vertical-align: middle;
+    width: 4px;
+    height: 4px;
+    margin: 0 2px;
+    background: #9E66FF;
+    border-radius: 10px;
+    -webkit-animation: loader 0.9s infinite alternate;
+    -moz-animation: loader 0.8s infinite alternate;
+}
+.client-messages__item--isTyping span:nth-of-type(2) {
+    -webkit-animation-delay: 0.3s;
+    -moz-animation-delay: 0.3s;
+}
+.client-messages__item--isTyping span:nth-of-type(3) {
+    -webkit-animation-delay: 0.6s;
+    -moz-animation-delay: 0.6s;
+}
+@-webkit-keyframes loader {
+  0% {
+    width: 6px;
+    height: 6px;
+    border-radius: 10px;
+    opacity: 0.9;
+    -webkit-transform: translateY(0);
+  }
+  100% {
+    width: 4px;
+    height: 4px;
+    opacity: 0.4;
+    -webkit-transform: translateY(6px);
+  }
+}
+
+
+/*.client-messages__item--isTyping:after {
   overflow: hidden;
   display: flex;
   align-items: center;
   -webkit-animation: ellipsis 1000ms steps(4,end) 50ms infinite;      
   animation: ellipsis 1000ms steps(4,end) 50ms infinite;
-  content: url('./images/ellipses.svg'); /* ascii code for the ellipsis character */
+  content: url('./images/ellipses.svg'); 
   width: 0px;
 }
 
@@ -134,7 +177,7 @@ body {
   to {
     width: 1.7em;    
   }
-}
+}*/
 
 /* chat form */
 .chat-header--client {

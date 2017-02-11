@@ -15,7 +15,11 @@ const ChatMessages = ({messages, uncleIsTyping}) => {
     <div className="messages-container">
       <ul className="client-messages">
         {messageList}
-        <li className={isTypingClasses}></li>
+        <li className={isTypingClasses}>
+            <span></span>
+            <span></span>
+            <span></span>
+        </li>
       </ul>
     </div>
   )
