@@ -105,12 +105,14 @@ body {
     opacity: 1;
     padding: .35rem 1rem;
     width: 16px;
+    height: auto;
+    transition: all 0.3s;
 }
 .client-messages__item--isNotTyping {
     visibility: hidden;
     opacity: 0;
-    display: none;
-    transition: all 5s;
+    height: 0;
+    transition: all 0.3s;
 }
 .client-messages__item--isTyping:after {
   overflow: hidden;

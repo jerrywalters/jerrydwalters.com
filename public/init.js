@@ -15,7 +15,7 @@ function init() {
 
   // DirectionalLight( hex, intensity )
   var directionalLight = new THREE.DirectionalLight(0x99ffda);
-  directionalLight.position.set(1, 1.5, 2);
+  directionalLight.position.set(.5, 1.8, 2.4);
   scene.add(directionalLight);
 
   // texture
