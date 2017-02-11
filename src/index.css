@@ -62,6 +62,7 @@ table {
 
 body {
     overflow: hidden;
+    background-color: #ccd4ff;
 }
 
 .messages-container {
@@ -395,7 +396,7 @@ body {
 
 /* dont let header push canvas down */
 canvas {
-	background-color: #fff;
+	background-color: transparent;
 	-ms-transform: translateY(-300px); /* IE 9 */
 	-webkit-transform: translateY(-300px); /* Safari */
 	transform: translateY(-300px);

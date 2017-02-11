@@ -15,7 +15,7 @@ function init() {
 
   // DirectionalLight( hex, intensity )
   var directionalLight = new THREE.DirectionalLight(0x99ffda);
-  directionalLight.position.set(.5, 1.8, 2.4);
+  directionalLight.position.set(2, 1.8, 3.5);
   scene.add(directionalLight);
 
   // texture
@@ -63,12 +63,16 @@ function init() {
     function(obj) {
       obj.traverse(function(child) {
         if(child instanceof THREE.Mesh) {
+          child.material.map = texture;
         }
       });
       // add object to scene
       obj.position.y = window.innerHeight/500;
       obj.position.x = window.innerWidth/350;
       obj.position.z = 43;
+      obj.rotation.y -= 2 * Math.PI / 180;
+      obj.rotation.x += 28 * Math.PI / 180;
+      obj.rotation.z -= 12 * Math.PI / 180;
 
       var bbox = new THREE.BoxHelper( obj, 0x552200 );
       bbox.material.visible = false;
@@ -187,10 +191,10 @@ function init() {
   // );
 
   //
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer( {alpha:true} );
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor (0xd3c6ff, 1);
+  renderer.setClearColor (0x000000, 0);
   container.appendChild(renderer.domElement);
 
   window.addEventListener('resize', onWindowResize, false);
