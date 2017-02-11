@@ -10,12 +10,12 @@ function init() {
 
   // ambient light "globall illuminates all objects in the scene equally" -- no shadows
   // AmbientLight( color, intensity )
-  var ambient = new THREE.AmbientLight(0x101030);
+  var ambient = new THREE.AmbientLight(0x99003d);
   scene.add(ambient);
 
   // DirectionalLight( hex, intensity )
-  var directionalLight = new THREE.DirectionalLight(0xffeedd);
-  directionalLight.position.set(0, 0, 1);
+  var directionalLight = new THREE.DirectionalLight(0x99ffda);
+  directionalLight.position.set(1, 1.5, 2);
   scene.add(directionalLight);
 
   // texture
@@ -190,7 +190,7 @@ function init() {
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor (0xccffee, 1);
+  renderer.setClearColor (0xd3c6ff, 1);
   container.appendChild(renderer.domElement);
 
   window.addEventListener('resize', onWindowResize, false);
