@@ -74,7 +74,8 @@ function checkOnline(conversationId) {
 function setUncleOnline(data) {
   const conversation = data.val();
   let isUncleOnline = conversation.isUncleOnline;
-  store.dispatch(addUncleStatus(isUncleOnline));
+  let isTyping = conversation.isClientTyping;
+  store.dispatch(addUncleStatus(isUncleOnline, isTyping));
 }
 
 // set isUncleOnline state on load

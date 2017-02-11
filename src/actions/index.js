@@ -6,6 +6,7 @@ export const ADD__UNCLE__STATUS = 'ADD__UNCLE__STATUS';
 
 export const TOGGLE_CHAT = 'TOGGLE_CHAT';
 export const SEND__MESSAGE = 'SEND__MESSAGE';
+export const UPDATE__IS__TYPING = 'UPDATE__IS__TYPING';
 
 export function addNewMessage(message){
   return {
@@ -14,11 +15,21 @@ export function addNewMessage(message){
   }
 }
 
-export function addUncleStatus(isUncleOnline) {
+export function addUncleStatus(isUncleOnline, isTyping) {
   return {
     type: ADD__UNCLE__STATUS,
-    isUncleOnline
+    isUncleOnline, 
+    isTyping
   }
+}
+
+export function updateIsTyping(typing){
+    firebaseDb.ref(`conversations/${getUserId()}`).update({
+        clientIsTyping: typing
+    });
+    return {
+        type: UPDATE__IS__TYPING,
+    }
 }
 
 export function toggleChat() {

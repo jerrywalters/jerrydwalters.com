@@ -6,6 +6,7 @@ export default class Chat extends Component {
   constructor(props){
     super(props)
     this.sendMessage = this.props.sendMessage;
+    this.updateIsTyping = this.props.updateIsTyping.bind(this);
   }
 
   componentDidUpdate() {
@@ -13,6 +14,21 @@ export default class Chat extends Component {
     if(messageList) {
       messageList[0].scrollTop = messageList[0].scrollHeight; 
     }
+  }
+
+  handleKeyPress() {
+    var isTypingTimeout;
+    var isTyping = false;
+    var debounceTime = 1500;
+    var updateIsTyping = this.updateIsTyping;
+    var input = document.getElementById('chat-form__textarea');
+    updateIsTyping(true);
+    if (isTypingTimeout !== undefined) {
+      clearTimeout(isTypingTimeout);
+    }
+    isTypingTimeout = setTimeout(function() {
+      updateIsTyping(false);
+    }, debounceTime);
   }
 
   formSubmit(inputText){
@@ -69,7 +85,8 @@ export default class Chat extends Component {
               placeholder="message uncle" 
               className="chat-form__input" 
               id="chat__input" 
-              onKeyDown={(e) => this.handleTyping(e)}>
+              onKeyDown={(e) => this.handleTyping(e)}
+              onKeyPress={() => this.handleKeyPress()}>
           </div>
           <input className="chat-form__submit" 
                  type="submit" 

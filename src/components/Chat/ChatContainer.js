@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Chat from './Chat';
 
-import { sendMessage, toggleChat } from '../../actions'
+import { sendMessage, toggleChat, updateIsTyping } from '../../actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     sendMessage: (message) => {
       dispatch(sendMessage(message));
+    },
+    updateIsTyping: typing => {
+      dispatch(updateIsTyping(typing));
     },
     toggleChat: () => {
       dispatch(toggleChat());
