@@ -6,11 +6,7 @@ import { Router, Route, browserHistory, IndexRoute, IndexRedirect, location } fr
 import './index.css';
 import { projects } from './projects'; 
 
-// import { slideIn } from '../components/'
-
 import App from './components/App';
-// import Project from './components/Project/Project';
-import ChatContainer from './components/ChatContainer';
 
 const store = configureStore();
 const mountApp = document.getElementById('root');

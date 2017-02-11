@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { toggleChat } from '../actions';
+import { toggleChat } from '../../actions';
 import ChatButton from './ChatButton';
 
 const mapStateToProps = (state) => {

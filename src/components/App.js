@@ -3,8 +3,8 @@ import { browserHistory } from 'react-router';
 import '../App.css';
 
 import Header from './Header/Header';
-import ChatButton from './ChatButtonContainer';
-import ChatContainer from './ChatContainer';
+import ChatButton from './Chat/ChatButtonContainer';
+import ChatContainer from './Chat/ChatContainer';
 import Project from './Project/ProjectContainer'
 
 function backHome() {

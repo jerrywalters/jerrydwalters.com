@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Chat from './Chat';
 
-import { sendMessage, toggleChat } from '../actions'
+import { sendMessage, toggleChat } from '../../actions'
 
 const mapStateToProps = (state) => {
   return {

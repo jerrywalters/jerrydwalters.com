@@ -5,12 +5,39 @@ import ChatMessages from './ChatMessages';
 export default class Chat extends Component {
   constructor(props){
     super(props)
+    this.sendMessage = this.props.sendMessage;
   }
 
   componentDidUpdate() {
     const messageList = document.getElementsByClassName('client-messages');
     if(messageList) {
       messageList[0].scrollTop = messageList[0].scrollHeight; 
+    }
+  }
+
+  formSubmit(inputText){
+    let text = inputText.trim();
+    if(!text || text === ' ') {
+    } else {
+      this.sendMessage(text);
+    }
+  }
+
+  submitByIcon(e) {
+    const input = document.getElementById('chat__input');
+    this.formSubmit(input.innerText);
+    input.innerHTML = '';
+    e.preventDefault();
+  }
+
+  handleTyping(e) {
+    const keyCode = e.keyCode;
+    if (keyCode == 13 && e.shiftKey) {
+    } else if (keyCode == 13) {
+      const input = document.getElementById('chat__input');
+      this.formSubmit(input.innerText);
+      input.innerHTML = '';
+       e.preventDefault();
     }
   }
 
@@ -28,18 +55,6 @@ export default class Chat extends Component {
       'uncle-status--online' : isUncleOnline,
       'uncle-status--offline' : !isUncleOnline
     })
-
-    function formSubmit(e){
-      e.preventDefault();
-      const input = document.getElementById('chat__input').value.trim();;
-      if(!input) {
-        document.getElementById('chat__input').value = '';
-        return
-      } else {
-        sendMessage(input);
-        document.getElementById('chat__input').value = '';
-      }
-    }
     
     return (
       <div className={chatClasses}>
@@ -49,9 +64,17 @@ export default class Chat extends Component {
             <span className={statusClasses}></span>
         </header>   
         <ChatMessages messages={messages}/>
-        <form className="chat-form chat-form--client" onSubmit={(e) => formSubmit(e)}>
-          <input className="chat-form__input" id="chat__input" type="text" autoComplete="off"></input>
-          <input className="chat-form__submit" type="submit"></input>
+        <form className="chat-form chat-form--client">
+          <div contentEditable="true" 
+              placeholder="message uncle" 
+              className="chat-form__input" 
+              id="chat__input" 
+              onKeyDown={(e) => this.handleTyping(e)}>
+          </div>
+          <input className="chat-form__submit" 
+                 type="submit" 
+                 onClick={ (e) => this.submitByIcon(e)}>
+        </input>
         </form>
       </div>
     )
