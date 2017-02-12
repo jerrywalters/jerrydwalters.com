@@ -83,6 +83,39 @@ body {
     position: absolute;
     /*animation: dot1 5s alternate ease-in-out infinite;*/
 }
+
+.shape {
+    animation: gentle 3s ease-in-out 500ms infinite;
+}
+
+@keyframes gentle {
+    from { transform: translate(0, 0) }
+    50% { transform: translate(4px, 12px) }
+    to { transform: translate(0, 0) }
+}
+
+.shape2 {
+    animation: gentler 8s ease-in-out 500ms infinite;
+}
+
+@keyframes gentler {
+    from { transform: translate(0, 0) }
+    25% { transform: translate(4px, 8px) }
+    50% { transform: translate(2px, 5px) }
+    75% { transform: translate(9px, 3px) }
+    to { transform: translate(0, 0) }
+}
+
+.shape3 {
+    animation: gentlest 12s ease-in-out 500ms infinite;
+}
+
+@keyframes gentlest {
+    from { transform: rotate(12deg) }
+    50% { transform: rotate(-24deg), translate(4px, 12px) }
+    to { transform: rotate(12deg), translate(0, 0) }
+}
+
 /*
 .ellipse {
     position: absolute;

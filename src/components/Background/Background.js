@@ -35,27 +35,30 @@ const Background = () => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
-    for(let i = 0; i <= 150; i++) {
+    for(let i = 0; i <= 80; i++) {
       let newShape =       
         {
           background: `url(${getRandomShape()}) no-repeat center`,
-          height: getRandomInt(6, 30),
-          width: getRandomInt(10, 60),
+          height: getRandomInt(10, 30),
+          width: getRandomInt(20, 60),
           posX: getRandomInt(1, windowWidth),
           posY: getRandomInt(1, windowHeight),
           transform: `rotate(${getRandomInt(0, 360)}deg)`,
           // color: "#"+((1<<24)*Math.random()|0).toString(16),
           // fucking lol at me being too lazy to just not make another function 
-          opacity: `0.${getRandomInt(15, 99)}`
+          opacity: `0.${getRandomInt(15, 80)}`
         }
       shapes.push(newShape)
     }
   }
 
+  const shapeClasses = [ 'shape1', 'shape2', 'shape3' ];
+
   generateShapes();
 
   const generatedShapes = shapes.map(
     (shape, index) => {
+      let thisShapeClass = shapeClasses[Math.floor(Math.random()*shapeImgs.length)];
       let imgStyles = {
         height: `${shape.height}px`,
         width: `${shape.width}px`,
@@ -70,9 +73,10 @@ const Background = () => {
         transform: shape.transform,
         transformOrigin: 100% 0,
         // background: shape.background,
-        opacity: shape.opacity
+        opacity: shape.opacity,
+        transition: 'all 1.5s'
       }
-      return <div style={shapeStyles} key={index}><img style={imgStyles} src={getRandomShape()}></img></div>
+      return <div className={thisShapeClass} style={shapeStyles} key={index}><img style={imgStyles} src={getRandomShape()}></img></div>
     }
   )
 
