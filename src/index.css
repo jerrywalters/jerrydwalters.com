@@ -64,7 +64,7 @@ body {
     overflow: hidden;
     /*background-color: #ccd4ff;*/
     background: #1a0033; /* For browsers that do not support gradients */
-    background: linear-gradient(to bottom right, #420080, #28004d 20%, #1a0033 60%, #0d001a 90%);  
+    background: linear-gradient(to bottom right, #230080, #28004d 25%, #1a0033 60%, #0d001a 90%);  
 }
 
 .shapes-container {
