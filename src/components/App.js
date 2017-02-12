@@ -5,7 +5,8 @@ import '../App.css';
 import Header from './Header/Header';
 import ChatButton from './Chat/ChatButtonContainer';
 import ChatContainer from './Chat/ChatContainer';
-import Project from './Project/ProjectContainer'
+import Project from './Project/ProjectContainer';
+import Background from './Background/Background';
 
 function backHome() {
   if(location.pathname === '/project') {
@@ -26,6 +27,7 @@ class App extends Component {
         <ChatContainer />
         <ChatButton />
         <Project location={this.props.location} />
+        <Background />
       </div>
     );
   }
