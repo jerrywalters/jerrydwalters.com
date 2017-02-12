@@ -6,9 +6,9 @@ import { sendMessage, toggleChat, updateIsTyping } from '../../actions'
 const mapStateToProps = (state) => {
   return {
     isChatOpen: state.chat.isChatOpen,
-    messages: state.messages,
-    isUncleOnline: state.isUncleOnline,
-    uncleIsTyping: state.uncleIsTyping
+    messages: state.chat.conversation.messages,
+    isUncleOnline: state.chat.conversation.isUncleOnline,
+    uncleIsTyping: state.chat.conversation.uncleIsTyping
   }
 }
 

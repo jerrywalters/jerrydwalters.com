@@ -1,10 +1,14 @@
 const initialState = {
-  messages: [],
-  chat: {
-    isChatOpen: false
+  portfolio: {
+    currentProject: {
+      images: []
+  }
   },
-  currentProject: {
-    images: []
+  chat: {
+    isChatOpen: false,
+    conversation: {
+      messages: []
+    }
   }
 }
 

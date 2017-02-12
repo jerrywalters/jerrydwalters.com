@@ -2,7 +2,7 @@ import firebaseDb, { getUserId } from '../firebaseDb';
 import { fullName } from '../nameGenerator'
 
 export const ADD_MESSAGE_TO_CONVERSATION = 'ADD_MESSAGE_TO_CONVERSATION';
-export const ADD_UNCLE_STATUS = 'ADD_UNCLE_STATUS';
+export const UPDATE_CONVERSATION = 'UPDATE_CONVERSATION';
 
 export const TOGGLE_CHAT = 'TOGGLE_CHAT';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
@@ -15,11 +15,10 @@ export function addMessageToConversation(message){
   }
 }
 
-export function addUncleStatus(isUncleOnline, uncleIsTyping) {
+export function updateConversation(conversation) {
   return {
-    type: ADD_UNCLE_STATUS,
-    isUncleOnline, 
-    uncleIsTyping
+    type: UPDATE_CONVERSATION,
+    conversation
   }
 }
 

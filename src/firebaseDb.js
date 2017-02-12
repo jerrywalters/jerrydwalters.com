@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { addMessageToConversation, addNewConversation, addUncleStatus } from './actions';
+import { addMessageToConversation, updateConversation } from './actions';
 import store from './index';
 import { fullName } from './nameGenerator';
 
@@ -13,9 +13,46 @@ const config = {
 };
 
 firebase.initializeApp(config);
-
-// Database stuff
 const db = firebase.database();
+
+let userId = getUserId();
+checkOnline(userId);
+
+function checkOnline(conversationId) {
+  let convoRef = db.ref(`conversations/${conversationId}`);
+  convoRef.update({
+    isNephewOnline: true
+  })
+  convoRef.onDisconnect().update({
+    isNephewOnline: false
+  });
+}
+
+db.ref(`conversations/${userId}`).on('value', function(data) {
+  const conversationId = data.val().conversationId;
+  const isUncleOnline = data.val().isUncleOnline;
+  const uncleIsTyping = data.val().uncleIsTyping;
+  const lastChat = data.val().lastChat;
+  const conversation = {
+    conversationId,
+    isUncleOnline,
+    uncleIsTyping,
+    lastChat
+  };
+  store.dispatch(updateConversation(conversation));
+});
+
+// function setUncleOnline(data) {
+//   const conversation = data.val();
+//   console.log('convooo', conversation);
+//   let isUncleOnline = conversation.isUncleOnline;
+//   let uncleIsTyping = conversation.uncleIsTyping;
+//   console.log('conversation', conversation);
+//   store.dispatch(updateConversation(isUncleOnline, uncleIsTyping));
+// }
+
+
+
 
 // db.ref('conversations')
 //   .on('child_added', function(data) {
@@ -35,50 +72,26 @@ function uid(){
 const name = fullName();
 
 export function getUserId(){
-  var userId = '';
+  let userId = '';
   // get and or set user
   if(localStorage.user){
-    var userId = localStorage.user;
-    // firebase.database().ref('conversations/' + userId).set({
-    //   conversationId: userId
-    // });
+    userId = localStorage.user;
+    db.ref(`conversations/${userId}`).update({
+      conversationId: userId,
+    });
   } else {
     userId = uid();
     localStorage.user = userId;
-    console.log('created new user');
-    firebase.database().ref('conversations/' + userId).set({
+    db.ref(`conversations/${userId}`).update({
       conversationId: userId,
-      name: name,
       createdOn: Date.now(),
-      lastChat: Date.now()
+      name: name
     });
   }
   return userId;
 }
 
-let userId = getUserId();
-
-checkOnline(userId);
-
-function checkOnline(conversationId) {
-  let convoRef = db.ref('conversations/' + conversationId);
-  convoRef.update({
-    isNephewOnline: true
-  })
-  convoRef.onDisconnect().update({
-    isNephewOnline: false
-  });
-}
-
 // set isUncleOnline state
-function setUncleOnline(data) {
-  const conversation = data.val();
-  console.log('convooo', conversation);
-  let isUncleOnline = conversation.isUncleOnline;
-  let uncleIsTyping = conversation.uncleIsTyping;
-  console.log('conversation', conversation);
-  store.dispatch(addUncleStatus(isUncleOnline, uncleIsTyping));
-}
 
 // set isUncleOnline state on load
 // db.ref('conversations/').limitToLast(1).on('child_added', function(data) {
@@ -86,10 +99,6 @@ function setUncleOnline(data) {
 // });
 
 // set isUncleOnline state whenever it changes in db
-db.ref(`conversations/${userId}`).on('value', function(data) {
-  setUncleOnline(data);
-  console.log('changed');
-});
 
 
 db.ref('messages')
