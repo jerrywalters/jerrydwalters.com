@@ -3,13 +3,13 @@ var camera, scene, raycaster, renderer;
 
 // React
 // define some dirty action right here in public
-const OPEN__PROJECT = 'OPEN__PROJECT';
+const OPEN_PROJECT = 'OPEN_PROJECT';
 
 function openProject(projectName) {
   window.browserHistory.push(`/project/${projectName}`)
   let projects = window.projects;
   return {
-    type: OPEN__PROJECT,
+    type: OPEN_PROJECT,
     project: projects[projects.findIndex(project => project.name === projectName)]
   }
 }
@@ -66,6 +66,7 @@ function onMouseMove(event) {
 function animate() {
   // from WebGL, this works like setInterval but stops running when you switch tabs!
   requestAnimationFrame(animate);
+  // TWEEN.update();
   render();
 }
 

@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { addNewMessage, addNewConversation, addUncleStatus } from './actions';
+import { addMessageToConversation, addNewConversation, addUncleStatus } from './actions';
 import store from './index';
 import { fullName } from './nameGenerator';
 
@@ -81,12 +81,12 @@ function setUncleOnline(data) {
 }
 
 // set isUncleOnline state on load
-db.ref('conversations/').limitToLast(1).on('child_added', function(data) {
-  setUncleOnline(data);
-});
+// db.ref('conversations/').limitToLast(1).on('child_added', function(data) {
+//   setUncleOnline(data);
+// });
 
 // set isUncleOnline state whenever it changes in db
-db.ref('conversations/').on('child_changed', function(data) {
+db.ref(`conversations/${userId}`).on('value', function(data) {
   setUncleOnline(data);
   console.log('changed');
 });
@@ -101,7 +101,7 @@ db.ref('messages')
     convoRef.update({
       lastChat: Date.now()
     })
-    store.dispatch(addNewMessage(message));
+    store.dispatch(addMessageToConversation(message));
 
    });
 

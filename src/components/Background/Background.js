@@ -35,7 +35,7 @@ const Background = () => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
-    for(let i = 0; i <= 80; i++) {
+    for(let i = 0; i <= 90; i++) {
       let newShape =       
         {
           background: `url(${getRandomShape()}) no-repeat center`,
@@ -71,7 +71,6 @@ const Background = () => {
         left: `${shape.posX}px`,
         position: 'absolute',
         transform: shape.transform,
-        transformOrigin: 100% 0,
         // background: shape.background,
         opacity: shape.opacity,
         transition: 'all 1.5s'

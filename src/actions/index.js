@@ -1,23 +1,23 @@
 import firebaseDb, { getUserId } from '../firebaseDb';
 import { fullName } from '../nameGenerator'
 
-export const ADD__NEW__MESSAGE = 'ADD__NEW__MESSAGE';
-export const ADD__UNCLE__STATUS = 'ADD__UNCLE__STATUS';
+export const ADD_MESSAGE_TO_CONVERSATION = 'ADD_MESSAGE_TO_CONVERSATION';
+export const ADD_UNCLE_STATUS = 'ADD_UNCLE_STATUS';
 
 export const TOGGLE_CHAT = 'TOGGLE_CHAT';
-export const SEND__MESSAGE = 'SEND__MESSAGE';
-export const UPDATE__IS__TYPING = 'UPDATE__IS__TYPING';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const UPDATE_IS_TYPING = 'UPDATE_IS_TYPING';
 
-export function addNewMessage(message){
+export function addMessageToConversation(message){
   return {
-    type: ADD__NEW__MESSAGE,
+    type: ADD_MESSAGE_TO_CONVERSATION,
     message,
   }
 }
 
 export function addUncleStatus(isUncleOnline, uncleIsTyping) {
   return {
-    type: ADD__UNCLE__STATUS,
+    type: ADD_UNCLE_STATUS,
     isUncleOnline, 
     uncleIsTyping
   }
@@ -28,7 +28,7 @@ export function updateIsTyping(typing){
     clientIsTyping: typing
   });
   return {
-    type: UPDATE__IS__TYPING,
+    type: UPDATE_IS_TYPING,
   }
 }
 
@@ -49,6 +49,6 @@ export function sendMessage(message) {
     console.log('success');
   })
   return {
-    type: SEND__MESSAGE
+    type: SEND_MESSAGE
   }
 }

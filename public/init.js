@@ -86,14 +86,50 @@ function init() {
       boxes.push(bbox);
 
       stove = obj;
+      // setUpTween(stove);
     },
     // function called when download progresses
-    // in this case defined globally
     onProgress,
     // function called when download error
-    // also defined globally
     onError
   );
+
+  var userOpts	= {
+  range		: .035,
+  duration	: 2500,
+  delay		: 200,
+  easing		: 'Elastic.EaseInOut'
+};
+
+function setUpTween(object) {
+  var update = function(){
+    object.position.x = current.x;
+    object.position.y = current.y;
+    console.log('updating!');
+  }
+  // var position = { x : 3, y: 1.2 };
+  // var target = { x: -1, y: -2 };
+  var current	= { x: -userOpts.range, y: -userOpts.range };
+
+  TWEEN.removeAll();
+
+  var tweenTo = new TWEEN.Tween(current)
+    .to({x: +userOpts.range, y: +userOpts.range}, 1700)
+    .delay(10)
+    .easing(TWEEN.Easing.Sinusoidal.InOut)
+    .onUpdate(update);
+
+  var tweenBack = new TWEEN.Tween(current)
+    .to({x: -userOpts.range, y: -userOpts.range}, 1700)
+    .delay(10)
+    .easing(TWEEN.Easing.Sinusoidal.InOut)
+    .onUpdate(update);
+
+    tweenTo.chain(tweenBack);
+    tweenBack.chain(tweenTo);
+    tweenTo.start();
+
+  }
 
   // load broom
   loader.load(

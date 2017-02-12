@@ -1,10 +1,10 @@
-import { SEND__MESSAGE, 
-         ADD__NEW__MESSAGE,
-         ADD__UNCLE__STATUS,
+import { SEND_MESSAGE, 
+         ADD_MESSAGE_TO_CONVERSATION,
+         ADD_UNCLE_STATUS,
          TOGGLE_CHAT
         } from '../actions'
 
-const OPEN__PROJECT = 'OPEN__PROJECT';
+const OPEN_PROJECT = 'OPEN_PROJECT';
 
 const rootReducer = (state = {}, action) => {
   switch (action.type) {
@@ -14,15 +14,15 @@ const rootReducer = (state = {}, action) => {
         isChatOpen: !state.chat.isChatOpen,
       }
     });
-    case ADD__NEW__MESSAGE:
+    case ADD_MESSAGE_TO_CONVERSATION:
       return Object.assign({}, state, {
         messages: [...state.messages, action.message]
       });
-    case OPEN__PROJECT:
+    case OPEN_PROJECT:
       return Object.assign({}, state, {
         currentProject: action.project
       })
-    case ADD__UNCLE__STATUS:
+    case ADD_UNCLE_STATUS:
       return Object.assign({}, state, {
         uncleIsTyping: action.uncleIsTyping,
         isUncleOnline: action.isUncleOnline
