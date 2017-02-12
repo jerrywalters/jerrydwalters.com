@@ -21,7 +21,7 @@ function onClick(event) {
   if (intersects.length > 0) {
     const projectName = intersects[0].object.projectName;
     window.store.dispatch(openProject(projectName));
-  } else if (intersects.length <= 0)  window.browserHistory.push('/')
+  } else if (intersects.length <= 0 && window.location.pathname !== '/') window.browserHistory.push('/')
 }
 
 // Three
