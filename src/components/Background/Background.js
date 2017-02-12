@@ -7,7 +7,7 @@ import squiggleBlue from './shapes/squiggle-blue.svg';
 import squigglePurple from './shapes/squiggle-purple.svg';
 
 const Background = () => {
-  const shapeImgs = [circleBlue, circlePurple, zigzagBlue, zigzagPurple, squiggleBlue, squigglePurple];
+  const shapeImgs = [circleBlue, zigzagBlue, squiggleBlue];
   let shapes = [];
   let randomShape = shapeImgs[Math.floor(Math.random()*shapeImgs.length)];
 
@@ -35,7 +35,7 @@ const Background = () => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
-    for(let i = 0; i <= 200; i++) {
+    for(let i = 0; i <= 150; i++) {
       let newShape =       
         {
           background: `url(${getRandomShape()}) no-repeat center`,
@@ -43,10 +43,10 @@ const Background = () => {
           width: getRandomInt(10, 60),
           posX: getRandomInt(1, windowWidth),
           posY: getRandomInt(1, windowHeight),
-          transform: `rotateY(${getRandomInt(0, 360)}deg)`,
+          transform: `rotate(${getRandomInt(0, 360)}deg)`,
           // color: "#"+((1<<24)*Math.random()|0).toString(16),
           // fucking lol at me being too lazy to just not make another function 
-          opacity: `0.${getRandomInt(1, 15)}`
+          opacity: `0.${getRandomInt(15, 99)}`
         }
       shapes.push(newShape)
     }
@@ -68,8 +68,9 @@ const Background = () => {
         left: `${shape.posX}px`,
         position: 'absolute',
         transform: shape.transform,
+        transformOrigin: 100% 0,
         // background: shape.background,
-        opacity: 1
+        opacity: shape.opacity
       }
       return <div style={shapeStyles} key={index}><img style={imgStyles} src={getRandomShape()}></img></div>
     }
