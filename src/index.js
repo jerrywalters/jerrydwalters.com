@@ -3,10 +3,10 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from './store'
 import { Router, Route, browserHistory, IndexRoute, IndexRedirect, location } from 'react-router';
-import './index.css';
+import './styles/index.css';
 import { projects } from './projects'; 
 
-import App from './components/App';
+import App from './components/App/App';
 
 const store = configureStore();
 const mountApp = document.getElementById('root');

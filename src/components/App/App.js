@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import '../App.css';
+import '../../styles/App.css';
 
-import Header from './Header/Header';
-import ChatButton from './Chat/ChatButtonContainer';
-import ChatContainer from './Chat/ChatContainer';
-import Project from './Project/ProjectContainer';
-import Background from './Background/Background';
+import Header from '../Header/Header';
+import ChatButton from '../Chat/ChatButtonContainer';
+import ChatContainer from '../Chat/ChatContainer';
+import Project from '../Project/ProjectContainer';
+import Background from '../Background/Background';
 
 function backHome() {
   if(location.pathname === '/project') {
