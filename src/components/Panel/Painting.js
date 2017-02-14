@@ -1,5 +1,6 @@
 window.onload = function(){
-  var canvas = document.getElementById('canvas');
+  console.log('loaded up ur paint shit!');
+  var canvas = document.getElementById('panel');
   var ctx = canvas.getContext("2d");
   var optionWhite = document.getElementById('options__color--white');
   var optionYellow = document.getElementById('options__color--yellow');
@@ -9,16 +10,16 @@ window.onload = function(){
   var optionBlue = document.getElementById('options__color--blue');
   var optionPurple = document.getElementById('options__color--purple');
   var optionBlack = document.getElementById('options__color--black');
-  var optionGradient = document.getElementById('options__color--gradient');
   var optionClear = document.getElementById('options__clear');
 
   // create gradient color
-  var gradient=ctx.createLinearGradient(0,0,300,0);
-    gradient.addColorStop("0","magenta");
-    gradient.addColorStop("0.25","green");
-    gradient.addColorStop("0.5","blue");
-    gradient.addColorStop("0.75","yellow");
-    gradient.addColorStop("1.0","red");
+  // gradients are for nephews, I have original ideas too
+  // var gradient=ctx.createLinearGradient(0,0,300,0);
+  //   gradient.addColorStop("0","magenta");
+  //   gradient.addColorStop("0.25","green");
+  //   gradient.addColorStop("0.5","blue");
+  //   gradient.addColorStop("0.75","yellow");
+  //   gradient.addColorStop("1.0","red");
 
   // create array of colors with associate values for loop to generate listeners
   var colorOptions = [
@@ -53,10 +54,6 @@ window.onload = function(){
     {
       el: optionPurple,
       color: 'purple',
-    },
-    {
-      el: optionGradient,
-      color: gradient,
     },
   ]
 

@@ -359,6 +359,155 @@ body {
     margin-right: 4rem;
     cursor: pointer;
 }
+/*.panel-container {
+    position: absolute;
+    z-index: 9999;
+    top: 20;
+    left: 200;
+    background: #fff;
+    width: 300;
+    height: 500;
+}*/
+
+
+/* throw some drawing shit here*/
+.panel-container #panel {
+    position: absolute;
+	top: 0px;
+	left:0;
+	background-color: rgba(255,255,255,.5);
+	width: 300px;
+	height: 500px;
+	background-color:white;
+	cursor:crosshair;
+	opacity:1;
+	transition: all .3s;
+}
+
+.options__container {
+	left: calc(100% - 40px);
+	opacity:1;
+	position: absolute;
+	border-left: 2px solid #9999ff;
+	z-index: 100;
+	background-color: white;
+	transition: opacity .3s;
+	text-align:center;
+	height:504px;
+}
+
+.panel-container {
+	opacity:1;
+	position: absolute;
+	top: 20px;
+	border-left: 2px solid #9999ff;
+	z-index: 999;
+	background-color: white;
+	transition: opacity .3s;
+	text-align:center;
+    width: 300px;
+	height:504px;
+}
+.options__color {
+	width:20px;
+	height:20px;
+	border:2px solid black;
+	border-radius: 100%;
+	margin:4px auto;
+	transition: all .2s;
+	cursor:pointer;
+}
+.options__size {
+	border: 2px solid black;
+	border-radius: 100%;
+	margin:4px auto;
+	transition: all .2s;
+	cursor:pointer;
+}
+.options__color:hover, .options__size:hover {
+	opacity:.75;
+}
+.options__color--white {
+	background-color:white;
+}
+.options__color--orange {
+	background-color:orange;
+}
+.options__color--yellow {
+	background-color:yellow;
+}
+.options__color--green {
+	background-color:green;
+}
+.options__color--red {
+	background-color:red;
+}
+.options__color--purple {
+	background-color:purple;
+}
+.options__color--blue {
+	background-color:blue;
+}
+.options__color--black {
+	background-color:black;
+}
+.options__color--active {
+	border:2px solid white;
+}
+.options__color--white.options__color--active {
+	border:2px solid #ccc;
+}
+.options__size--five {
+	margin-top:14px;
+	width:14px;
+	height:14px;
+}
+.options__size--ten {
+	width:16px;
+	height:16px;
+}
+.options__size--twenty {
+	width:20px;
+	height:20px;
+}
+
+.options__size--active {
+	border:2px solid lightgray;
+}
+
+.options__clear {
+	padding:10px 2px 2px;
+	cursor:pointer;
+}
+
+.options__file-container {
+	position:relative;
+}
+
+.options__file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+	cursor:pointer;
+}
+
+.options__send, .options__attachment {
+    font-size: 20px;
+    margin: 22px 0px;
+		cursor:pointer;
+}
+
+
+
+
+
+
+
+
+
+
 .chat-form__input:focus {
     outline: none;
 }
@@ -468,7 +617,7 @@ body {
 }
 
 /* dont let header push canvas down */
-canvas {
+#container canvas {
 	background-color: transparent;
 	-ms-transform: translateY(-250px); /* IE 9 */
 	-webkit-transform: translateY(-250px); /* Safari */
