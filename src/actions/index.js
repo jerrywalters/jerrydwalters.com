@@ -3,10 +3,11 @@ import { fullName } from '../nameGenerator'
 
 export const ADD_MESSAGE_TO_CONVERSATION = 'ADD_MESSAGE_TO_CONVERSATION';
 export const UPDATE_CONVERSATION = 'UPDATE_CONVERSATION';
-
 export const TOGGLE_CHAT = 'TOGGLE_CHAT';
+export const TOGGLE_PAINTING = 'TOGGLE_PAINTING';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const UPDATE_IS_TYPING = 'UPDATE_IS_TYPING';
+
 
 export function addMessageToConversation(message){
   return {
@@ -22,18 +23,24 @@ export function updateConversation(conversation) {
   }
 }
 
+export function toggleChat() {
+  return {
+    type: TOGGLE_CHAT,
+  }
+}
+
+export function togglePainting() {
+  return {
+    type: TOGGLE_PAINTING
+  }
+}
+
 export function updateIsTyping(typing){
   firebaseDb.ref(`conversations/${getUserId()}`).update({
     clientIsTyping: typing
   });
   return {
     type: UPDATE_IS_TYPING,
-  }
-}
-
-export function toggleChat() {
-  return {
-    type: TOGGLE_CHAT,
   }
 }
 
