@@ -355,6 +355,10 @@ body {
     overflow-y: scroll;
     max-height: 120px;
 }
+.chat-form__paint {
+    margin-right: 4rem;
+    cursor: pointer;
+}
 .chat-form__input:focus {
     outline: none;
 }

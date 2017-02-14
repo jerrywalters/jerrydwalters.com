@@ -11,10 +11,8 @@ const Header = ({ location }) => {
   return (
     <header className={ headerClasses }>
       <div className="header__top">
-        <section className="header__bio">
-        <p>
-            I am the lord of lords.
-        </p>
+        <section className="header-bio">
+          <h1 className="header-bio__name">Jerry Walters</h1>
         </section>
         <img src="" className="header__pic" />
         <div className="header__links">

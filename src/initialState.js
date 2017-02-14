@@ -6,6 +6,7 @@ const initialState = {
   },
   chat: {
     isChatOpen: false,
+    isPainting: false,
     conversation: {
       messages: []
     }

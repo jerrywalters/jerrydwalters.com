@@ -44,7 +44,7 @@ export default class Chat extends Component {
   }
 
   render() {
-    const { sendMessage, location, isUncleOnline, uncleIsTyping, messages, isChatOpen, updateIsTyping } = this.props;
+    const { sendMessage, location, isUncleOnline, uncleIsTyping, messages, isChatOpen, updateIsTyping, togglePainting } = this.props;
     let isTypingTimeout;
 
     function isClientTyping() {
@@ -81,6 +81,9 @@ export default class Chat extends Component {
               id="chat__input" 
               onKeyDown={(e) => this.handleTyping(e)}
               onKeyPress={() => isClientTyping()}>
+          </div>
+          <div className="chat-form__paint" onClick={() => togglePainting()}>
+          paint 
           </div>
           <input className="chat-form__submit" 
                  type="submit" 
