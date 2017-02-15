@@ -1,8 +1,73 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
-import './Painting';
+import { initPainting } from './Painting';
 
-const Panel = ({ isDrawing, sendMessage }) =>  {
+class Panel extends Component {
+  constructor(props) {
+    super(props);
+    this.sendMessage = this.props.sendMessage;
+    this.isPainting = this.props.isPainting;
+  }
+
+  componentDidMount() {
+    initPainting();
+  }
+
+  render() {
+    const { sendMessage, isPainting } = this.props;
+
+    function submitImage(){
+    var canvas = document.getElementById('panel');
+    var ctx = canvas.getContext('2d');
+    var dataURL = canvas.toDataURL();
+    var optionBlack = document.getElementById('options__color--black');
+    var optionTen = document.getElementById('options__size--ten');
+
+    sendMessage(dataURL);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.lineWidth = "10";
+    ctx.lineJoin = ctx.lineCap = 'round';
+    ctx.strokeStyle = "black"; 
+    removeClassFromElements('.options__color--active');
+    removeClassFromElements('.options__size--active');
+    optionTen.classList.add('options__size--active');
+    optionBlack.classList.add('options__color--active');
+  }
+
+    function removeClassFromElements(selector){
+      var className = selector.startsWith('.') === true ? selector.substr(1) : selector;
+      var active = [].slice.call(document.querySelectorAll(selector));
+      active.forEach(function(el){
+        el.classList.remove(className);
+      });
+    }
+    return (
+      <div className="panel-container">
+          <div className="options__container">
+              <div className="options__color options__color--white" id="options__color--white"></div>
+              <div className="options__color options__color--yellow" id="options__color--yellow"></div>
+              <div className="options__color options__color--orange" id="options__color--orange"></div>
+              <div className="options__color options__color--red" id="options__color--red"></div>
+              <div className="options__color options__color--green" id="options__color--green"></div>
+              <div className="options__color options__color--blue" id="options__color--blue"></div>
+              <div className="options__color options__color--purple" id="options__color--purple"></div>
+              <div className="options__color options__color--black" id="options__color--black"></div>
+              <div className="options__color options__color--gradient" id="options__color--gradient"></div>
+              <div className="options__size options__size--five" id="options__size--five"></div>
+              <div className="options__size options__size--ten" id="options__size--ten"></div>
+              <div className="options__size options__size--twenty" id="options__size--twenty"></div>
+              <div className="options__clear" id="options__clear">clear</div>
+          </div>
+          <canvas id="panel" width="300" height="500"></canvas>
+      </div>
+    )
+  }
+}
+
+export default Panel
+
+/*const Panel = ({ isDrawing, sendMessage }) =>  {
 
 // for handling files -- just get drawing to work first
 //   function handleImageFile() {
@@ -100,4 +165,4 @@ const Panel = ({ isDrawing, sendMessage }) =>  {
   );
 }
 
-export default Panel;
+export default Panel;*/

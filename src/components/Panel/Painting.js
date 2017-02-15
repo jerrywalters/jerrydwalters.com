@@ -1,5 +1,4 @@
-window.onload = function(){
-  console.log('loaded up ur paint shit!');
+export function initPainting() {
   var canvas = document.getElementById('panel');
   var ctx = canvas.getContext("2d");
   var optionWhite = document.getElementById('options__color--white');
