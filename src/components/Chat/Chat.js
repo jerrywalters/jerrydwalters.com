@@ -55,6 +55,19 @@ export default class Chat extends Component {
       }, 2000);
     }
 
+    function attachImage(){
+      var file    = document.getElementById('chat-form__file').files[0];
+      var reader  = new FileReader();
+      console.log('attaching image')
+      reader.addEventListener("load", function () {
+        sendMessage(reader.result);
+      }, false);
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
     const chatClasses = classNames({
       'chat-window': true,
       'hidden' : !isChatOpen
@@ -85,6 +98,8 @@ export default class Chat extends Component {
           <div className="chat-form__paint" onClick={() => togglePainting()}>
           paint 
           </div>
+          <div className="chat-form__attachment" onClick={() => attachImage()}>attach</div>
+          <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
           <input className="chat-form__submit" 
                  type="submit" 
                  onClick={ (e) => this.submitByIcon(e)}>

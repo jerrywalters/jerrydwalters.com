@@ -362,9 +362,34 @@ body {
     max-height: 120px;
 }
 .chat-form__paint {
-    margin-right: 4rem;
     cursor: pointer;
+    position: absolute;
+    bottom: 12px;
+    right: 104px;
 }
+.chat-form__attachment {
+    cursor: pointer;
+    position: absolute;
+    bottom: 12px;
+    right: 64px;
+}
+.chat-form__file {
+    position: absolute;
+    bottom: 12px;
+    right: 64px;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: transparent;
+    border: 0;
+    width:16px;
+	opacity:0;
+}
+.chat-form__submit {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
 /*.panel-container {
     position: absolute;
     z-index: 9999;
@@ -526,12 +551,6 @@ body {
 
 .chat-form__input:focus {
     outline: none;
-}
-.chat-form__submit {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-
 }
 .chat-form--client {
     background-color:  #fff;
