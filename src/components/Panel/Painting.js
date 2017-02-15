@@ -83,6 +83,16 @@ export function initPainting() {
     }
   });
 
+  // paint a dot on click
+  canvas.addEventListener('click', function(e){
+    mouseX = e.clientX - rectLeft;
+    mouseY = e.clientY - rectTop;
+
+    ctx.lineTo(mouseX, mouseY);
+    ctx.stroke();
+  });
+
+
   canvas.addEventListener('mousedown', function(e){
     isMouseDown = true;
   });
