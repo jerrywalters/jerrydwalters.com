@@ -12,7 +12,8 @@ class Panel extends Component {
   }
 
   render() {
-    const { sendMessage, isPainting } = this.props;
+    const { sendMessage, isPainting, togglePainting } = this.props;
+    console.log('painting', isPainting);
 
     function handleImageFile() {
       var file    = document.getElementById('options__file').files[0];
@@ -70,8 +71,14 @@ class Panel extends Component {
         el.classList.remove(className);
       });
     }
+
+    const panelClasses = classNames({
+      'panel-container': true,
+      'panel-container--painting': isPainting,
+    });
+
     return (
-      <div className="panel-container">
+      <div className={panelClasses}>
           <div className="options__container">
               <div className="options__color options__color--white" id="options__color--white"></div>
               <div className="options__color options__color--yellow" id="options__color--yellow"></div>

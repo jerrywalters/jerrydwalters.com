@@ -253,6 +253,8 @@ body {
   }
 }*/
 
+
+
 /* chat form */
 .chat-header--client {
     background-color: #9e66ff;
@@ -375,7 +377,17 @@ body {
 
 
 /* throw some drawing shit here*/
-.panel-container #panel {
+.panel-container {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.panel-container--painting {
+    visibility: visible;
+    opacity: 1;
+}
+
+.panel-container--painting #panel {
     position: absolute;
 	top: 0px;
 	left:0;
