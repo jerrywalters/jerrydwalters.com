@@ -64,7 +64,7 @@ body {
     overflow: hidden;
     /*background-color: #ccd4ff;*/
     background: #1a0033; /* For browsers that do not support gradients */
-    background: linear-gradient(to bottom right, #230080, #13004d 25%, #1a0033 60%, #0d001a 90%);  
+    background: linear-gradient(to bottom right, #390080, #29004d 25%, #200039 45%, #1b0033 60%, #0d001a 90%);  
 }
 
 .shapes-container {
@@ -607,7 +607,7 @@ body {
 	background-color: #e1f1ff;
 	height: 300px;
 	color: #0c1d00;
-	opacity: 0.9;
+	opacity: 0.95;
 	z-index: 9;
 	position: relative;
 	-ms-transform: translateY(calc(-100%)); /* IE 9 */
@@ -616,8 +616,8 @@ body {
 	transition: 0.5s;
 }
 .header__top {
-	background: rgba(255,0,255,.5);
-	opacity: 0.85;
+	background: #ccccff;
+	opacity: 0.95;
 	height: 300px;
 	z-index: 9;
 }
