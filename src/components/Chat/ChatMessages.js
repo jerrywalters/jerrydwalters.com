@@ -8,7 +8,17 @@ const ChatMessages = ({messages, uncleIsTyping}) => {
   })  
 
   const messageList = messages.map(
-    (message, index) => <li className={`client-messages__item client-messages__item--${message.author}`} key={index}>{message.message}</li>
+    (message, index) => {
+      if (message.message.startsWith('data:')){
+        return (
+          <li key={index} className={`client-messages__item client-messages__item--${message.author}`}>
+            <img className="client-messages__image" onDoubleClick={() => this.imageNewWindow(message.message)} src={message.message} />
+          </li>
+        )
+      } return (
+          <li className={`client-messages__item client-messages__item--${message.author}`} key={index}>{message.message}</li>
+      )
+    }
   )
 
   return (

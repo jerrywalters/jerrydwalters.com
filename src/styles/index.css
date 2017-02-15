@@ -148,6 +148,10 @@ body {
 .client-messages::-webkit-scrollbar { 
     display: none; 
 }
+.client-messages__image {
+    max-width: 100%;
+    max-height: 200px;
+}
 
 .client-messages__item, .client-messages__item--isTyping {
     padding: .35rem 1rem;
