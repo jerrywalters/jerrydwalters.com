@@ -7,7 +7,7 @@ import ChatButton from '../Chat/ChatButtonContainer';
 import ChatContainer from '../Chat/ChatContainer';
 import Project from '../Project/ProjectContainer';
 import Background from '../Background/Background';
-import Panel from '../Panel/Panel'
+import Panel from '../Panel/PanelContainer'
 
 function backHome() {
   if(location.pathname === '/project') {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { sendMessage } from '../../actions/actions';
-import Preview from './Preview';
+import { sendMessage } from '../../actions/';
+import Panel from './Panel';
 
 const mapStateToProps = (state) => {
   return {
@@ -16,9 +16,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const PreviewContainer = connect(
+const PanelContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Preview);
+)(Panel);
 
-export default PreviewContainer;
+export default PanelContainer;
