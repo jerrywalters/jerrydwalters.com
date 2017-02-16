@@ -66,6 +66,8 @@ export function initPainting() {
   var mouseY;
   var rectLeft = canvas.getBoundingClientRect().left;
   var rectTop = canvas.getBoundingClientRect().top;
+  console.log('rectLeft', rectLeft);
+  console.log('rectTop', rectTop);
 
   optionTen.classList.add('options__size--active');
   optionBlack.classList.add('options__color--active');
@@ -74,8 +76,8 @@ export function initPainting() {
 
   canvas.addEventListener('mousemove', function(e){
     console.log('mousex', mouseX)
-    mouseX = e.clientX - 406;
-    mouseY = e.clientY - 234;
+    mouseX = e.clientX - rectLeft;
+    mouseY = e.clientY - rectTop;
 
     console.log('rectleft', rectLeft)
     console.log('mousex', mouseX)

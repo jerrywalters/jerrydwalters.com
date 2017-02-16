@@ -7,7 +7,7 @@ class Panel extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     initPainting();
   }
 
