@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import ChatMessages from './ChatMessages';
-
+import Panel from '../Panel/PanelContainer';
 
 export default class Chat extends Component {
   constructor(props){
@@ -44,7 +44,7 @@ export default class Chat extends Component {
   }
 
   render() {
-    const { sendMessage, location, isUncleOnline, uncleIsTyping, messages, isChatOpen, updateIsTyping, togglePainting } = this.props;
+    const { sendMessage, location, isUncleOnline, uncleIsTyping, messages, isChatOpen, updateIsTyping, togglePainting, isPainting } = this.props;
     let isTypingTimeout;
 
     function isClientTyping() {
@@ -70,6 +70,7 @@ export default class Chat extends Component {
 
     const chatClasses = classNames({
       'chat-window': true,
+      'chat-window--painting' : isPainting,
       'hidden' : !isChatOpen
     });
 
@@ -85,26 +86,31 @@ export default class Chat extends Component {
             <div className="uncle-icon"></div>
             <h3 className="uncle-name">Uncle Jerry</h3>
             <span className={statusClasses}></span>
-        </header>   
-        <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
-        <form className="chat-form chat-form--client">
-          <div contentEditable="true" 
-              placeholder="message uncle" 
-              className="chat-form__input" 
-              id="chat__input" 
-              onKeyDown={(e) => this.handleTyping(e)}
-              onKeyPress={() => isClientTyping()}>
+        </header> 
+        <div className="chat-window__content">
+          <Panel />
+          <div className="chat-window__chat">
+            <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
+            <form className="chat-form chat-form--client">
+              <div contentEditable="true" 
+                  placeholder="message uncle" 
+                  className="chat-form__input" 
+                  id="chat__input" 
+                  onKeyDown={(e) => this.handleTyping(e)}
+                  onKeyPress={() => isClientTyping()}>
+              </div>
+              <div className="chat-form__paint" onClick={() => togglePainting()}>
+              paint 
+              </div>
+              <div className="chat-form__attachment" onClick={() => attachImage()}>attach</div>
+              <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
+              <input className="chat-form__submit" 
+                    type="submit" 
+                    onClick={ (e) => this.submitByIcon(e)}>
+            </input>
+            </form>
           </div>
-          <div className="chat-form__paint" onClick={() => togglePainting()}>
-          paint 
-          </div>
-          <div className="chat-form__attachment" onClick={() => attachImage()}>attach</div>
-          <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
-          <input className="chat-form__submit" 
-                 type="submit" 
-                 onClick={ (e) => this.submitByIcon(e)}>
-        </input>
-        </form>
+        </div>
       </div>
     )
   }

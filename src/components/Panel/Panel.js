@@ -93,13 +93,13 @@ class Panel extends Component {
               <div className="options__size options__size--ten" id="options__size--ten"></div>
               <div className="options__size options__size--twenty" id="options__size--twenty"></div>
               <div className="options__file-container">
-                <div className="options__attachment">attach</div>
+                <div className="options__attachment">a</div>
                 <input className="options__file" id="options__file" onChange={() => handleImageFile()} type="file"></input>
               </div>
-              <div className="options__send" onClick={() => submitImage()}>send</div>
+              <div className="options__send" onClick={() => submitImage()}>s</div>
               <div className="options__clear" id="options__clear">clear</div>
             </div>
-          <canvas id="panel" width="300" height="500"></canvas>
+          <canvas id="panel" style={{height:420, width:280}}></canvas>
       </div>
     )
   }

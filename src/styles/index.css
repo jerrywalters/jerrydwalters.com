@@ -143,7 +143,10 @@ body {
     flex-direction: column;
     box-sizing: border-box;
     overflow-y: scroll;
-    max-height: 325px;
+    height: 325px;
+}
+.chat-window--painting .client-messages {
+    height: 385px;
 }
 .client-messages::-webkit-scrollbar { 
     display: none; 
@@ -162,6 +165,9 @@ body {
     font-weight: 300;
     font-size: .8em;
     line-height: 1.25em;
+}
+.client-messages__item--isTyping {
+    margin-bottom: 3rem;
 }
 .client-messages__item--client {
     margin-left: auto;
@@ -188,8 +194,8 @@ body {
 .client-messages__item--isNotTyping {
     visibility: hidden;
     opacity: 0;
-    height: 0;
-    width: 0;
+    /*height: 0;
+    width: 0;*/
     /*transition: all 0.3s;*/
 }
 
@@ -259,6 +265,7 @@ body {
 .chat-header--client {
     background-color: #9e66ff;
     height: 40px;
+    width: 100%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     position: relative;
@@ -268,7 +275,7 @@ body {
     padding: 0 .5rem;
 }
 .chat-window {
-    width: 290px;
+    min-width: 290px;
     height: 400px;
     position: absolute;
     bottom: 50px;
@@ -284,11 +291,34 @@ body {
     opacity: 1;
     overflow: hidden;
 }
+.chat-window.chat-window--painting {
+    width: 610px;
+    height: 460px;
+}
+.chat-window__chat {
+    width: 290px;
+    height: 360px;
+    max-height: 420px;
+}
+.chat-window--painting .chat-window__chat {
+    height: 420px;
+}
+.chat-window__content {
+    display: flex;
+    flex-direction: row;
+    height: 360px;
+    max-height: 420px;
+    justify-content: flex-end;
+}
+.chat-window--painting .chat-window__content {
+    height: 420px;
+}
 .chat-window.hidden {
+    display: none;
     visibility: hidden;
     opacity: 0.5;
-    height: 0;
-    width: 0;
+    /*height: 0;
+    width: 0;*/
     transition: all 0.25s ease-in-out;
 }
 .uncle-icon {
@@ -338,7 +368,6 @@ body {
 .chat-form {
     width: 100%;
     box-sizing: border-box;
-    position: absolute;
     bottom: 0;
     background-color: #ffdafa;
     padding: 1rem 1rem .5rem 1rem;
@@ -403,58 +432,61 @@ body {
 
 /* throw some drawing shit here*/
 .panel-container {
+    width: 0;
     visibility: hidden;
-    opacity: 0;
+	/*border-left: 2px solid #9999ff;*/
+	background-color: white;
+	text-align:center;
+	height: 420px;
+    transition: all 0.3s;
+    position: relative;
+    display: none;
 }
-
 .panel-container--painting {
+    width: 320px;
     visibility: visible;
     opacity: 1;
+    display: flex;
+    height: 420px;
+    overflow: hidden;
+    background-color: transparent;
 }
-
+#panel {
+    background-color:transparent;
+    display: none;
+}
 .panel-container--painting #panel {
-    position: absolute;
-	top: 0px;
-	left:0;
-	background-color: rgba(255,255,255,.5);
-	width: 300px;
-	height: 500px;
+    /*position: absolute;*/
+    display: flex;
+	/*left:0;*/
+	width: 280px;
+	height: 420px;
 	background-color:white;
 	cursor:crosshair;
-	opacity:1;
-	transition: all .3s;
+	opacity: 1;
 }
-
+.panel-container--painting .options__container {
+    display: flex;
+    flex-direction: column;
+}
 .options__container {
-	left: calc(100% - 40px);
+    position: absolute; 
+    display: none;
+    right: 0;
 	opacity:1;
-	position: absolute;
-	border-left: 2px solid #9999ff;
 	z-index: 100;
 	background-color: white;
-	transition: opacity .3s;
+    box-shadow: 0px -3px 5px 0px rgba(0,0,0,0.14); 
 	text-align:center;
-	height:504px;
-}
-
-.panel-container {
-	opacity:1;
-	position: absolute;
-	top: 20px;
-	border-left: 2px solid #9999ff;
-	z-index: 999;
-	background-color: white;
-	transition: opacity .3s;
-	text-align:center;
-    width: 300px;
-	height:504px;
+	height: 420px;
+    width: 40px;
 }
 .options__color {
-	width:20px;
-	height:20px;
-	border:2px solid black;
+	width: 18px;
+	height: 18px;
+	border: 2px solid black;
 	border-radius: 100%;
-	margin:4px auto;
+	margin: 3px auto;
 	transition: all .2s;
 	cursor:pointer;
 }
@@ -531,13 +563,13 @@ body {
   left: 0;
   width: 100%;
   opacity: 0;
-	cursor:pointer;
+  cursor:pointer;
 }
 
 .options__send, .options__attachment {
     font-size: 20px;
-    margin: 22px 0px;
-		cursor:pointer;
+    margin: 6px 0px;
+    cursor:pointer;
 }
 
 

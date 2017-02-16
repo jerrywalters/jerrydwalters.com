@@ -1,6 +1,8 @@
 export function initPainting() {
+
   var canvas = document.getElementById('panel');
   var ctx = canvas.getContext("2d");
+
   var optionWhite = document.getElementById('options__color--white');
   var optionYellow = document.getElementById('options__color--yellow');
   var optionOrange = document.getElementById('options__color--orange');
@@ -71,9 +73,14 @@ export function initPainting() {
   initOptions();
 
   canvas.addEventListener('mousemove', function(e){
+    console.log('mousex', mouseX)
+    mouseX = e.clientX - 406;
+    mouseY = e.clientY - 234;
 
-    mouseX = e.clientX - rectLeft;
-    mouseY = e.clientY - rectTop;
+    console.log('rectleft', rectLeft)
+    console.log('mousex', mouseX)
+    console.log('recttop', rectTop)
+    console.log('mousey', mouseY)
 
     if(mouseX && isMouseDown){
       ctx.lineTo(mouseX, mouseY);
@@ -84,13 +91,13 @@ export function initPainting() {
   });
 
   // paint a dot on click
-  canvas.addEventListener('click', function(e){
-    mouseX = e.clientX - rectLeft;
-    mouseY = e.clientY - rectTop;
+  // canvas.addEventListener('click', function(e){
+  //   mouseX = e.clientX - rectLeft;
+  //   mouseY = e.clientY - rectTop;
 
-    ctx.lineTo(mouseX, mouseY);
-    ctx.stroke();
-  });
+  //   ctx.lineTo(mouseX, mouseY);
+  //   ctx.stroke();
+  // });
 
 
   canvas.addEventListener('mousedown', function(e){
