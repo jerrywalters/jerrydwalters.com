@@ -1,4 +1,5 @@
 import React from 'react';
+import className from 'classnames';
 
 const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) => {
   let isTypingTimeout;
@@ -50,6 +51,12 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
     }
   }
 
+  const paintingIconClasses = className({
+    'fa': true,
+    'fa-paint-brush': true,
+    'fa-paint-brush-gray': isPainting,
+  });
+
   return (
     <form className="chat-form chat-form--client">
         <div contentEditable="true" 
@@ -59,15 +66,16 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
             onKeyDown={(e) => handleTyping(e)}
             onKeyPress={() => isClientTyping()}>
         </div>
-        <div className="chat-form__paint" onClick={() => togglePainting()}>
-        paint 
+        <div className="chat-form__icon" onClick={() => togglePainting()}>
+        <i className={paintingIconClasses} aria-hidden="true"></i> 
         </div>
-        <div className="chat-form__attachment" onClick={() => attachImage()}>attach</div>
+        <div className="chat-form__icon" onClick={() => attachImage()}><i className="fa fa-paperclip" aria-hidden="true"></i></div>
         <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
-        <input className="chat-form__submit" 
+        <div className="chat-form__icon" 
                 type="submit" 
                 onClick={ (e) => submitByIcon(e)}>
-        </input>
+                <i className="fa fa-paper-plane-o" aria-hidden="true"></i>
+        </div>
     </form>
   )
 }

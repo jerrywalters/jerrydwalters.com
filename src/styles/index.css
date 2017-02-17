@@ -390,27 +390,28 @@ body {
     overflow-y: scroll;
     max-height: 120px;
 }
-.chat-form__paint {
+.chat-form__icon {
     cursor: pointer;
-    position: absolute;
-    bottom: 12px;
-    right: 104px;
+    margin-left: 0.7rem;
+    font-size: 18px;
+    color: #9e66ff
 }
-.chat-form__attachment {
-    cursor: pointer;
-    position: absolute;
-    bottom: 12px;
-    right: 64px;
+.painting__icon {
+
+}
+.fa-paint-brush-gray {
+    color: #ccc;
+    transition: all 0.2s;
 }
 .chat-form__file {
+    cursor: pointer;
     position: absolute;
     bottom: 12px;
-    right: 64px;
-    cursor: pointer;
+    right: 40px;
     overflow: hidden;
     background-color: transparent;
     border: 0;
-    width:16px;
+    width:18px;
 	opacity:0;
 }
 .chat-form__submit {
@@ -451,7 +452,7 @@ body {
     overflow: hidden;
     transition: all 1s;
     background-color: transparent;
-    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.20); 
+    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.15); 
 }
 #panel {
     background-color:transparent;
@@ -481,7 +482,7 @@ body {
 	opacity:1;
 	z-index: 100;
 	background-color: #fefefe;
-    box-shadow: 0px -2px 8px 0px rgba(0,0,0,0.20); 
+    box-shadow: 0px -2px 8px 0px rgba(0,0,0,0.15); 
 	text-align:center;
 	height: 420px;
     width: 40px;
@@ -508,6 +509,7 @@ body {
 }
 .options__color--white {
 	background-color:white;
+    border: solid 2px #fefefe;
 }
 .options__color--orange {
 	background-color:#ff9933;
@@ -534,7 +536,8 @@ body {
 	border:2px solid #000;
 }
 .options__color--white.options__color--active {
-	border:2px solid #ccc;
+	border:2px solid #fefefe;
+    color: #bbb;
 }
 .options__size--five {
 	margin-top:14px;
@@ -555,8 +558,11 @@ body {
 }
 
 .options__clear {
-	padding:10px 2px 2px;
+	padding:6px 2px 2px;
 	cursor:pointer;
+    font-family: helvetica;
+    font-weight: 100;
+    font-size: .9em;
 }
 
 .options__file-container {
@@ -572,9 +578,12 @@ body {
   cursor:pointer;
 }
 
+.options__attachment {
+    margin-top: 0.7rem;
+}
 .options__send, .options__attachment {
     font-size: 20px;
-    margin: 6px 0px;
+    margin-bottom: 0.5rem;
     cursor:pointer;
 }
 
