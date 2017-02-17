@@ -8,7 +8,11 @@ class Panel extends Component {
   }
 
   componentDidMount() {
-    initPainting();
+    // wait until the transition is done so it doesn't mess up my canvas
+    // lord is there another way
+    setTimeout(function() {
+      initPainting();
+    }, 200)
   }
 
   render() {
@@ -80,15 +84,14 @@ class Panel extends Component {
     return (
       <div className={panelClasses}>
           <div className="options__container">
-              <div className="options__color options__color--white" id="options__color--white"></div>
-              <div className="options__color options__color--yellow" id="options__color--yellow"></div>
-              <div className="options__color options__color--orange" id="options__color--orange"></div>
               <div className="options__color options__color--red" id="options__color--red"></div>
+              <div className="options__color options__color--orange" id="options__color--orange"></div>
+              <div className="options__color options__color--yellow" id="options__color--yellow"></div>
               <div className="options__color options__color--green" id="options__color--green"></div>
               <div className="options__color options__color--blue" id="options__color--blue"></div>
               <div className="options__color options__color--purple" id="options__color--purple"></div>
               <div className="options__color options__color--black" id="options__color--black"></div>
-              <div className="options__color options__color--gradient" id="options__color--gradient"></div>
+              <div className="options__color options__color--white" id="options__color--white"></div>
               <div className="options__size options__size--five" id="options__size--five"></div>
               <div className="options__size options__size--ten" id="options__size--ten"></div>
               <div className="options__size options__size--twenty" id="options__size--twenty"></div>

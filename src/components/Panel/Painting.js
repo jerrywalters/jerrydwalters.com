@@ -4,7 +4,6 @@ export function initPainting() {
   canvas.height = 420;
   canvas.width = 280;
   var ctx = canvas.getContext("2d");
-  console.log(canvas);
 
   var optionWhite = document.getElementById('options__color--white');
   var optionYellow = document.getElementById('options__color--yellow');
@@ -28,36 +27,36 @@ export function initPainting() {
   // create array of colors with associate values for loop to generate listeners
   var colorOptions = [
     {
-      el: optionWhite,
-      color: 'white',
-    },
-    {
-      el: optionYellow,
-      color: 'yellow',
+      el: optionRed,
+      color: '#fb4754',
     },
     {
       el: optionOrange,
-      color: 'orange',
+      color: '#ff9933',
     },
     {
-      el: optionRed,
-      color: 'red',
+      el: optionYellow,
+      color: '#fbf335',
     },
     {
       el: optionGreen,
-      color: 'green',
+      color: '#00cc66',
+    },
+    {
+      el: optionBlue,
+      color: '#3366ff',
+    },
+    {
+      el: optionPurple,
+      color: '#9933ff',
     },
     {
       el: optionBlack,
       color: 'black',
     },
     {
-      el: optionBlue,
-      color: 'blue',
-    },
-    {
-      el: optionPurple,
-      color: 'purple',
+      el: optionWhite,
+      color: 'white',
     },
   ]
 
@@ -69,8 +68,6 @@ export function initPainting() {
   var mouseY;
   var rectLeft = canvas.getBoundingClientRect().left;
   var rectTop = canvas.getBoundingClientRect().top; 
-  console.log('rectLeft', rectLeft);
-  console.log('rectTop', rectTop);
 
   optionTen.classList.add('options__size--active');
   optionBlack.classList.add('options__color--active');
@@ -78,14 +75,8 @@ export function initPainting() {
   initOptions();
 
   canvas.addEventListener('mousemove', function(e){
-    console.log('mousex', mouseX)
     mouseX = e.clientX - rectLeft;
     mouseY = e.clientY - rectTop;
-
-    console.log('rectleft', rectLeft)
-    console.log('mousex', mouseX)
-    console.log('recttop', rectTop)
-    console.log('mousey', mouseY)
 
     if(mouseX && isMouseDown){
       ctx.lineTo(mouseX, mouseY);

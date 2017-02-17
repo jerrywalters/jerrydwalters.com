@@ -135,7 +135,7 @@ body {
 
 
 .messages-container {
-   box-shadow: inset 0px 3px 4px 0px rgba(0,0,0,0.14); 
+   
 }
 .client-messages {
     padding: .75rem .75rem;
@@ -166,9 +166,6 @@ body {
     font-size: .8em;
     line-height: 1.25em;
 }
-.client-messages__item--isTyping {
-    margin-bottom: 3rem;
-}
 .client-messages__item--client {
     margin-left: auto;
     background-color: #ff457e;
@@ -189,11 +186,12 @@ body {
     min-height: 16px;
     display: flex;
     justify-content: center;
-    padding: .5rem .5rem .2rem .5rem;;
+    padding: .5rem .5rem .2rem .5rem;
 }
 .client-messages__item--isNotTyping {
     visibility: hidden;
     opacity: 0;
+    display: none;
     /*height: 0;
     width: 0;*/
     /*transition: all 0.3s;*/
@@ -273,6 +271,7 @@ body {
     display: flex;
     box-sizing: border-box;
     padding: 0 .5rem;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.20);
 }
 .chat-window {
     min-width: 290px;
@@ -282,17 +281,18 @@ body {
     right: 20px;
     background-color: #f7f7ff;
     border-radius: 5px;
-    box-shadow: 1px 3px 8px 0px rgba(90, 84, 133,0.2); 
     z-index: 11;
     display: flex;
     flex-direction: column;
     visibility: visible;
     opacity: 1;
     overflow: hidden;
+    transition: all 0.3s ease-in-out;
 }
 .chat-window.chat-window--painting {
     width: 610px;
     height: 460px;
+    transition: all 0.3s;
 }
 .chat-window__chat {
     width: 290px;
@@ -313,11 +313,10 @@ body {
     height: 420px;
 }
 .chat-window.hidden {
-    display: none;
     visibility: hidden;
-    opacity: 0.5;
-    /*height: 0;
-    width: 0;*/
+    opacity: 0.9;
+    height: 0;
+    width: 0;
     transition: all 0.25s ease-in-out;
 }
 .uncle-icon {
@@ -365,9 +364,11 @@ body {
     z-index: 11;
 }
 .chat-form {
-    width: 100%;
+    width: 290px;
     box-sizing: border-box;
+    position: absolute;
     bottom: 0;
+    right: 0;
     background-color: #ffdafa;
     padding: 1rem 1rem .5rem 1rem;
     display: flex;
@@ -433,12 +434,13 @@ body {
 .panel-container {
     width: 0;
     visibility: hidden;
-    opacity: 0;
 	/*border-left: 2px solid #9999ff;*/
 	background-color: white;
 	text-align:center;
 	height: 420px;
     position: relative;
+    transition: all 1s;
+    z-index: 1;
 }
 .panel-container--painting {
     width: 320px;
@@ -447,7 +449,9 @@ body {
     display: flex;
     height: 420px;
     overflow: hidden;
+    transition: all 1s;
     background-color: transparent;
+    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.20); 
 }
 #panel {
     background-color:transparent;
@@ -468,6 +472,7 @@ body {
 .panel-container--painting .options__container {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 .options__container {
     position: absolute; 
@@ -475,23 +480,24 @@ body {
     right: 0;
 	opacity:1;
 	z-index: 100;
-	background-color: white;
-    box-shadow: 0px -3px 5px 0px rgba(0,0,0,0.14); 
+	background-color: #fefefe;
+    box-shadow: 0px -2px 8px 0px rgba(0,0,0,0.20); 
 	text-align:center;
 	height: 420px;
     width: 40px;
 }
 .options__color {
-	width: 18px;
-	height: 18px;
-	border: 2px solid black;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #fefefe;
 	border-radius: 100%;
-	margin: 3px auto;
+	margin: 2px 0;
 	transition: all .2s;
 	cursor:pointer;
 }
 .options__size {
 	border: 2px solid black;
+    background-color: #fff;
 	border-radius: 100%;
 	margin:4px auto;
 	transition: all .2s;
@@ -504,28 +510,28 @@ body {
 	background-color:white;
 }
 .options__color--orange {
-	background-color:orange;
+	background-color:#ff9933;
 }
 .options__color--yellow {
-	background-color:yellow;
+	background-color:#fbf335;
 }
 .options__color--green {
-	background-color:green;
+	background-color:#00cc66;
 }
 .options__color--red {
-	background-color:red;
+	background-color:#fb4754;
 }
 .options__color--purple {
-	background-color:purple;
+	background-color:#9933ff;
 }
 .options__color--blue {
-	background-color:blue;
+	background-color:#3366ff;
 }
 .options__color--black {
 	background-color:black;
 }
 .options__color--active {
-	border:2px solid white;
+	border:2px solid #000;
 }
 .options__color--white.options__color--active {
 	border:2px solid #ccc;
@@ -571,14 +577,6 @@ body {
     margin: 6px 0px;
     cursor:pointer;
 }
-
-
-
-
-
-
-
-
 
 
 .chat-form__input:focus {
