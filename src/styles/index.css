@@ -153,7 +153,7 @@ body {
 }
 .client-messages__image {
     max-width: 100%;
-    max-height: 200px;
+    /*max-height: 200px;*/
 }
 
 .client-messages__item, .client-messages__item--isTyping {
@@ -287,7 +287,6 @@ body {
     display: flex;
     flex-direction: column;
     visibility: visible;
-    transition: all 0.2s ease-in-out;
     opacity: 1;
     overflow: hidden;
 }
@@ -434,13 +433,12 @@ body {
 .panel-container {
     width: 0;
     visibility: hidden;
+    opacity: 0;
 	/*border-left: 2px solid #9999ff;*/
 	background-color: white;
 	text-align:center;
 	height: 420px;
-    transition: all 0.3s;
     position: relative;
-    display: none;
 }
 .panel-container--painting {
     width: 320px;
@@ -453,7 +451,8 @@ body {
 }
 #panel {
     background-color:transparent;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
 }
 .panel-container--painting #panel {
     /*position: absolute;*/
@@ -463,6 +462,7 @@ body {
 	height: 420px;
 	background-color:white;
 	cursor:crosshair;
+    visibility: visible;
 	opacity: 1;
 }
 .panel-container--painting .options__container {

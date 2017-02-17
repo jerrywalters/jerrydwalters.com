@@ -79,39 +79,73 @@ export default class Chat extends Component {
       'uncle-status--online' : isUncleOnline,
       'uncle-status--offline' : !isUncleOnline
     })
-    
-    return (
-      <div className={chatClasses}>
-        <header className="chat-header--client">
-            <div className="uncle-icon"></div>
-            <h3 className="uncle-name">Uncle Jerry</h3>
-            <span className={statusClasses}></span>
-        </header> 
-        <div className="chat-window__content">
-          <Panel />
-          <div className="chat-window__chat">
-            <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
-            <form className="chat-form chat-form--client">
-              <div contentEditable="true" 
-                  placeholder="message uncle" 
-                  className="chat-form__input" 
-                  id="chat__input" 
-                  onKeyDown={(e) => this.handleTyping(e)}
-                  onKeyPress={() => isClientTyping()}>
-              </div>
-              <div className="chat-form__paint" onClick={() => togglePainting()}>
-              paint 
-              </div>
-              <div className="chat-form__attachment" onClick={() => attachImage()}>attach</div>
-              <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
-              <input className="chat-form__submit" 
-                    type="submit" 
-                    onClick={ (e) => this.submitByIcon(e)}>
-            </input>
-            </form>
+    if(!isPainting) {
+      return ( 
+        <div className={chatClasses}>
+          <header className="chat-header--client">
+              <div className="uncle-icon"></div>
+              <h3 className="uncle-name">Uncle Jerry</h3>
+              <span className={statusClasses}></span>
+          </header> 
+          <div className="chat-window__content">
+            <div className="chat-window__chat">
+              <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
+              <form className="chat-form chat-form--client">
+                <div contentEditable="true" 
+                    placeholder="message uncle" 
+                    className="chat-form__input" 
+                    id="chat__input" 
+                    onKeyDown={(e) => this.handleTyping(e)}
+                    onKeyPress={() => isClientTyping()}>
+                </div>
+                <div className="chat-form__paint" onClick={() => togglePainting()}>
+                paint 
+                </div>
+                <div className="chat-form__attachment" onClick={() => attachImage()}>attach</div>
+                <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
+                <input className="chat-form__submit" 
+                      type="submit" 
+                      onClick={ (e) => this.submitByIcon(e)}>
+              </input>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    } else if(isPainting) {
+        return (
+          <div className={chatClasses}>
+            <header className="chat-header--client">
+                <div className="uncle-icon"></div>
+                <h3 className="uncle-name">Uncle Jerry</h3>
+                <span className={statusClasses}></span>
+            </header> 
+            <div className="chat-window__content">
+              <Panel />
+              <div className="chat-window__chat">
+                <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
+                <form className="chat-form chat-form--client">
+                  <div contentEditable="true" 
+                      placeholder="message uncle" 
+                      className="chat-form__input" 
+                      id="chat__input" 
+                      onKeyDown={(e) => this.handleTyping(e)}
+                      onKeyPress={() => isClientTyping()}>
+                  </div>
+                  <div className="chat-form__paint" onClick={() => togglePainting()}>
+                  paint 
+                  </div>
+                  <div className="chat-form__attachment" onClick={() => attachImage()}>attach</div>
+                  <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
+                  <input className="chat-form__submit" 
+                        type="submit" 
+                        onClick={ (e) => this.submitByIcon(e)}>
+                </input>
+                </form>
+              </div>
+            </div>
+          </div>
+        )
+    }
   }
 }
