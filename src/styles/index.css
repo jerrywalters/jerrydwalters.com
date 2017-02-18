@@ -80,7 +80,7 @@ body {
 
 @keyframes gentle {
     from { transform: translate(0, 0) rotate(0deg) }
-    50% { transform: translate(4px, 22px) rotate(-68deg) }
+    50% { transform: translate(4px, 22px) rotate(-51deg) }
     to { transform: translate(0, 0) rotate(0deg) }
 }
 

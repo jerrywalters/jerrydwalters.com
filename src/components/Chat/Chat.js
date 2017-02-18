@@ -34,7 +34,7 @@ export default class Chat extends Component {
     // and it can't be mounted on initial render
     if(!isPainting) {
       return (
-        <div className={chatClasses}>
+        <div id="chat-window" className={chatClasses}>
           <header className="chat-header--client">
               <div className="uncle-icon"></div>
               <h3 className="uncle-name">Uncle Jerry</h3>

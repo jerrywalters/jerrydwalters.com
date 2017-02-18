@@ -7,7 +7,7 @@ import squiggleBlue from './shapes/squiggle-blue.svg';
 import squigglePurple from './shapes/squiggle-purple.svg';
 
 const Background = () => {
-  const shapeImgs = [circleBlue, zigzagBlue, squiggleBlue];
+  const shapeImgs = [circleBlue, zigzagBlue, squiggleBlue, circlePurple, zigzagPurple, squigglePurple];
   let shapes = [];
   let randomShape = shapeImgs[Math.floor(Math.random()*shapeImgs.length)];
 
@@ -81,7 +81,7 @@ const Background = () => {
 
 
   return (
-    <div className="shapes-container">
+    <div id="shapes-container" className="shapes-container">
       {generatedShapes}
     </div>
   )

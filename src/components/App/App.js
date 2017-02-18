@@ -17,6 +17,14 @@ function backHome() {
 class App extends Component {
   componentDidMount() {
     document.addEventListener("click", backHome);
+    const background = document.getElementById('shapes-container');
+    background.style.opacity = 0;
+    window.requestAnimationFrame(function() {
+      // Now set a transition on the opacity
+      background.style.transition = "opacity 3s";
+      // and set the opacity to 1
+      background.style.opacity = 1;
+    });
   }
 
   render(props) {
