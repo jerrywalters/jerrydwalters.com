@@ -46,13 +46,13 @@ const Background = () => {
           transform: `rotate(${getRandomInt(0, 360)}deg)`,
           // color: "#"+((1<<24)*Math.random()|0).toString(16),
           // fucking lol at me being too lazy to just not make another function 
-          opacity: `0.${getRandomInt(15, 80)}`
+          opacity: `0.${getRandomInt(15, 70)}`
         }
       shapes.push(newShape)
     }
   }
 
-  const shapeClasses = [ 'shape1', 'shape2', 'shape3' ];
+  const shapeClasses = [ 'shape1', 'shape2', 'shape3', 'shape4', 'shape5', 'shape6' ];
 
   generateShapes();
 
