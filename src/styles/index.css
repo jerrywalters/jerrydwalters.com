@@ -297,7 +297,7 @@ body {
     min-width: 290px;
     height: 400px;
     position: absolute;
-    bottom: 50px;
+    bottom: 80px;
     right: 20px;
     background-color: #f7f7ff;
     border-radius: 5px;
@@ -307,7 +307,7 @@ body {
     visibility: visible;
     opacity: 1;
     overflow: hidden;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 .chat-window.chat-window--painting {
     width: 610px;
@@ -373,15 +373,41 @@ body {
 }
 .chat-button {
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     bottom: 20px;
     right: 20px;
     content: 'open';
-    height: 20px;
-    width: 20px;
-    background-color: blue;
-    border-radius: 10px;
+    height: 50px;
+    width: 50px;
+    background-color: #e1f1ff;
+    border-radius: 50%;
     cursor: pointer;
     z-index: 11;
+}
+.chat-button:hover {
+    box-shadow: 0 0 10px 1px #fff;
+}
+.chat-icon {
+    font-size: 1.7em;
+    font-weight: 100;
+    transform: translate(-50%,-50%) rotate(0deg);
+    transition: all 0.3s;
+}
+.fa-comment {
+    transform: rotateY(180deg);
+    animation: spin 4s linear infinite;
+    color: #9e66ff;
+}
+.fa-times {
+    transform: rotate(360deg);
+    transition: all 0.3s;
+    color: #300065;
+}
+@keyframes spin {
+    from {transform:rotateY(180deg);}
+    to {transform:rotateY(540deg);}
 }
 .chat-form {
     width: 290px;
@@ -556,11 +582,13 @@ body {
 	background-color:black;
 }
 .options__color--active {
-	border:2px solid #000;
+	/*border:2px solid #000;*/
+    box-shadow: 0 0 6px 1px rgba(0,0,0,0.5);
 }
 .options__color--white.options__color--active {
 	border:2px solid #fefefe;
     color: #bbb;
+    box-shadow: none;
 }
 .options__size--five {
 	margin-top:14px;

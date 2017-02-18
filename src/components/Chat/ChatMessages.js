@@ -7,12 +7,17 @@ const ChatMessages = ({messages, uncleIsTyping}) => {
     'client-messages__item--notTyping' :  !uncleIsTyping
   })  
 
+  function openImageNewTab(url){
+    var win = window.open(url, '_blank');
+    win.focus();
+  }
+
   const messageList = messages.map(
     (message, index) => {
       if (message.message.startsWith('data:')){
         return (
           <li key={index} className={`client-messages__item client-messages__item--${message.author}`}>
-            <img className="client-messages__image" onDoubleClick={() => this.imageNewWindow(message.message)} src={message.message} />
+            <img className="client-messages__image" onDoubleClick={() => openImageNewTab(message.message)} src={message.message} />
           </li>
         )
       } return (
