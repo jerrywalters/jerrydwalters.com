@@ -70,7 +70,7 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
           <div className="chat-form__icon" onClick={() => togglePainting()}>
           <i className={paintingIconClasses} aria-hidden="true"></i> 
           </div>
-          <label for="chat-form__file" className="chat-form__icon">
+          <label className="chat-form__icon">
             <i className="fa fa-paperclip" aria-hidden="true"></i>
             <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
           </label>

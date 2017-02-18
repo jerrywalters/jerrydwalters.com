@@ -74,18 +74,6 @@ body {
     position: absolute;
 }
 
-/* dots */
-.circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    top: 150px;
-    right: 400px;
-    background-color: limegreen;
-    position: absolute;
-    /*animation: dot1 5s alternate ease-in-out infinite;*/
-}
-
 .shape1 {
     animation: gentle 12s ease-in-out 500ms infinite;
 }
@@ -602,7 +590,7 @@ body {
 
 .options__file-container {
 	position:relative;
-    margin-top: .8rem;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
 
