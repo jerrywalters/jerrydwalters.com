@@ -15,18 +15,10 @@ const config = {
 firebase.initializeApp(config);
 const db = firebase.database();
 
+// generate a name for this fucker
+const name = fullName();
+console.log('name',name)
 let userId = getUserId();
-checkOnline(userId);
-
-function checkOnline(conversationId) {
-  let convoRef = db.ref(`conversations/${conversationId}`);
-  convoRef.update({
-    isNephewOnline: true
-  })
-  convoRef.onDisconnect().update({
-    isNephewOnline: false
-  });
-}
 
 db.ref(`conversations/${userId}`).on('value', function(data) {
   const conversationId = data.val().conversationId;
@@ -42,17 +34,30 @@ db.ref(`conversations/${userId}`).on('value', function(data) {
   store.dispatch(updateConversation(conversation));
 });
 
-// function setUncleOnline(data) {
-//   const conversation = data.val();
-//   console.log('convooo', conversation);
-//   let isUncleOnline = conversation.isUncleOnline;
-//   let uncleIsTyping = conversation.uncleIsTyping;
-//   console.log('conversation', conversation);
-//   store.dispatch(updateConversation(isUncleOnline, uncleIsTyping));
-// }
+db.ref('messages')
+  .orderByChild('conversationId')
+  .equalTo(userId)
+  .on('child_added', function(data) {
+    const message = data.val();
+    let convoRef = db.ref('conversations/' + userId);
+    convoRef.update({
+      lastChat: Date.now()
+    })
+    store.dispatch(addMessageToConversation(message));
 
+   });
 
+checkOnline(userId);
 
+function checkOnline(conversationId) {
+  let convoRef = db.ref(`conversations/${conversationId}`);
+  convoRef.update({
+    isNephewOnline: true
+  })
+  convoRef.onDisconnect().update({
+    isNephewOnline: false
+  });
+}
 
 // db.ref('conversations')
 //   .on('child_added', function(data) {
@@ -68,9 +73,6 @@ function uid(){
   });
 }
 
-// generate a name for this fucker
-const name = fullName();
-
 export function getUserId(){
   let userId = '';
   // get and or set user
@@ -80,6 +82,7 @@ export function getUserId(){
       conversationId: userId,
     });
   } else {
+    console.log('user doesnt exist')
     userId = uid();
     localStorage.user = userId;
     db.ref(`conversations/${userId}`).update({
@@ -100,18 +103,5 @@ export function getUserId(){
 
 // set isUncleOnline state whenever it changes in db
 
-
-db.ref('messages')
-  .orderByChild('conversationId')
-  .equalTo(userId)
-  .on('child_added', function(data) {
-    const message = data.val();
-    let convoRef = db.ref('conversations/' + userId);
-    convoRef.update({
-      lastChat: Date.now()
-    })
-    store.dispatch(addMessageToConversation(message));
-
-   });
 
 export default db;

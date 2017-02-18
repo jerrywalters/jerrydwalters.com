@@ -1,0 +1,5 @@
+jerrydwalters:
+  build: .
+  container_name: www.jerrydwalters.com
+  ports:
+    - "3000:3000"
