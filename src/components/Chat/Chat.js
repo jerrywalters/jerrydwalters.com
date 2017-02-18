@@ -29,43 +29,21 @@ export default class Chat extends Component {
       'uncle-status--offline' : !isUncleOnline
     })
 
-    // if state isPainting is false, then don't even render the Panel
-    // this is because I need to getBoundingRect of the canvas only once when its mounted
-    // and it can't be mounted on initial render
-    if(!isPainting) {
-      return (
-        <div id="chat-window" className={chatClasses}>
-          <header className="chat-header--client">
-              <div className="uncle-icon"></div>
-              <h3 className="uncle-name">Uncle Jerry</h3>
-              <span className={statusClasses}></span>
-          </header> 
-          <div className="chat-window__content">
-            <div className="chat-window__chat">
-              <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
-              <ChatForm sendMessage={sendMessage} togglePainting={togglePainting} isPainting={isPainting} updateIsTyping={updateIsTyping} />
-            </div>
+    return (
+      <div className={chatClasses}>
+        <header className="chat-header--client">
+            <div className="uncle-icon"></div>
+            <h3 className="uncle-name">Uncle Jerry</h3>
+            <span className={statusClasses}></span>
+        </header> 
+        <div className="chat-window__content">
+          { isPainting ? <Panel/> : ''}
+          <div className="chat-window__chat">
+            <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
+            <ChatForm sendMessage={sendMessage} togglePainting={togglePainting} isPainting={isPainting} updateIsTyping={updateIsTyping} />
           </div>
         </div>
-      )
-      // otherwise, render this bad boy with the Panel in it.
-    } else if (isPainting) {
-        return (
-          <div className={chatClasses}>
-            <header className="chat-header--client">
-                <div className="uncle-icon"></div>
-                <h3 className="uncle-name">Uncle Jerry</h3>
-                <span className={statusClasses}></span>
-            </header> 
-            <div className="chat-window__content">
-              <Panel />
-              <div className="chat-window__chat">
-                <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
-                <ChatForm sendMessage={sendMessage} togglePainting={togglePainting} isPainting={isPainting} updateIsTyping={updateIsTyping} />
-              </div>
-            </div>
-          </div>
-        )
-      }
+      </div>
+    )
   }
 }
