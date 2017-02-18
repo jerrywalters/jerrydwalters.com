@@ -93,6 +93,9 @@ export function initPainting() {
 
     ctx.lineTo(mouseX, mouseY);
     ctx.stroke();
+    
+    // Don't open projects if youo accidentally click them under your canvas
+    e.stopPropagation();
   });
 
 
@@ -102,6 +105,8 @@ export function initPainting() {
 
   canvas.addEventListener('mouseup', function(e){
     isMouseDown = false;
+    // Don't open projects if youo accidentally click them under your canvas
+    e.stopPropagation();
   });
 
   function initOptions(){

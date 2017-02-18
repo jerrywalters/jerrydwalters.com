@@ -307,7 +307,7 @@ body {
     flex-direction: row;
     height: 360px;
     max-height: 420px;
-    justify-content: flex-end;
+    /*justify-content: flex-end;*/
 }
 .chat-window--painting .chat-window__content {
     height: 420px;
@@ -413,6 +413,9 @@ body {
     border: 0;
     width:18px;
 	opacity:0;
+}
+.chat-form__file:hover {
+    cursor: pointer;
 }
 .chat-form__submit {
     position: absolute;
