@@ -96,8 +96,10 @@ class Panel extends Component {
               <div className="options__size options__size--ten" id="options__size--ten"></div>
               <div className="options__size options__size--twenty" id="options__size--twenty"></div>
               <div className="options__file-container">
-                <div className="options__attachment"><i className="fa fa-paperclip" aria-hidden="true"></i></div>
-                <input className="options__file" id="options__file" onChange={() => handleImageFile()} type="file"></input>
+                <label for="options__file" className="options__attachment">
+                  <i className="fa fa-paperclip" aria-hidden="true"></i>
+                  <input className="options__file" id="options__file" onChange={() => handleImageFile()} type="file"></input>
+                </label>
               </div>
               <div className="options__send" onClick={() => submitImage()}><i className="fa fa-paper-plane-o" aria-hidden="true"></i></div>
               <div className="options__clear" id="options__clear">clear</div>

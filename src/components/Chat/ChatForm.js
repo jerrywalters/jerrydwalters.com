@@ -66,15 +66,19 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
             onKeyDown={(e) => handleTyping(e)}
             onKeyPress={() => isClientTyping()}>
         </div>
-        <div className="chat-form__icon" onClick={() => togglePainting()}>
-        <i className={paintingIconClasses} aria-hidden="true"></i> 
-        </div>
-        <div className="chat-form__icon" onClick={() => attachImage()}><i className="fa fa-paperclip" aria-hidden="true"></i></div>
-        <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
-        <div className="chat-form__icon" 
-                type="submit" 
-                onClick={ (e) => submitByIcon(e)}>
-                <i className="fa fa-paper-plane-o" aria-hidden="true"></i>
+        <div className="chat-form__actions">
+          <div className="chat-form__icon" onClick={() => togglePainting()}>
+          <i className={paintingIconClasses} aria-hidden="true"></i> 
+          </div>
+          <label for="chat-form__file" className="chat-form__icon">
+            <i className="fa fa-paperclip" aria-hidden="true"></i>
+            <input className="chat-form__file" id="chat-form__file" onChange={() => attachImage()} type="file"></input>
+          </label>
+          <div className="chat-form__icon" 
+                  type="submit" 
+                  onClick={ (e) => submitByIcon(e)}>
+                  <i className="fa fa-paper-plane-o" aria-hidden="true"></i>
+          </div>
         </div>
     </form>
   )

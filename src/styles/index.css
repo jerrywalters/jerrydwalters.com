@@ -590,7 +590,9 @@ body {
     cursor:pointer;
 }
 
-
+input[type="file"] {
+    display: none;
+}
 .chat-form__input:focus {
     outline: none;
 }
@@ -600,6 +602,11 @@ body {
     border-bottom-right-radius: 5px;
     padding: .6rem .8rem .6rem 1rem;
     font-size: .85em;
+}
+.chat-form__actions {
+    display: flex;
+    align-items: flex-end;
+    border-left: 1px solid #9e66ff;
 }
 
 /* Projects */
