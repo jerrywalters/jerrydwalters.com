@@ -1,7 +1,9 @@
 const initialState = {
   portfolio: {
     currentProject: {
-      images: []
+      images: [],
+      links: [],
+      technology: []
   }
   },
   chat: {

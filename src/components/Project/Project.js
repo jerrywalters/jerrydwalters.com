@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import classNames from 'classnames';
-import dickPic from '../../images/dickpic.png';
 
-import { projects } from '../../projects.js';
+// import { projects } from '../../projects.js';
 
 class Project extends Component {
 	constructor(props){
@@ -13,17 +12,19 @@ class Project extends Component {
   render() {
     const { location } = this.props;
     console.log('current project', this.props)
-    const { name, links, description, images } = this.props.project;
+    const { name, links, description, images, technology } = this.props.project;
     const projectClasses = classNames({
 			'project-single': true,
 			'slide-in' : location.pathname===`/project/${name}`
 	  });
-    let projectImages = images.map((img, index) => {
-      // let imgClass = classNames({
-      //   'project-images__single' : true
-      // });
+
+    let projectImages = images.map((img, index) => <img key={index} className="project-images__single" src={img} /> );
+
+    let projectLinks = links.map((link, index) => <a key={index} className="project-about__link" href={link}>{link}</a>);
+
+    let projectTech = technology.map((tech, index) => {
       return (
-        <img key={index} className="project-images__single" src={img} />
+        <li key={ index } className="project-tech__item"><a className="project-tech__link" target="_blank" href={tech.link}>{ tech.name }</a></li>
       )
     });
 
@@ -31,11 +32,13 @@ class Project extends Component {
       <div className={projectClasses}>
         <section className="project-about">
           <h2 className="project-about__heading--primary">{name}</h2>
-          <a className="project-about__link" href={links}>{links}</a>
+          { projectLinks }
           <h3 className="project-about__heading--secondary">Technology</h3>
-          <p className="project-about__body">used some sicc tech brah</p>
+          <ul className="project-tech">
+            { projectTech }
+          </ul>
           <h3 className="project-about__heading--secondary">Description</h3>
-          <p className="project-about__body">this project was fucking lame</p>
+          <p className="project-about__body">{ description }</p>
         </section>
         <section className="project-images">
           { projectImages }

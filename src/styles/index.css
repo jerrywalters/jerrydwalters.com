@@ -656,10 +656,10 @@ input[type="file"] {
 
 /* Projects */
 .project-single {
-	background-color: blue;
+	background-color: #fff;
 	height: 100px;
 	color: #fff;
-	opacity: .9;
+	/*opacity: .95;*/
 	z-index: 99;
 	position: absolute;
 	top: 0;
@@ -684,9 +684,16 @@ input[type="file"] {
 	margin-bottom: 10%;
 }
 .project-about {
+    color: #140026;
 	padding: 3%;
 	width: 35%;
-	background-color: salmon;
+	background-color: #ffc6ca;
+    font-family: Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+.project-about__link {
+    text-decoration: none;
 }
 .slide-in {
 	-ms-transform: translateX(9%);

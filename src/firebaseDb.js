@@ -82,7 +82,6 @@ export function getUserId(){
       conversationId: userId,
     });
   } else {
-    console.log('user doesnt exist')
     userId = uid();
     localStorage.user = userId;
     db.ref(`conversations/${userId}`).update({

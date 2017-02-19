@@ -8,10 +8,20 @@ import peach from './images/peach-blue.png'
 export const projects = [
 	{
 		name: 'portfolio-admin',
-		links: 'www.github.com/jerrywalters',
+		links: [
+			'github.com/jerrywalters',
+			'admin.jerrydwalters.com'
+		],
 		description: 'HEY HEY HEY MILORD HERE IS A GOD DAMN DESCRIPTION!',
+		technology: [
+			{
+				name: 'React',
+				link: 'https://facebook.github.io/react/'
+			}
+		],
 		images: [
 				dickPic, admin, blueberry, lemon, peach
-		]
+		],
+		backgroundColor: '#ffd8e6'
 	}
 ]
