@@ -7,11 +7,20 @@ import classNames from 'classnames';
 class Project extends Component {
 	constructor(props){
     super(props);
+    console.log('my props!',this.props)
+  }
+
+  componentDidUpdate() {
+    
   }
 
   componentDidMount() {
-    let location = this.props.location.pathname
-    // this.props.openProject('portfolio-admin');
+    // let location = this.props.location.pathname
+    // location.pathname===`/project/${name}` ? this.props.openProject(name)
+    if(typeof this.props.params.projectName !== 'undefined' && typeof this.props.project.name === 'undefined'){
+      this.props.openProject(this.props.params.projectName);
+      console.log('opening bad boy')
+    }
   }
 
   render() {
@@ -20,7 +29,6 @@ class Project extends Component {
 
     const projectClasses = classNames({
 			'project-single': true,
-			'slide-in' : location.pathname===`/project/${name}`
 	  });
 
     let projectImages = images.map((img, index) => <img key={index} className="project-images__single" src={img} /> );

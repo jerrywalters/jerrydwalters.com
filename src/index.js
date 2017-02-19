@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from './store'
 import { Router, Route, browserHistory, IndexRoute, IndexRedirect, location } from 'react-router';
@@ -12,19 +12,22 @@ import Project from './components/Project/ProjectContainer'
 const store = configureStore();
 const mountApp = document.getElementById('root');
 
+const MockIndex = () => {
+  return <div></div>
+}
+
 window.store = store;
 window.browserHistory = browserHistory;
 window.projects = projects;
 
-render(
+ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
-      <IndexRoute component={App}/>
-        <Route path='project/:projectName' component={App} />
+        <IndexRoute component={MockIndex}/>
+        <Route path='project/:projectName' component={Project} />
       </Route>
-      <Route path='*' component={App} onEnter={browserHistory.push('/')} />
-      <Route path='/project/*' component={App} />
+      <Route path='*' component={App} />
     </Router>
   </Provider>,
   mountApp

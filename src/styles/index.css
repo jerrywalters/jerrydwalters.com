@@ -663,14 +663,31 @@ input[type="file"] {
 	z-index: 99;
 	position: absolute;
 	top: 0;
-	-ms-transform: translateX(calc(200%)); 
-    -webkit-transform: translateX(calc(200%])); 
-	transform: translateX(calc(200%));
-	transition: 0.5s;
 	width: 92%;
 	height: 100vh;
 	display: flex;
+    transform: translateX(9%);
 }
+
+.pageSlider-leave {
+  transform: translateX(9%);
+}
+
+.pageSlider-leave.pageSlider-leave-active {
+  transform: translate3d(110%, 0, 0);
+  transition: all 500ms;
+}
+
+.pageSlider-enter {
+  transform: translateX(110%);
+}
+
+.pageSlider-enter.pageSlider-enter-active {
+  transform: translateX(9%);
+  transition: all 500ms;
+}
+
+
 .project-single::before {
     content: '';
 }
@@ -727,12 +744,8 @@ input[type="file"] {
 .project-about__link:hover {
     color: #9e66ff;
 }
-.slide-in {
-	-ms-transform: translateX(9%);
-	-webkit-transform: translateX(9%); 
-	transform: translateX(9%);
-    transition: 0.5s;
-}
+
+
 .project-tech {
     display: flex;
     flex-direction: row;

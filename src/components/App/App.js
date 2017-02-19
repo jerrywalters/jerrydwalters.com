@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import '../../styles/App.css';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Header from '../Header/Header';
 import ChatButton from '../Chat/ChatButtonContainer';
@@ -28,13 +29,23 @@ class App extends Component {
   }
 
   render(props) {
-    console.log('location: ', this.props.location);
+    const children = this.props.children;
+    let path = this.props.location.pathname;
+    let segment = path.split('/')[2] || 'root';
     return (
       <div className="app">
         <Header location={this.props.location} />
         <ChatContainer />
         <ChatButton />
-        <Project location={this.props.location} />
+        <ReactCSSTransitionGroup
+          transitionName="pageSlider"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+        >
+          { React.cloneElement(children, {
+            key: segment
+          }) }
+        </ReactCSSTransitionGroup>    
         <Background />
       </div>
     );
