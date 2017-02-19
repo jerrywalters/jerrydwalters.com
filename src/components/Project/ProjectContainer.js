@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import Project from './Project';
 
+import { openProject } from '../../actions';
+
 const mapStateToProps = (state) => {
   return {
     project: state.portfolio.currentProject,
@@ -9,6 +11,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    openProject: (project) => {
+      dispatch(openProject(project));
+    },
   };
 };
 

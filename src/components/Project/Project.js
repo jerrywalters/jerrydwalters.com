@@ -9,10 +9,14 @@ class Project extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.openProject('portfolio-admin');
+  }
+
   render() {
     const { location } = this.props;
-    console.log('current project', this.props)
-    const { name, links, description, images, technology } = this.props.project;
+    const { name, links, description, images, technology, backgroundColor } = this.props.project;
+
     const projectClasses = classNames({
 			'project-single': true,
 			'slide-in' : location.pathname===`/project/${name}`
@@ -20,7 +24,7 @@ class Project extends Component {
 
     let projectImages = images.map((img, index) => <img key={index} className="project-images__single" src={img} /> );
 
-    let projectLinks = links.map((link, index) => <a key={index} className="project-about__link" href={link}>{link}</a>);
+    let projectLinks = links.map((link, index) => <a key={index} className="project-about__link" href={link} target="_blank">{link}</a>);
 
     let projectTech = technology.map((tech, index) => {
       return (
@@ -30,13 +34,14 @@ class Project extends Component {
 
     return (
       <div className={projectClasses}>
-        <section className="project-about">
+        <section className="project-about" style={{backgroundColor: backgroundColor}}>
           <h2 className="project-about__heading--primary">{name}</h2>
           <p className="project-about__body">{ description }</p>
-          <h3 className="project-about__heading--secondary">Technology:</h3>
+          <h3 className="project-about__heading--secondary">technology</h3>
           <ul className="project-tech">
             { projectTech }
           </ul>
+          <h3 className="project-about__heading--secondary">links</h3>
           { projectLinks }
         </section>
         <section className="project-images">

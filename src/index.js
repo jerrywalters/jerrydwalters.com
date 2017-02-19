@@ -7,6 +7,7 @@ import './styles/index.css';
 import { projects } from './projects'; 
 
 import App from './components/App/App';
+import Project from './components/Project/ProjectContainer'
 
 const store = configureStore();
 const mountApp = document.getElementById('root');

@@ -7,7 +7,16 @@ export const TOGGLE_CHAT = 'TOGGLE_CHAT';
 export const TOGGLE_PAINTING = 'TOGGLE_PAINTING';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const UPDATE_IS_TYPING = 'UPDATE_IS_TYPING';
+export const OPEN_PROJECT = 'OPEN_PROJECT';
 
+export function openProject(projectName) {
+  window.browserHistory.push(`/project/${projectName}`)
+  let projects = window.projects;
+  return {
+    type: OPEN_PROJECT,
+    project: projects[projects.findIndex(project => project.name === projectName)]
+  }
+}
 
 export function addMessageToConversation(message){
   return {
