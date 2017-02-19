@@ -32,13 +32,12 @@ class Project extends Component {
       <div className={projectClasses}>
         <section className="project-about">
           <h2 className="project-about__heading--primary">{name}</h2>
-          { projectLinks }
-          <h3 className="project-about__heading--secondary">Technology</h3>
+          <p className="project-about__body">{ description }</p>
+          <h3 className="project-about__heading--secondary">Technology:</h3>
           <ul className="project-tech">
             { projectTech }
           </ul>
-          <h3 className="project-about__heading--secondary">Description</h3>
-          <p className="project-about__body">{ description }</p>
+          { projectLinks }
         </section>
         <section className="project-images">
           { projectImages }

@@ -691,15 +691,54 @@ input[type="file"] {
     font-family: Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+}
+.project-about__heading--primary {
+    margin-bottom: 2rem;
+    font-size: 1.5em;
+    font-weight: 200;
+}
+.project-about__heading--secondary {
+    font-size: 1.1em;
+    font-weight: 200;
+    margin-bottom: 1rem;
+}
+.project-about__body {
+    font-size: .95em;
+    line-height: 1.3em;
+    margin-bottom: 1rem;
+    font-weight: 200;
 }
 .project-about__link {
     text-decoration: none;
+    margin-bottom: .5rem;
+    font-weight: 300;
+    color: #3366ff;
 }
 .slide-in {
 	-ms-transform: translateX(9%);
 	-webkit-transform: translateX(9%); 
 	transform: translateX(9%);
     transition: 0.5s;
+}
+.project-tech {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+.project-tech__item {
+    margin-left: .5rem;
+}
+.project-tech__link {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    border: 1px solid #000;
+    border-radius: 3px;
+    background-color: #fff;
+    font-size: .95em;
+    font-weight: 200;
+    padding: .3rem .5rem;
 }
 
 /* Header */
@@ -708,7 +747,7 @@ input[type="file"] {
 	background-color: #e1f1ff;
 	height: 300px;
 	color: #0c1d00;
-	opacity: 0.95;
+	/*opacity: 0.95;*/
 	z-index: 9;
 	position: relative;
 	-ms-transform: translateY(calc(-100%)); /* IE 9 */
