@@ -7,6 +7,7 @@ const portfolioReducer = (state = {}, action) => {
       return Object.assign({}, state, {
         currentProject: action.project
       });
+    // probably get rid of this
     case  INIT_BACKGROUND:
       return Object.assign({}, state, {
         shapesGenerated: true

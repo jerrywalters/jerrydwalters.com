@@ -5,7 +5,6 @@ import zigzagBlue from './shapes/zigzag-blue.svg';
 import zigzagPurple from './shapes/zigzag-purple.svg';
 import squiggleBlue from './shapes/squiggle-blue.svg';
 import squigglePurple from './shapes/squiggle-purple.svg';
-// import { generateShapes } from './generateShapes'
 
 const Shapes = () => {
     let shapes = [];
@@ -28,7 +27,7 @@ const Shapes = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
-      for(let i = 0; i <= 90; i++) {
+      for(let i = 0; i <= 100; i++) {
         let newShape =       
         {
             height: getRandomInt(10, 30),
@@ -36,7 +35,6 @@ const Shapes = () => {
             posX: getRandomInt(1, windowWidth),
             posY: getRandomInt(1, windowHeight),
             transform: `rotate(${getRandomInt(0, 360)}deg)`,
-            // color: "#"+((1<<24)*Math.random()|0).toString(16),
             // fucking lol at me being too lazy to just not make another function 
             opacity: `0.${getRandomInt(15, 70)}`
         }

@@ -19,6 +19,7 @@ export function openProject(projectName) {
   }
 }
 
+// probably get rid of this 
 export function initBackground() {
   return {
     type: INIT_BACKGROUND

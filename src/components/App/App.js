@@ -6,7 +6,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Header from '../Header/Header';
 import ChatButton from '../Chat/ChatButtonContainer';
 import ChatContainer from '../Chat/ChatContainer';
-// import Project from '../Project/ProjectContainer';
+
 import Background from '../Background/BackgroundContainer';
 
 function backHome() {

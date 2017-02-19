@@ -5,7 +5,8 @@ const initialState = {
       links: [],
       technology: []
     },
-    shapesGenerated: false
+    // probably get rid of this
+    // shapesGenerated: false
   },
   chat: {
     isChatOpen: false,
