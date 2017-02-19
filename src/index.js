@@ -19,8 +19,12 @@ window.projects = projects;
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path='/' component={App} />
-      <Route path='project/:projectName' component={App} />
+      <Route path='/' component={App}>
+      <IndexRoute component={App}/>
+        <Route path='project/:projectName' component={App} />
+      </Route>
+      <Route path='*' component={App} onEnter={browserHistory.push('/')} />
+      <Route path='/project/*' component={App} />
     </Router>
   </Provider>,
   mountApp

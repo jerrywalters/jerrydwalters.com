@@ -10,7 +10,8 @@ class Project extends Component {
   }
 
   componentDidMount() {
-    this.props.openProject('portfolio-admin');
+    let location = this.props.location.pathname
+    // this.props.openProject('portfolio-admin');
   }
 
   render() {
