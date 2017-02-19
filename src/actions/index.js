@@ -8,6 +8,7 @@ export const TOGGLE_PAINTING = 'TOGGLE_PAINTING';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const UPDATE_IS_TYPING = 'UPDATE_IS_TYPING';
 export const OPEN_PROJECT = 'OPEN_PROJECT';
+export const INIT_BACKGROUND = 'INIT_BACKGROUND';
 
 export function openProject(projectName) {
   window.browserHistory.push(`/project/${projectName}`)
@@ -15,6 +16,12 @@ export function openProject(projectName) {
   return {
     type: OPEN_PROJECT,
     project: projects[projects.findIndex(project => project.name === projectName)]
+  }
+}
+
+export function initBackground() {
+  return {
+    type: INIT_BACKGROUND
   }
 }
 

@@ -1,3 +1,4 @@
+import { INIT_BACKGROUND } from '../actions'
 const OPEN_PROJECT = 'OPEN_PROJECT'; 
 
 const portfolioReducer = (state = {}, action) => {
@@ -5,7 +6,11 @@ const portfolioReducer = (state = {}, action) => {
     case OPEN_PROJECT:
       return Object.assign({}, state, {
         currentProject: action.project
-    });
+      });
+    case  INIT_BACKGROUND:
+      return Object.assign({}, state, {
+        shapesGenerated: true
+      });
     default:
       return state;
   }

@@ -4,8 +4,6 @@ max = Math.floor(max);
 return Math.floor(Math.random() * (max - min)) + min;
 }
 
-let shapes = [];
-
 export function generateShapes() {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;

@@ -4,7 +4,8 @@ const initialState = {
       images: [],
       links: [],
       technology: []
-  }
+    },
+    shapesGenerated: false
   },
   chat: {
     isChatOpen: false,
