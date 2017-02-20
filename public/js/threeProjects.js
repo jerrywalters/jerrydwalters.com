@@ -52,8 +52,8 @@ function onWindowResize() {
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  stove.position.y = window.innerHeight/500;
-  stove.position.x = window.innerWidth/350;
+  stove.position.y = window.innerHeight/60;
+  stove.position.x = window.innerWidth/50;
 }
 
 function onMouseMove(event) {
@@ -77,12 +77,14 @@ function render() {
   	// calculate objects intersecting the picking ray
   	var intersects = raycaster.intersectObjects(boxes, true);
     if (intersects.length > 0) {
+      console.log(intersects)
       let boxName = intersects[0].object.name;
+      console.log('intersecting', boxName)
       let modelIndex = models.findIndex(function(model) {
         return model.name === boxName;
       });
       let intersectedObject = models[modelIndex];
-      intersects.position = intersectedObject.position;
+      // intersects.position = intersectedObject.position;
       intersectedObject.rotation.y += 2 * Math.PI / 180; 
     }
   renderer.render(scene, camera);

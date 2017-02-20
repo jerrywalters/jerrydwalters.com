@@ -54,10 +54,10 @@ function init() {
 
   var loader = new THREE.OBJLoader(manager);
 
-  // load stove
+  // load morty
   loader.load(
     // resource path
-    '../objects/stove.obj',
+    '../objects/morty_small.obj',
     // pass the loaded data to the onLoad function - assumed to be object
     // do some other shit
     function(obj) {
@@ -67,25 +67,29 @@ function init() {
         }
       });
       // add object to scene
-      obj.position.y = window.innerHeight/500;
-      obj.position.x = window.innerWidth/350;
-      obj.position.z = 43;
-      obj.rotation.y -= 2 * Math.PI / 180;
-      obj.rotation.x += 28 * Math.PI / 180;
-      obj.rotation.z -= 12 * Math.PI / 180;
+      obj.position.y = 1.8;
+      obj.position.x = -0.9;
+      // obj.position.y = window.innerHeight/60;
+      // obj.position.x = window.innerWidth/50;
+      obj.position.z = 42;
+      obj.rotation.y -= 170 * Math.PI / 180;
+      obj.rotation.x += 180 * Math.PI / 180;
+      obj.rotation.z -= -8 * Math.PI / 180;
 
       var bbox = new THREE.BoxHelper( obj, 0x552200 );
       bbox.material.visible = false;
 
-      obj.name = 'stove'
-      bbox.name = 'stove'
-      bbox.projectName = 'portfolio-admin'
+      obj.name = 'morty';
+      bbox.name = 'morty';
+      bbox.projectName = 'portfolio-admin';
+      // obj.material.transparent = true;
+      // obj.material.opacity = 1;
       scene.add(obj);
       scene.add(bbox);
       models.push(obj);
       boxes.push(bbox);
 
-      stove = obj;
+      morty = obj;
       // setUpTween(stove);
     },
     // function called when download progresses
@@ -131,10 +135,10 @@ function setUpTween(object) {
 
   }
 
-  // load broom
+  // load praylien
   loader.load(
     // resource path
-    '../objects/broom.obj',
+    '../objects/pray_alien.obj',
     // pass the loaded data to the onLoad function - assumed to be object
     // do some other shit
     function(obj) {
@@ -144,13 +148,27 @@ function setUpTween(object) {
         }
       });
       // add object to scene
-      obj.position.y = -2;
-      obj.position.x = -1500;
-      obj.position.z = -3500;
-      models.push(obj);
-      scene.add(obj);
+      obj.position.y = 0.3;
+      obj.position.x = 2.5;
+      obj.position.z = 43;
+      obj.rotation.y -= 2 * Math.PI / 180;
+      obj.rotation.x += 28 * Math.PI / 180;
+      obj.rotation.z -= 12 * Math.PI / 180;
 
-      broom = obj;
+
+      var bbox = new THREE.BoxHelper( obj, 0xffff00 );
+      bbox.material.visible = false;
+      console.log('bbox', bbox);
+      obj.name = 'praylien'
+      bbox.name = 'praylien'
+
+      bbox.projectName = 'resume';
+      scene.add(obj);
+      scene.add(bbox);
+      models.push(obj);
+      boxes.push(bbox);
+
+      courage = obj;
     },
     // function called when download progresses
     // in this case defined globally
@@ -160,10 +178,10 @@ function setUpTween(object) {
     onError
   );
 
-  // load courage
+  // load atm
   loader.load(
     // resource path
-    '../objects/courage.obj',
+    '../objects/atm_smallish.obj',
     // pass the loaded data to the onLoad function - assumed to be object
     // do some other shit
     function(obj) {
@@ -173,21 +191,70 @@ function setUpTween(object) {
         }
       });
       // add object to scene
-      obj.position.y = -8;
-      obj.position.x = 0;
+      obj.position.y = -0.4;
+      obj.position.x = 0.3;
+      obj.position.z = 48;
+      obj.rotation.y -= 20 * Math.PI / 180;
+      obj.rotation.x += 12 * Math.PI / 180;
+      // obj.rotation.z -= 12 * Math.PI / 180;
+
 
       var bbox = new THREE.BoxHelper( obj, 0xffff00 );
       bbox.material.visible = false;
       console.log('bbox', bbox);
-      obj.name = 'courage'
-      bbox.name = 'courage'
-      bbox.material.visible = false;
+      obj.name = 'atm'
+      bbox.name = 'atm'
+
+      bbox.projectName = 'capital-one';
       scene.add(obj);
       scene.add(bbox);
       models.push(obj);
       boxes.push(bbox);
 
-      courage = obj;
+      atm = obj;
+    },
+    // function called when download progresses
+    // in this case defined globally
+    onProgress,
+    // function called when download error
+    // also defined globally
+    onError
+  );
+
+  // load skelly
+  loader.load(
+    // resource path
+    '../objects/skelly_small.obj',
+    // pass the loaded data to the onLoad function - assumed to be object
+    // do some other shit
+    function(obj) {
+      obj.traverse(function(child) {
+        if(child instanceof THREE.Mesh) {
+          child.material.map = texture;
+        }
+      });
+      // add object to scene
+      obj.position.y = -1.5;
+      obj.position.x = -2;
+      obj.position.z = 45;
+      // obj.rotation.y -= 2 * Math.PI / 180;
+      // obj.rotation.x += 28 * Math.PI / 180;
+      // obj.rotation.z -= 12 * Math.PI / 180;
+
+
+      var bbox = new THREE.BoxHelper( obj, 0xffff00 );
+      bbox.material.visible = false;
+      console.log('bbox', bbox);
+      obj.name = 'skelly'
+      bbox.name = 'skelly'
+
+      bbox.projectName = 'portfolio-client';
+      scene.add(obj);
+      scene.add(bbox);
+      models.push(obj);
+      boxes.push(bbox);
+
+      skelly = obj;
     },
     // function called when download progresses
     // in this case defined globally

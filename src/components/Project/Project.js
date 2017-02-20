@@ -25,7 +25,8 @@ class Project extends Component {
 
   render() {
     const { location } = this.props;
-    const { name, links, description, images, technology, backgroundColor } = this.props.project;
+    const { name, links, description, images, technology, backgroundColor, description2 } = this.props.project;
+    console.log('numero2', description2)
 
     const projectClasses = classNames({
 			'project-single': true,
@@ -46,6 +47,7 @@ class Project extends Component {
         <section className="project-about" style={{backgroundColor: backgroundColor}}>
           <h2 className="project-about__heading--primary">{name}</h2>
           <p className="project-about__body">{ description }</p>
+          { description2 ? <p className="project-about__body">{ description2 }</p> : '' }
           <h3 className="project-about__heading--secondary">technology</h3>
           <ul className="project-tech">
             { projectTech }

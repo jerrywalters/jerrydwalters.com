@@ -5,8 +5,8 @@
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="shapes" transform="translate(-79.000000, -83.000000)" stroke="#B5C0FC" stroke-width="3">
-            <path d="M80,93 C80,93 87.6028646,87.6425781 88,88 C88.3971354,88.3574219 90,97 90,97 L99,87 L107,99 L115,87 L118,97" id="zigzag-purple"></path>
+        <g id="zigzag-purple" stroke-width="3" stroke="#B5C0FC">
+            <path d="M1,10 C1,10 8.60286458,4.64257812 9,5 C9.39713542,5.35742188 11,14 11,14 L20,4 L28,16 L36,4 L39,14"></path>
         </g>
     </g>
 </svg>
