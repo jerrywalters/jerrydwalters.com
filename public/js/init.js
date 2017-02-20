@@ -10,11 +10,11 @@ function init() {
 
   // ambient light "globall illuminates all objects in the scene equally" -- no shadows
   // AmbientLight( color, intensity )
-  var ambient = new THREE.AmbientLight(0x99003d);
+  var ambient = new THREE.AmbientLight(0x000000);
   scene.add(ambient);
 
   // DirectionalLight( hex, intensity )
-  var directionalLight = new THREE.DirectionalLight(0x99ffda);
+  var directionalLight = new THREE.DirectionalLight(0xeeeeee);
   directionalLight.position.set(2, 1.8, 3.5);
   scene.add(directionalLight);
 
@@ -63,25 +63,25 @@ function init() {
     function(obj) {
       obj.traverse(function(child) {
         if(child instanceof THREE.Mesh) {
-          child.material.map = texture;
+          child.material.color.setHex(0x3c3c3c);
         }
       });
       // add object to scene
       obj.position.y = 1.8;
-      obj.position.x = -0.9;
+      obj.position.x = -2.5;
       // obj.position.y = window.innerHeight/60;
       // obj.position.x = window.innerWidth/50;
       obj.position.z = 42;
       obj.rotation.y -= 170 * Math.PI / 180;
-      obj.rotation.x += 180 * Math.PI / 180;
-      obj.rotation.z -= -8 * Math.PI / 180;
+      // obj.rotation.x += 180 * Math.PI / 180;
+      obj.rotation.z -= 8 * Math.PI / 180;
 
       var bbox = new THREE.BoxHelper( obj, 0x552200 );
       bbox.material.visible = false;
 
       obj.name = 'morty';
       bbox.name = 'morty';
-      bbox.projectName = 'portfolio-admin';
+      bbox.projectName = 'resume';
       // obj.material.transparent = true;
       // obj.material.opacity = 1;
       scene.add(obj);
@@ -105,35 +105,35 @@ function init() {
   easing		: 'Elastic.EaseInOut'
 };
 
-function setUpTween(object) {
-  var update = function(){
-    object.position.x = current.x;
-    object.position.y = current.y;
-    console.log('updating!');
-  }
-  // var position = { x : 3, y: 1.2 };
-  // var target = { x: -1, y: -2 };
-  var current	= { x: -userOpts.range, y: -userOpts.range };
+// function setUpTween(object) {
+//   var update = function(){
+//     object.position.x = current.x;
+//     object.position.y = current.y;
+//     console.log('updating!');
+//   }
+//   // var position = { x : 3, y: 1.2 };
+//   // var target = { x: -1, y: -2 };
+//   var current	= { x: -userOpts.range, y: -userOpts.range };
 
-  TWEEN.removeAll();
+//   TWEEN.removeAll();
 
-  var tweenTo = new TWEEN.Tween(current)
-    .to({x: +userOpts.range, y: +userOpts.range}, 1700)
-    .delay(10)
-    .easing(TWEEN.Easing.Sinusoidal.InOut)
-    .onUpdate(update);
+//   var tweenTo = new TWEEN.Tween(current)
+//     .to({x: +userOpts.range, y: +userOpts.range}, 1700)
+//     .delay(10)
+//     .easing(TWEEN.Easing.Sinusoidal.InOut)
+//     .onUpdate(update);
 
-  var tweenBack = new TWEEN.Tween(current)
-    .to({x: -userOpts.range, y: -userOpts.range}, 1700)
-    .delay(10)
-    .easing(TWEEN.Easing.Sinusoidal.InOut)
-    .onUpdate(update);
+//   var tweenBack = new TWEEN.Tween(current)
+//     .to({x: -userOpts.range, y: -userOpts.range}, 1700)
+//     .delay(10)
+//     .easing(TWEEN.Easing.Sinusoidal.InOut)
+//     .onUpdate(update);
 
-    tweenTo.chain(tweenBack);
-    tweenBack.chain(tweenTo);
-    tweenTo.start();
+//     tweenTo.chain(tweenBack);
+//     tweenBack.chain(tweenTo);
+//     tweenTo.start();
 
-  }
+//   }
 
   // load praylien
   loader.load(
@@ -144,14 +144,14 @@ function setUpTween(object) {
     function(obj) {
       obj.traverse(function(child) {
         if(child instanceof THREE.Mesh) {
-          child.material.map = texture;
+          child.material.color.setHex(0xfb4754);
         }
       });
       // add object to scene
-      obj.position.y = 0.3;
-      obj.position.x = 2.5;
+      obj.position.y = 0.1;
+      obj.position.x = 0.5;
       obj.position.z = 43;
-      obj.rotation.y -= 2 * Math.PI / 180;
+      obj.rotation.y -= 20 * Math.PI / 180;
       obj.rotation.x += 28 * Math.PI / 180;
       obj.rotation.z -= 12 * Math.PI / 180;
 
@@ -162,7 +162,7 @@ function setUpTween(object) {
       obj.name = 'praylien'
       bbox.name = 'praylien'
 
-      bbox.projectName = 'resume';
+      bbox.projectName = 'portfolio-admin';
       scene.add(obj);
       scene.add(bbox);
       models.push(obj);
@@ -187,16 +187,16 @@ function setUpTween(object) {
     function(obj) {
       obj.traverse(function(child) {
         if(child instanceof THREE.Mesh) {
-          child.material.map = texture;
+          child.material.color.setHex(0x00cc66);
         }
       });
       // add object to scene
-      obj.position.y = -0.4;
-      obj.position.x = 0.3;
+      obj.position.y = -0.1;
+      obj.position.x = 1;
       obj.position.z = 48;
-      obj.rotation.y -= 20 * Math.PI / 180;
-      obj.rotation.x += 12 * Math.PI / 180;
-      // obj.rotation.z -= 12 * Math.PI / 180;
+      obj.rotation.y -= -15 * Math.PI / 180;
+      obj.rotation.x += 30 * Math.PI / 180;
+      obj.rotation.z -= -6 * Math.PI / 180;
 
 
       var bbox = new THREE.BoxHelper( obj, 0xffff00 );
@@ -230,14 +230,14 @@ function setUpTween(object) {
     function(obj) {
       obj.traverse(function(child) {
         if(child instanceof THREE.Mesh) {
-          child.material.map = texture;
+          child.material.color.setHex(0x4d79ff);
         }
       });
       // add object to scene
       obj.position.y = -1.5;
-      obj.position.x = -2;
-      obj.position.z = 45;
-      // obj.rotation.y -= 2 * Math.PI / 180;
+      obj.position.x = -2.7;
+      obj.position.z = 45.5;
+      obj.rotation.y -= -40 * Math.PI / 180;
       // obj.rotation.x += 28 * Math.PI / 180;
       // obj.rotation.z -= 12 * Math.PI / 180;
 
