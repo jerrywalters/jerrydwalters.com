@@ -18,8 +18,6 @@ function init() {
   directionalLight.position.set(2, 1.8, 3.5);
   scene.add(directionalLight);
 
-  // texture
-
   // handles and keeps track of loaded and pending data
   var manager = new THREE.LoadingManager();
   manager.onProgress = function(item, loaded, total) {
@@ -40,17 +38,7 @@ function init() {
 
   };
 
-  var loader = new THREE.ImageLoader(manager);
-  loader.load(
-    '../textures/purple.jpg',
-    // function when resource is added
-    function(image) {
-      // do stuff with it
-      texture.image = image;
-      texture.needsUpdate = true;
-    }
-  );
-  // model
+  // models
 
   var loader = new THREE.OBJLoader(manager);
 
@@ -97,13 +85,6 @@ function init() {
     // function called when download error
     onError
   );
-
-  var userOpts	= {
-  range		: .035,
-  duration	: 2500,
-  delay		: 200,
-  easing		: 'Elastic.EaseInOut'
-};
 
   // load praylien
   loader.load(
@@ -237,6 +218,13 @@ function init() {
     // also defined globally
     onError
   );
+
+  // var userOpts	= {
+  //   range		: .035,
+  //   duration	: 2500,
+  //   delay		: 200,
+  //   easing		: 'Elastic.EaseInOut'
+  // };
 
   // function setUpTween(object) {
   //   var update = function(){
