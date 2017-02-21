@@ -26,9 +26,10 @@ function onClick(event) {
 
 // Three
 // declare objects that exist
-var courage;
-var stove;
-var broom;
+var morty;
+var skelly;
+var atm;
+var praylien;
 var models = [];
 var boxes = [];
 
@@ -52,8 +53,20 @@ function onWindowResize() {
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  stove.position.y = window.innerHeight/60;
-  stove.position.x = window.innerWidth/50;
+
+  // responsive models
+  // morty.position.y = window.innerHeight/360;
+  morty.position.x = window.innerWidth/-510;
+
+  // atm.position.y = window.innerHeight/-6000;
+  atm.position.x = window.innerWidth/1200;
+
+  // skelly.position.y = window.innerHeight/-425;
+  skelly.position.x = window.innerWidth/-490;
+
+  // praylien.position.y = window.innerHeight/2100;
+  praylien.position.x = window.innerWidth/4400;
+
 }
 
 function onMouseMove(event) {

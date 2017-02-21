@@ -68,9 +68,9 @@ function init() {
       });
       // add object to scene
       obj.position.y = 1.8;
-      obj.position.x = -2.5;
-      // obj.position.y = window.innerHeight/60;
-      // obj.position.x = window.innerWidth/50;
+      // obj.position.x = -2.5;
+      // obj.position.y = window.innerHeight/360;
+      obj.position.x = window.innerWidth/-510;
       obj.position.z = 42;
       obj.rotation.y -= 170 * Math.PI / 180;
       // obj.rotation.x += 180 * Math.PI / 180;
@@ -105,40 +105,10 @@ function init() {
   easing		: 'Elastic.EaseInOut'
 };
 
-// function setUpTween(object) {
-//   var update = function(){
-//     object.position.x = current.x;
-//     object.position.y = current.y;
-//     console.log('updating!');
-//   }
-//   // var position = { x : 3, y: 1.2 };
-//   // var target = { x: -1, y: -2 };
-//   var current	= { x: -userOpts.range, y: -userOpts.range };
-
-//   TWEEN.removeAll();
-
-//   var tweenTo = new TWEEN.Tween(current)
-//     .to({x: +userOpts.range, y: +userOpts.range}, 1700)
-//     .delay(10)
-//     .easing(TWEEN.Easing.Sinusoidal.InOut)
-//     .onUpdate(update);
-
-//   var tweenBack = new TWEEN.Tween(current)
-//     .to({x: -userOpts.range, y: -userOpts.range}, 1700)
-//     .delay(10)
-//     .easing(TWEEN.Easing.Sinusoidal.InOut)
-//     .onUpdate(update);
-
-//     tweenTo.chain(tweenBack);
-//     tweenBack.chain(tweenTo);
-//     tweenTo.start();
-
-//   }
-
   // load praylien
   loader.load(
     // resource path
-    '../objects/pray_alien.obj',
+    '../objects/range_small.obj',
     // pass the loaded data to the onLoad function - assumed to be object
     // do some other shit
     function(obj) {
@@ -148,8 +118,10 @@ function init() {
         }
       });
       // add object to scene
-      obj.position.y = 0.1;
-      obj.position.x = 0.5;
+      obj.position.y = 0.3;
+      // obj.position.x = 0.2;
+      // obj.position.y = window.innerHeight/2100;
+      obj.position.x = window.innerWidth/4400;
       obj.position.z = 43;
       obj.rotation.y -= 20 * Math.PI / 180;
       obj.rotation.x += 28 * Math.PI / 180;
@@ -168,7 +140,7 @@ function init() {
       models.push(obj);
       boxes.push(bbox);
 
-      courage = obj;
+      praylien = obj;
     },
     // function called when download progresses
     // in this case defined globally
@@ -192,7 +164,9 @@ function init() {
       });
       // add object to scene
       obj.position.y = -0.1;
-      obj.position.x = 1;
+      // obj.position.x = 1;
+      // obj.position.y = window.innerHeight/-6000;
+      obj.position.x = window.innerWidth/1172;
       obj.position.z = 48;
       obj.rotation.y -= -15 * Math.PI / 180;
       obj.rotation.x += 30 * Math.PI / 180;
@@ -235,7 +209,7 @@ function init() {
       });
       // add object to scene
       obj.position.y = -1.5;
-      obj.position.x = -2.7;
+      obj.position.x = window.innerWidth/-490;
       obj.position.z = 45.5;
       obj.rotation.y -= -40 * Math.PI / 180;
       // obj.rotation.x += 28 * Math.PI / 180;
@@ -264,34 +238,36 @@ function init() {
     onError
   );
 
-  // load sthugh
-  // loader.load(
-  //   // resource path
-  //   '../objects/sthugh.obj',
-  //   // pass the loaded data to the onLoad function - assumed to be object
-  //   // do some other shit
-  //   function(obj) {
-  //     obj.traverse(function(child) {
-  //       // if(child instanceof THREE.Mesh) {
-  //       //   child.material.map = texture;
-  //       // }
-  //     });
-  //     // add object to scene
-  //     obj.position.y = -2;
-  //     obj.position.x = 0;
-  //     obj.position.z = 40;
-  //     models.push(obj);
-  //     scene.add(obj);
-  //
-  //     sthugh = obj;
-  //   },
-  //   // function called when download progresses
-  //   // in this case defined globally
-  //   onProgress,
-  //   // function called when download error
-  //   // also defined globally
-  //   onError
-  // );
+  // function setUpTween(object) {
+  //   var update = function(){
+  //     object.position.x = current.x;
+  //     object.position.y = current.y;
+  //     console.log('updating!');
+  //   }
+  //   // var position = { x : 3, y: 1.2 };
+  //   // var target = { x: -1, y: -2 };
+  //   var current	= { x: -userOpts.range, y: -userOpts.range };
+
+  //   TWEEN.removeAll();
+
+  //   var tweenTo = new TWEEN.Tween(current)
+  //     .to({x: +userOpts.range, y: +userOpts.range}, 1700)
+  //     .delay(10)
+  //     .easing(TWEEN.Easing.Sinusoidal.InOut)
+  //     .onUpdate(update);
+
+  //   var tweenBack = new TWEEN.Tween(current)
+  //     .to({x: -userOpts.range, y: -userOpts.range}, 1700)
+  //     .delay(10)
+  //     .easing(TWEEN.Easing.Sinusoidal.InOut)
+  //     .onUpdate(update);
+
+  //     tweenTo.chain(tweenBack);
+  //     tweenBack.chain(tweenTo);
+  //     tweenTo.start();
+
+  //   }
+
 
   //
   renderer = new THREE.WebGLRenderer( {alpha:true} );
