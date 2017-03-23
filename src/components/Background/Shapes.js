@@ -5,12 +5,13 @@ import zigzagBlue from './shapes/zigzag-blue.svg';
 import zigzagPurple from './shapes/zigzag-purple.svg';
 import squiggleBlue from './shapes/squiggle-blue.svg';
 import squigglePurple from './shapes/squiggle-purple.svg';
+import face from './shapes/face.svg'
 
 const Shapes = () => {
     let shapes = [];
-    const shapeImgs = [circleBlue, zigzagBlue, squiggleBlue, circlePurple, zigzagPurple, squigglePurple];
+    const shapeImgs = [circleBlue, zigzagBlue, squiggleBlue, circlePurple, zigzagPurple, squigglePurple, face];
     let randomShape = shapeImgs[Math.floor(Math.random()*shapeImgs.length)];
-    const shapeClasses = [ 'shape1', 'shape2', 'shape3', 'shape4', 'shape5', 'shape6' ];
+    const shapeClasses = [ 'shape1', 'shape2', 'shape3', 'shape4', 'shape5', 'shape6', 'shape7' ];
 
     function getRandomShape() {
       randomShape = shapeImgs[Math.floor(Math.random()*shapeImgs.length)];
