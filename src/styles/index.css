@@ -64,7 +64,7 @@ body {
     overflow: hidden;
     /*background-color: #ccd4ff;*/
     background: #1a0033; /* For browsers that do not support gradients */
-    background: linear-gradient(to bottom right, #390080, #29004d 25%, #200039 45%, #1b0033 60%, #0d001a 90%);  
+    background: linear-gradient(to bottom right, #390080, #29004d 5%, #200039 15%, #1b0033 20%, #0d001a 60%);  
 }
 
 .shapes-container {
@@ -663,14 +663,14 @@ input[type="file"] {
 	z-index: 99;
 	position: absolute;
 	top: 0;
-	width: 92%;
+	width: 100%;
 	height: 100vh;
 	display: flex;
-    transform: translateX(9%);
+    transform: translateX(0%);
 }
 
 .pageSlider-leave {
-  transform: translateX(9%);
+  transform: translateX(0%);
 }
 
 .pageSlider-leave.pageSlider-leave-active {
@@ -683,13 +683,17 @@ input[type="file"] {
 }
 
 .pageSlider-enter.pageSlider-enter-active {
-  transform: translateX(9%);
+  transform: translateX(0%);
   transition: all 500ms;
 }
 
 
 .project-single::before {
     content: '';
+}
+.project-sidebar {
+    width: 5%;
+    background-color: #fff;
 }
 .project-images {
 	display: flex;
@@ -698,6 +702,9 @@ input[type="file"] {
 	overflow-y: scroll;
 	flex-direction: column;
 	width: 60%;
+}
+.project-images::-webkit-scrollbar {
+    display: none;
 }
 .project-images__single {
 	max-width: 60%;
@@ -712,6 +719,7 @@ input[type="file"] {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    box-shadow: 1px 0 4px 0 rgba(0,0,0,.2);
 }
 .project-about__heading--primary {
     margin-bottom: 2rem;

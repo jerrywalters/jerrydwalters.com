@@ -45,16 +45,20 @@ class Project extends Component {
     function stopClickThrough(e){
       e.stopPropagation();
       e.nativeEvent.stopImmediatePropagation();
+      window.browserHistory.push('/')
     }
 
     return (
-      <div className={projectClasses}>
-        <section className="project-about" style={{backgroundColor: backgroundColor}} onClick={(e) => stopClickThrough(e)}>
+      <div className={projectClasses} onClick={(e) => stopClickThrough(e)}>
+        {/*<div className="project-sidebar" onClick={(e) => stopClickThrough(e)}>
+    
+        </div>*/}
+        <section className="project-about" style={{backgroundColor: backgroundColor}}>
           <h2 className="project-about__heading--primary">{name}</h2>
           <p className="project-about__body">{ description }</p>
           { description2 ? <p className="project-about__body">{ description2 }</p> : '' }
           <h3 className="project-about__heading--secondary">technology</h3>
-          <ul className="project-tech">
+          <ul className="project-tech" onClick={e => e.stopPropagation()}>
             { projectTech }
           </ul>
           <h3 className="project-about__heading--secondary">links</h3>
