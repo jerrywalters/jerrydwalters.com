@@ -50,9 +50,6 @@ class Project extends Component {
 
     return (
       <div className={projectClasses} onClick={(e) => stopClickThrough(e)}>
-        {/*<div className="project-sidebar" onClick={(e) => stopClickThrough(e)}>
-    
-        </div>*/}
         <section className="project-about" style={{backgroundColor: backgroundColor}}>
           <h2 className="project-about__heading--primary">{name}</h2>
           <p className="project-about__body">{ description }</p>
