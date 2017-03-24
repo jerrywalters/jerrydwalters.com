@@ -17,6 +17,13 @@ export default class Chat extends Component {
   render() {
     const { sendMessage, isUncleOnline, uncleIsTyping, messages, isChatOpen, updateIsTyping, togglePainting, isPainting } = this.props;
 
+    // don't allow click through to projects
+    
+    function stopClickThrough(e){
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+    }
+
     const chatClasses = classNames({
       'chat-window': true,
       'chat-window--painting' : isPainting,
@@ -30,13 +37,13 @@ export default class Chat extends Component {
     })
 
     return (
-      <div className={chatClasses}>
-        <header className="chat-header--client">
+      <div className={chatClasses} id="chat-window">
+        <header className="chat-header--client" onClick={(e) => stopClickThrough(e)}>
             <div className="uncle-icon"></div>
             <h3 className="uncle-name">Uncle Jerry</h3>
             <span className={statusClasses}></span>
         </header> 
-        <div className="chat-window__content">
+        <div className="chat-window__content" onClick={(e) => stopClickThrough(e)}>
           { isPainting ? <Panel/> : ''}
           <div className="chat-window__chat">
             <ChatMessages messages={messages} uncleIsTyping={uncleIsTyping} />
