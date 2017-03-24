@@ -5,13 +5,17 @@ import zigzagBlue from './shapes/zigzag-blue.svg';
 import zigzagPurple from './shapes/zigzag-purple.svg';
 import squiggleBlue from './shapes/squiggle-blue.svg';
 import squigglePurple from './shapes/squiggle-purple.svg';
-import face from './shapes/face.svg'
+// import face from './shapes/face.svg';
+import sock from './shapes/sock.svg';
+import glove from './shapes/glove.svg';
+import hat from './shapes/hat.svg';
+import belt from './shapes/belt.svg';
 
 const Shapes = () => {
     let shapes = [];
-    const shapeImgs = [circleBlue, zigzagBlue, squiggleBlue, circlePurple, zigzagPurple, squigglePurple, face];
+    const shapeImgs = [hat, sock, glove, belt];
     let randomShape = shapeImgs[Math.floor(Math.random()*shapeImgs.length)];
-    const shapeClasses = [ 'shape1', 'shape2', 'shape3', 'shape4', 'shape5', 'shape6', 'shape7' ];
+    const shapeClasses = [ 'shape1', 'shape2', 'shape3', 'shape4'];
 
     function getRandomShape() {
       randomShape = shapeImgs[Math.floor(Math.random()*shapeImgs.length)];
@@ -28,16 +32,16 @@ const Shapes = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
-      for(let i = 0; i <= 100; i++) {
+      for(let i = 0; i <= 50; i++) {
         let newShape =       
         {
-            height: getRandomInt(10, 30),
-            width: getRandomInt(20, 60),
+            height: getRandomInt(30, 70),
+            width: getRandomInt(30, 70),
             posX: getRandomInt(1, windowWidth),
             posY: getRandomInt(1, windowHeight),
             transform: `rotate(${getRandomInt(0, 360)}deg)`,
             // fucking lol at me being too lazy to just not make another function 
-            opacity: `0.${getRandomInt(15, 70)}`
+            opacity: `0.${getRandomInt(25, 70)}`
         }
         shapes.push(newShape)
       }

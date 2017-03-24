@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66px" height="32px" viewBox="0 0 66 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 11</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFD14E" offset="0%"></stop>
+            <stop stop-color="#FFEC11" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0.469123831%" x2="50%" y2="34.3424349%" id="linearGradient-2">
+            <stop stop-color="#FFD14E" offset="0%"></stop>
+            <stop stop-color="#FFD14E" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="2.91573661%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FFD14E" offset="0%"></stop>
+            <stop stop-color="#FFEE0E" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-4" x="27.3849879" y="22.4255319" width="10.4323763" height="8.57446809"></rect>
+        <mask id="mask-5" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="10.4323763" height="8.57446809" fill="white">
+            <use xlink:href="#path-4"></use>
+        </mask>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-6">
+            <stop stop-color="#FFD349" offset="0%"></stop>
+            <stop stop-color="#FFEC10" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-7" x="28.3630232" y="23.4148936" width="8.47630578" height="6.59574468"></rect>
+        <mask id="mask-8" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="8.47630578" height="6.59574468" fill="white">
+            <use xlink:href="#path-7"></use>
+        </mask>
+        <rect id="path-9" x="27.0589761" y="26.3829787" width="5.86821169" height="0.989361702"></rect>
+        <mask id="mask-10" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="5.86821169" height="1" fill="white">
+            <use xlink:href="#path-9"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-552.000000, -174.000000)">
+            <g id="Group-11" transform="translate(553.000000, 175.000000)">
+                <g id="Group-7" transform="translate(0.186190, 0.000000)">
+                    <g id="Oval-3">
+                        <path d="M62.3624074,14.8723404 C63.0284089,13.9140805 63.3828803,12.9087182 63.3828803,11.8723404 C63.3828803,5.31542786 49.1941393,0 31.6914402,0 C14.1887411,0 0,5.31542786 0,11.8723404 C0,12.9087182 0.354471455,13.9140805 1.02047291,14.8723404 C4.56810224,9.76792062 16.9551968,6 31.6914402,6 C46.4276835,6 58.8147781,9.76792062 62.3624074,14.8723404 Z" id="Combined-Shape" fill="url(#linearGradient-1)"></path>
+                        <ellipse stroke="url(#linearGradient-2)" cx="31.6914402" cy="17.4787234" rx="31.6914402" ry="11.8723404"></ellipse>
+                    </g>
+                    <ellipse id="Oval-3" stroke="url(#linearGradient-3)" cx="31.6914402" cy="11.8723404" rx="31.6914402" ry="11.8723404"></ellipse>
+                </g>
+                <use id="Rectangle-2" stroke="url(#linearGradient-3)" mask="url(#mask-5)" stroke-width="2" xlink:href="#path-4"></use>
+                <path d="M0.186189651,11.8723404 C0.186189651,11.8723404 -0.0746452471,19.787234 0.44702455,20.4786026 C0.968694347,21.1699711 7.48956681,29.0661181 30.7038728,29.6808511 C53.9181787,30.2955841 63.3082351,22.0957447 63.56907,21.106383 C63.8299049,20.1170213 63.56907,11.8723404 63.56907,11.8723404" id="Path-16" stroke="url(#linearGradient-3)"></path>
+                <ellipse id="Oval-9" fill="url(#linearGradient-6)" cx="38.143376" cy="26.712766" rx="0.652023521" ry="0.659574468"></ellipse>
+                <ellipse id="Oval-9" fill="url(#linearGradient-6)" cx="21.5167762" cy="26.3829787" rx="0.652023521" ry="0.659574468"></ellipse>
+                <ellipse id="Oval-9" fill="url(#linearGradient-6)" cx="26.0809409" cy="26.712766" rx="0.652023521" ry="0.659574468"></ellipse>
+                <use id="Rectangle" stroke="url(#linearGradient-3)" mask="url(#mask-8)" stroke-width="2" xlink:href="#path-7"></use>
+                <path d="M19.2346939,22.7553191 C19.2346939,22.7553191 15.5067203,22.0957447 13.7085439,23.0851064 C11.9103675,24.0744681 11.9103675,24.7340426 12.8094557,25.7234043 C13.7085439,26.712766 14.3079783,27.3723404 17.6046351,28.3617021" id="Path-17" stroke="url(#linearGradient-3)"></path>
+                <ellipse id="Oval-10" fill="url(#linearGradient-6)" cx="32.6011761" cy="26.8776596" rx="0.652023521" ry="0.824468085"></ellipse>
+                <use id="Rectangle-3" stroke="url(#linearGradient-3)" mask="url(#mask-10)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-9"></use>
+            </g>
+        </g>
+    </g>
+</svg>
