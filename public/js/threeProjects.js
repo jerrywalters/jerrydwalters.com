@@ -88,11 +88,15 @@ function render() {
   	raycaster.setFromCamera( mouse, camera );
 
   	// calculate objects intersecting the picking ray
+
+    // reset cursor to default if not hovering
+    document.body.style.cursor = "default";
+
   	var intersects = raycaster.intersectObjects(boxes, true);
     if (intersects.length > 0) {
-      console.log(intersects)
       let boxName = intersects[0].object.name;
-      console.log('intersecting', boxName)
+      // if i'm hovering over an object set cursor to pointer (raycasting ugh)
+      document.body.style.cursor = "pointer";
       let modelIndex = models.findIndex(function(model) {
         return model.name === boxName;
       });
