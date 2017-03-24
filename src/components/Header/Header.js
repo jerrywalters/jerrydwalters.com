@@ -8,8 +8,13 @@ const Header = ({ location }) => {
     'header--stuck' : location.pathname !=='/'
   });
 
+  function stopClickThrough(e){
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+  }
+
   return (
-    <header className={ headerClasses }>
+    <header className={ headerClasses } onClick={(e) => stopClickThrough(e)}>
       <div className="header__top">
         <section className="header-bio">
           <h1 className="header-bio__name">Jerry Walters</h1>

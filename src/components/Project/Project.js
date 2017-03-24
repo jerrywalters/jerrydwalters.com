@@ -42,9 +42,14 @@ class Project extends Component {
       )
     });
 
+    function stopClickThrough(e){
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+    }
+
     return (
       <div className={projectClasses}>
-        <section className="project-about" style={{backgroundColor: backgroundColor}}>
+        <section className="project-about" style={{backgroundColor: backgroundColor}} onClick={(e) => stopClickThrough(e)}>
           <h2 className="project-about__heading--primary">{name}</h2>
           <p className="project-about__body">{ description }</p>
           { description2 ? <p className="project-about__body">{ description2 }</p> : '' }
