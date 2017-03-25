@@ -34,7 +34,7 @@ class Project extends Component {
 
     let projectImages = images.map((img, index) => <img key={index} className="project-images__single" src={img} /> );
 
-    let projectLinks = links.map((link, index) => <a key={index} className="project-about__link" href={link} target="_blank">{link}</a>);
+    let projectLinks = links.map((link, index) => <a key={index} className="project-about__link" href={link} target="_blank" onClick={e => e.stopPropagation()}>{link}</a>);
 
     let projectTech = technology.map((tech, index) => {
       return (
@@ -58,7 +58,7 @@ class Project extends Component {
           <ul className="project-tech" onClick={e => e.stopPropagation()}>
             { projectTech }
           </ul>
-          <h3 className="project-about__heading--secondary">links</h3>
+          <h3 className="project-about__heading--secondary" >links</h3>
           { projectLinks }
         </section>
         <section className="project-images">

@@ -32,7 +32,7 @@ const Shapes = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
-      for(let i = 0; i <= 50; i++) {
+      for(let i = 0; i <= 60; i++) {
         let newShape =       
         {
             height: getRandomInt(30, 70),
