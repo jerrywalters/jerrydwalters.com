@@ -30,6 +30,7 @@ class Project extends Component {
     scrollPos = 0,
     clonesHeight = 0,
     i = 0;
+    setScrollPos(1);
 
     function getScrollPos() {
       return (context.pageYOffset || context.scrollTop) - (context.clientTop || 0);
@@ -66,14 +67,12 @@ class Project extends Component {
     function scrollUpdate() {
       if (!disableScroll) {
         scrollPos = getScrollPos();
-
         if (clonesHeight + scrollPos >= scrollHeight) {
-          // Scroll to the top when you’ve reached the bottom
           setScrollPos(1); // Scroll down 1 pixel to allow upwards scrolling
           disableScroll = true;
         } else if (scrollPos <= 0) {
           // Scroll to the bottom when you reach the top
-          setScrollPos(scrollHeight - clonesHeight);
+          setScrollPos(scrollHeight - clonesHeight - 1);
           disableScroll = true;
           }
         }
@@ -99,7 +98,6 @@ class Project extends Component {
 
     const { location } = this.props;
     const { name, links, description, images, technology, backgroundColor, description2 } = this.props.project;
-    console.log('numero2', description2)
 
     const imgsArray = Array.isArray(images) ? [...images, images[0], images[1]] : [];
     let projectImages = imgsArray.map((img, index) => {
