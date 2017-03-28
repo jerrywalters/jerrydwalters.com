@@ -20,10 +20,13 @@ const Header = ({ location }) => {
         <section className="header-bio">
           <h1 className="header-bio__name">Jerry Walters</h1>
           <p className="header-bio__bio"> 
-            Hi, i'm Jerry and i'm a web developer 
+            I'm a strong front end developer, with an eye for design, and an affinity for full stack development. 
             <br /><br />
-            My strength lies in Front End Development, 
+            I've built an identity around my love for making things, and spend most of my free time working on web projects, trying to build games, or sanding bondo in my studio.
           </p>
+          <p className="header-bio__bio bio__secret">
+            I also love long coffee-fueled walks, <span className='bio__super-secret'>impulse buying a motorcycle</span>, and wrestling around with my cat River.
+          </p> 
         </section>
         <section className="header-contact">
           <img src={portrait} className="header__portrait" />

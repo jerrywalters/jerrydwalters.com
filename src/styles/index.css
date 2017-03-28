@@ -793,9 +793,9 @@ input[type="file"] {
 	/*opacity: 0.95;*/
 	z-index: 9;
 	position: relative;
-	/*-ms-transform: translateY(calc(-100%));
+	-ms-transform: translateY(calc(-100%));
 	-webkit-transform: translateY(calc(-100%));
-	transform: translateY(calc(-100%));*/
+	transform: translateY(calc(-100%));
 	transition: 0.5s;
      cursor: default;
 }
@@ -823,9 +823,10 @@ input[type="file"] {
     width: auto;
 }
 .header-bio {
-    width: 40%;
+    width: 50%;
     padding: 2rem;
     align-self: flex-start;
+    height: 85%;
 }
 .header-bio__name {
     font-size: 1.5em;
@@ -899,6 +900,24 @@ input[type="file"] {
     -ms-transform: translateY(-100%); /* IE 9 */
 	-webkit-transform: translateY(-100%); /* Safari */
 	transform: translateY(-100%);
+}
+.bio__secret { 
+    color: transparent;
+    margin-top: 1rem;
+    font-size: 0.9em;
+}
+.bio__secret:hover {
+    text-shadow: 1px 1px 1px #5d00ff;
+    font-size: 0.9em;
+    transition: all 0.2s;
+}
+.bio__super-secret {
+    color: transparent;
+    text-shadow: none;
+}
+.bio__super-secret:hover {
+    color: transparent;
+    text-shadow: 1px 1px 2px #5d00ff;
 }
 
 
