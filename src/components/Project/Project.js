@@ -45,6 +45,7 @@ class Project extends Component {
       i = 0;
 
       for (i; i < clones.length; i += 1) {
+        console.log('clones', clones)
         clonesHeight = clonesHeight + clones[i].offsetHeight;
       }
 
@@ -59,6 +60,10 @@ class Project extends Component {
       if (scrollPos <= 0) {
         setScrollPos(1); // Scroll 1 pixel to allow upwards scrolling
       }
+
+      console.log('scrollPos', scrollPos);
+      console.log('clonesHeight', clonesHeight);
+      console.log('scrollHeight', scrollHeight)
     }
 
     // Calculate variables
@@ -99,11 +104,13 @@ class Project extends Component {
     const { location } = this.props;
     const { name, links, description, images, technology, backgroundColor, description2 } = this.props.project;
 
+    // assuming atleast two images, copy for infinite loop
+    // cloning two images for looping scroll
     const imgsArray = Array.isArray(images) ? [...images, images[0], images[1]] : [];
     let projectImages = imgsArray.map((img, index) => {
       let imgClass = classNames({
         'project-images__item': true,
-        'project-images__single--clone': imgsArray.length - index <= 2,
+        'project-images__item--clone': imgsArray.length - index <= 2,
       });
       return (
         <div key={index} className={imgClass}>
@@ -111,8 +118,6 @@ class Project extends Component {
          </div>
       )
     });
-
-
 
     const projectClasses = classNames({
 			'project-single': true,
@@ -147,10 +152,11 @@ class Project extends Component {
           <h3 className="project-about__heading--secondary" >links</h3>
           { projectLinks }
         </section>
-        <section className="project-images">
-          
-          { projectImages }
-        </section>
+        <div className="project-images__container">
+          <section className="project-images">
+            { projectImages }
+          </section>
+        </div>
       </div>
     )
   }

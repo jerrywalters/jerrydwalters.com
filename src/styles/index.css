@@ -604,11 +604,9 @@ body {
 	width:20px;
 	height:20px;
 }
-
 .options__size--active {
 	border:2px solid lightgray;
 }
-
 .options__clear {
 	padding:6px 2px 2px;
 	cursor:pointer;
@@ -616,13 +614,11 @@ body {
     font-weight: 100;
     font-size: .9em;
 }
-
 .options__file-container {
 	position:relative;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
-
 .options__file {
   position: absolute;
   top: 0;
@@ -669,53 +665,57 @@ input[type="file"] {
 	display: flex;
     transform: translateX(0%);
 }
-
 .pageSlider-leave {
   transform: translateX(0%);
 }
-
 .pageSlider-leave.pageSlider-leave-active {
   transform: translate3d(110%, 0, 0);
   transition: all 500ms;
 }
-
 .pageSlider-enter {
   transform: translateX(110%);
 }
-
 .pageSlider-enter.pageSlider-enter-active {
   transform: translateX(0%);
   transition: all 500ms;
 }
-
-
 .project-single::before {
     content: '';
 }
-.project-sidebar {
-    width: 5%;
-    background-color: #fff;
+.project-images__container {
+    flex:auto;
+    display:flex;
+    align-items:center;	
+    width: 70%;
+    height: 100vh;
 }
 .project-images {
-	display: flex;
-	align-items: center;
-	padding-top: 4rem;
-	overflow-y: scroll;
-	flex-direction: column;
-	width: 60%;
     cursor: default;
+    width: 100%;
+    position: relative;
+    overflow-y: scroll;
+    height: 100%;
+}
+.project-images__item {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*top: 0;
+    left: 0;*/
 }
 .project-images::-webkit-scrollbar {
     display: none;
 }
 .project-images__single {
-	max-width: 60%;
-	margin-bottom: 10%;
+    max-width: 80%;
+    max-height: 60%
 }
 .project-about {
     color: #140026;
 	padding: 3%;
-	width: 35%;
+	width: 40%;
 	background-color: #fff;
     font-family: Helvetica, sans-serif;
     display: flex;
@@ -750,13 +750,14 @@ input[type="file"] {
     text-decoration: none;
     margin-bottom: .5rem;
     font-weight: 300;
-    color: #3366ff;
+    color: #5d00ff;
+}
+.project-about__link:visited {
+    color: #5d00ff;
 }
 .project-about__link:hover {
     color: #9e66ff;
 }
-
-
 .project-tech {
     display: flex;
     flex-direction: row;
@@ -812,12 +813,6 @@ input[type="file"] {
     width: 90%;
     margin: 0 auto;
 }
-/*.header__bottom {
-	background: rgba(0,0,0,0);
-	height: 40px;
-	color: white;
-	padding: 1rem;
-}*/
 .header__portrait {
     height: 85%;
     width: auto;
@@ -919,8 +914,6 @@ input[type="file"] {
     color: transparent;
     text-shadow: 1px 1px 2px #5d00ff;
 }
-
-
 .header::after, .header--stuck::after {
 	height: 0px;
 	width: 100%;
