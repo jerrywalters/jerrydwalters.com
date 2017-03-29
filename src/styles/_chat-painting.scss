@@ -99,8 +99,7 @@
 	background-color:black;
 }
 .options__color--active {
-	/*border:2px solid #000;*/
-    box-shadow: 0 0 6px 1px rgba(0,0,0,0.5);
+    box-shadow: 0 0 6px 1px rgba(0,0,0,0.4);
 }
 .options__color--white.options__color--active {
 	border:2px solid #fefefe;

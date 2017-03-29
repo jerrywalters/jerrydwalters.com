@@ -17,7 +17,10 @@ const ChatMessages = ({messages, uncleIsTyping}) => {
       if (message.message.startsWith('data:')){
         return (
           <li key={index} className={`client-messages__item client-messages__item--${message.author}`}>
-            <img className="client-messages__image" onDoubleClick={() => openImageNewTab(message.message)} src={message.message} />
+            <img alt="drawing" 
+                 className="client-messages__image" 
+                 onDoubleClick={() => openImageNewTab(message.message)} 
+                 src={message.message} />
           </li>
         )
       } return (

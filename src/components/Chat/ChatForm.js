@@ -8,12 +8,13 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
     let text = inputText.trim();
     if(!text || text === ' ') {
     } else {
-    sendMessage(text);
+      sendMessage(text);
     }
   }
 
   function submitByIcon(e) {
     const input = document.getElementById('chat__input');
+
     formSubmit(input.innerText);
     input.innerHTML = '';
     e.preventDefault();
@@ -21,6 +22,7 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
 
   function isClientTyping() {
     if (isTypingTimeout !== undefined) clearTimeout(isTypingTimeout);
+
     updateIsTyping(true);
     isTypingTimeout = setTimeout(function() {
       updateIsTyping(false);
@@ -29,19 +31,20 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
 
   function handleTyping(e) {
     const keyCode = e.keyCode;
-    if (keyCode == 13 && e.shiftKey) {
-    } else if (keyCode == 13) {
-    const input = document.getElementById('chat__input');
-    formSubmit(input.innerText);
-    input.innerHTML = '';
-    e.preventDefault();
+
+    if (keyCode === 13 && e.shiftKey) {
+    } else if (keyCode === 13) {
+      const input = document.getElementById('chat__input');
+      formSubmit(input.innerText);
+      input.innerHTML = '';
+      e.preventDefault();
     }
   }
 
   function attachImage(){
     var file    = document.getElementById('chat-form__file').files[0];
     var reader  = new FileReader();
-    console.log('attaching image')
+    
     reader.addEventListener("load", function () {
       sendMessage(reader.result);
     }, false);

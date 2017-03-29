@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import '../../styles/styles.scss';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import '../../styles/main.scss';
 
 import Header from '../Header/Header';
 import ChatButton from '../Chat/ChatButtonContainer';
 import ChatContainer from '../Chat/ChatContainer';
-
 import Background from '../Background/BackgroundContainer';
 
 function backHome() {

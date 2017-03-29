@@ -10,15 +10,30 @@ export default class Chat extends Component {
     const messageList = document.getElementsByClassName('client-messages');
     if(messageList) {
       console.log('scroll to top', messageList[0])
+      if(this.props.uncleIsTyping) {
+        // scroll happens immediately before isTyping is full height
+        setTimeout(function(){
+          messageList[0].scrollTop = messageList[0].scrollHeight; 
+        }, 200)
+        
+      }
       messageList[0].scrollTop = messageList[0].scrollHeight; 
     } 
   }
 
   render() {
-    const { sendMessage, isUncleOnline, uncleIsTyping, messages, isChatOpen, updateIsTyping, togglePainting, isPainting } = this.props;
+    const { 
+      sendMessage, 
+      isUncleOnline, 
+      uncleIsTyping, 
+      messages, 
+      isChatOpen, 
+      updateIsTyping, 
+      togglePainting, 
+      isPainting 
+    } = this.props;
 
     // don't allow click through to projects
-    
     function stopClickThrough(e){
       e.stopPropagation();
       e.nativeEvent.stopImmediatePropagation();
