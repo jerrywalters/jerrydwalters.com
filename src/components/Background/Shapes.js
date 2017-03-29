@@ -1,10 +1,4 @@
 import React from 'react';
-import circleBlue from './shapes/circle-blue.svg';
-import circlePurple from './shapes/circle-purple.svg';
-import zigzagBlue from './shapes/zigzag-blue.svg';
-import zigzagPurple from './shapes/zigzag-purple.svg';
-import squiggleBlue from './shapes/squiggle-blue.svg';
-import squigglePurple from './shapes/squiggle-purple.svg';
 // import face from './shapes/face.svg';
 import sock from './shapes/sock.svg';
 import glove from './shapes/glove.svg';

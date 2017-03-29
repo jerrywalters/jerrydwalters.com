@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import '../../styles/App.css';
+import '../../styles/styles.scss';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Header from '../Header/Header';
