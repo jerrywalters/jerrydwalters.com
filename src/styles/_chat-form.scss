@@ -29,7 +29,10 @@
     cursor: pointer;
     margin-left: 0.7rem;
     font-size: 18px;
-    color: #9e66ff
+    color: #5d00ff;
+    &:hover {
+        color: #9e66ff
+    }
 }
 .fa-paint-brush-gray {
     color: #ccc;
@@ -67,5 +70,5 @@
 .chat-form__actions {
     display: flex;
     align-items: flex-end;
-    border-left: 1px solid #9e66ff;
+    border-left: 1px solid #5d00ff;
 }

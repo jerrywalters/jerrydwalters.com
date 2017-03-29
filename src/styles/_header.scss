@@ -10,6 +10,11 @@
 	transition: 0.5s;
     cursor: default;
     box-shadow: 0px 6px 14px 2px rgba(0,0,0,0.4);
+    &:hover {
+        -ms-transform: translateY(0); /* IE 9 */
+        -webkit-transform: translateY(0); /* Safari */
+        transform: translateY(0);
+    }
 }
 .header__top {
 	background: #fff;
@@ -49,10 +54,10 @@
     margin-bottom: 2rem;
     text-shadow: 2px 2px 2px #5d00ff;
     color: transparent;
-}
-.header-bio__name:hover {
-    text-shadow: 2px 2px 0 #9e66ff;
-    transition: all ease-in-out 0.3s;
+    &:hover{
+        text-shadow: 2px 2px 0 #9e66ff;
+        transition: all ease-in-out 0.3s;
+    }
 }
 .header-bio__bio {
     line-height: 1.3rem;
@@ -91,19 +96,14 @@
     text-decoration: none;
     color: #5d00ff;
     cursor: pointer;
+	&:hover {
+		color: #9e66ff;
+        transform: scale(1.2);
+        transition: all 0.3s;	
+	}
 }
 .link-icon--2 {
     margin-left: 1rem;
-}
-.link-icon:hover {
-    color: #9e66ff;
-    transform: scale(1.2);
-    transition: all 0.3s;
-}
-.header:hover {
-	-ms-transform: translateY(0); /* IE 9 */
-	-webkit-transform: translateY(0); /* Safari */
-	transform: translateY(0);
 }
 .header--stuck:hover {
     -ms-transform: translateY(-100%); /* IE 9 */
@@ -114,19 +114,19 @@
     color: transparent;
     margin-top: 1rem;
     font-size: 0.9em;
-}
-.bio__secret:hover {
-    text-shadow: 1px 1px 1px #5d00ff;
-    font-size: 0.9em;
-    transition: all 0.2s;
+    &:hover {
+        text-shadow: 1px 1px 1px #5d00ff;
+        font-size: 0.9em;
+        transition: all 0.2s;
+    }
 }
 .bio__super-secret {
     color: transparent;
     text-shadow: none;
-}
-.bio__super-secret:hover {
-    color: transparent;
-    text-shadow: 1px 1px 2px #5d00ff;
+    &:hover {
+        color: transparent;
+        text-shadow: 1px 1px 2px #5d00ff;
+    }
 }
 .header::after, .header--stuck::after {
 	height: 0px;

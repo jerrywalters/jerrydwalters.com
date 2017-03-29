@@ -9,15 +9,12 @@ export default class Chat extends Component {
   componentDidUpdate() {
     const messageList = document.getElementsByClassName('client-messages');
     if(messageList) {
-      console.log('scroll to top', messageList[0])
+      // if isTyping then scroll after 200ms so that height is set properly
       if(this.props.uncleIsTyping) {
-        // scroll happens immediately before isTyping is full height
-        setTimeout(function(){
-          messageList[0].scrollTop = messageList[0].scrollHeight; 
-        }, 200)
-        
+        setTimeout(() => messageList[0].scrollTop = messageList[0].scrollHeight, 200)
       }
-      messageList[0].scrollTop = messageList[0].scrollHeight; 
+      // very slight delay here as well so height is set for images
+      setTimeout(() => messageList[0].scrollTop = messageList[0].scrollHeight, 10)
     } 
   }
 

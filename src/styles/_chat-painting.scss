@@ -76,6 +76,10 @@
 .options__color--white {
 	background-color:white;
     border: solid 2px #fefefe;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: .15rem;
 }
 .options__color--orange {
 	background-color:#ff9933;
@@ -141,11 +145,16 @@
   width: 100%;
   opacity: 0;
   cursor:pointer;
+  
 }
 .options__send, .options__attachment {
     font-size: 20px;    
     margin-bottom: 0.5rem;
     cursor:pointer;
+	color: #5d00ff;
+	&:hover {
+		color: #9e66ff;	
+	}
 }
 input[type="file"] {
     display: none;

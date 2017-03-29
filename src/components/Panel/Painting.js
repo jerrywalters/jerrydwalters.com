@@ -132,7 +132,6 @@ export function initPainting() {
       initDrawingLine(ctx);
     })
   }
-
 };
 
 function initDrawingLine(ctx){

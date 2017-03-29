@@ -67,7 +67,7 @@
     width: 4px;
     height: 4px;
     margin: 0 2px;
-    background: #9E66FF;
+    background: #5d00ff;
     border-radius: 10px;
     -webkit-animation: loader 0.9s infinite alternate;
     -moz-animation: loader 0.8s infinite alternate;
@@ -192,6 +192,8 @@
 .uncle-status--offline {
      background-color: #ff237b;
 }
+
+// open chat button
 .chat-button {
     position: absolute;
     display: flex;
@@ -206,9 +208,9 @@
     border-radius: 50%;
     cursor: pointer;
     z-index: 11;
-}
-.chat-button:hover {
-    box-shadow: 0 0 10px 1px #fff;
+    &:hover {
+        box-shadow: 0 0 10px 1px #fff;
+    }
 }
 .chat-icon {
     font-size: 1.7em;
@@ -219,7 +221,7 @@
 .fa-comment {
     transform: rotateY(180deg);
     animation: spin 4s linear infinite;
-    color: #9e66ff;
+    color: #5d00ff;
 }
 .fa-times {
     transform: rotate(360deg);
