@@ -1,0 +1,67 @@
+#container {
+    max-height: 100vh;
+}
+body {
+    overflow: hidden;
+    /*background-color: #ccd4ff;*/
+    background: #1a0033; /* For browsers that do not support gradients */
+    background: linear-gradient(to bottom right, #390080, #29004d 5%, #200039 15%, #1b0033 20%, #0d001a 60%);  
+}
+.shapes-container {
+    transform: translateY(-300px);
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+}
+.shape1 {
+    animation: gentle 12s ease-in-out 500ms infinite;
+}
+@keyframes gentle {
+    from { transform: translate(0, 0) rotate(0deg) }
+    50% { transform: translate(4px, 22px) rotate(-51deg) }
+    to { transform: translate(0, 0) rotate(0deg) }
+}
+.shape2 {
+    animation: gentleer 15s ease-in-out 1000ms infinite;
+}
+@keyframes gentleer {
+    from { transform: translate(0, 0) rotate(0deg) }
+    50% { transform: translate(9px, 18px) rotate(41deg) }
+    to { transform: translate(0, 0) rotate(0deg) }
+}
+.shape3 {
+    animation: gentler 13s ease-in-out 500ms infinite;
+}
+@keyframes gentler {
+    from { transform: translate(0, 0) }
+    25% { transform: translate(4px, 8px) }
+    50% { transform: translate(2px, 5px) }
+    75% { transform: translate(9px, 3px) }
+    to { transform: translate(0, 0) }
+}
+.shape4 {
+    animation: gentlerer 20s ease-in-out 300ms infinite;
+}
+@keyframes gentlerer {
+    from { transform: translate(0, 0) }
+    25% { transform: translate(-4px, - 7px) }
+    50% { transform: translate(7px, 8px) }
+    75% { transform: translate(-5px, 7px) }
+    to { transform: translate(0, 0) }
+}
+.shape5 {
+    animation: gentlest 17s ease-in-out 800ms infinite;
+}
+@keyframes gentlest {
+    from { transform: rotate(0deg) translate(0, 0)}
+    50% { transform: rotate(-24deg) translate(-2px, 6px) }
+    to { transform: rotate(0deg) translate(0, 0) }
+}
+.shape6 {
+    animation: gentlester 19s ease-in-out 200ms infinite;
+}
+@keyframes gentlester {
+    from { transform: rotate(0deg) translate(0, 0)}
+    50% { transform: rotate(21deg) translate(10px, 4px) }
+    to { transform: rotate(0deg) translate(0, 0) }
+}
