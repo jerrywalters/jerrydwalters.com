@@ -15,15 +15,6 @@ export function initPainting() {
   var optionBlack = document.getElementById('options__color--black');
   var optionClear = document.getElementById('options__clear');
 
-  // create gradient color
-  // gradients are for nephews, I have original ideas too
-  // var gradient=ctx.createLinearGradient(0,0,300,0);
-  //   gradient.addColorStop("0","magenta");
-  //   gradient.addColorStop("0.25","green");
-  //   gradient.addColorStop("0.5","blue");
-  //   gradient.addColorStop("0.75","yellow");
-  //   gradient.addColorStop("1.0","red");
-
   // create array of colors with associate values for loop to generate listeners
   var colorOptions = [
     {
@@ -94,7 +85,7 @@ export function initPainting() {
     ctx.lineTo(mouseX, mouseY);
     ctx.stroke();
     
-    // Don't open projects if youo accidentally click them under your canvas
+    // Don't open projects if you accidentally click them under your canvas
     e.stopPropagation();
   });
 

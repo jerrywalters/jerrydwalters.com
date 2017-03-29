@@ -7,13 +7,14 @@ import { initPainting } from './Painting';
 var emptyDataURL;
 
 class Panel extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // useless constructor
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     // wait until the transition is done so it doesn't mess up my canvas
-    // lord is there another way
+    // lord is there another way?
     setTimeout(function() {
       initPainting();
       // get dataURL of empty canvas, to compare later
@@ -23,14 +24,14 @@ class Panel extends Component {
   }
 
   render() {
-    const { sendMessage, isPainting, togglePainting } = this.props;
+    const { sendMessage, isPainting } = this.props;
     console.log('painting', isPainting);
 
     function handleImageFile() {
-      var file    = document.getElementById('options__file').files[0];
-      var canvas = document.getElementById('panel');
-      var ctx = canvas.getContext('2d');
-      var reader  = new FileReader();
+      var file = document.getElementById('options__file').files[0],
+      canvas   = document.getElementById('panel'),
+      ctx      = canvas.getContext('2d'),
+      reader   = new FileReader();
 
       reader.addEventListener("load", function () {
         var base_image = new Image();

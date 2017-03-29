@@ -1,5 +1,4 @@
 import firebaseDb, { getUserId } from '../firebaseDb';
-import { fullName } from '../nameGenerator'
 
 export const ADD_MESSAGE_TO_CONVERSATION = 'ADD_MESSAGE_TO_CONVERSATION';
 export const UPDATE_CONVERSATION = 'UPDATE_CONVERSATION';
@@ -19,7 +18,6 @@ export function openProject(projectName) {
   }
 }
 
-// probably get rid of this 
 export function initBackground() {
   return {
     type: INIT_BACKGROUND
@@ -42,7 +40,7 @@ export function updateConversation(conversation) {
 
 export function toggleChat() {
   return {
-    type: TOGGLE_CHAT,
+    type: TOGGLE_CHAT
   }
 }
 
@@ -57,7 +55,7 @@ export function updateIsTyping(typing){
     clientIsTyping: typing
   });
   return {
-    type: UPDATE_IS_TYPING,
+    type: UPDATE_IS_TYPING
   }
 }
 

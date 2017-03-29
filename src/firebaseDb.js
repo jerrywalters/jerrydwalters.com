@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import { addMessageToConversation, updateConversation } from './actions';
 import store from './index';
-import { fullName } from './nameGenerator';
+import { fullName } from './utils/nameGenerator';
 
 // Initialize Firebase
 const config = {
