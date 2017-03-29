@@ -4,6 +4,8 @@ import ChatMessages from './ChatMessages';
 import Panel from '../Panel/PanelContainer';
 import ChatForm from './ChatForm'
 
+import jerryIcon from '../../images/jerry-icon2.png'
+
 export default class Chat extends Component {
 
   componentDidUpdate() {
@@ -47,7 +49,7 @@ export default class Chat extends Component {
     return (
       <div className={chatClasses} id="chat-window">
         <header className="chat-header--client" onClick={(e) => stopClickThrough(e)}>
-            <div className="uncle-icon"></div>
+            <img src={jerryIcon} className="uncle-icon" />
             <h3 className="uncle-name">Uncle Jerry</h3>
             <span className={statusClasses}></span>
         </header> 

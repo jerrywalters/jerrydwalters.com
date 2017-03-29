@@ -16,6 +16,7 @@
     max-width: 100%;
     background-color: #fff; 
     margin: .6rem 0 .4rem;
+    cursor: default;
 }
 .client-messages__item, .client-messages__item--isTyping {
     padding: .35rem 1rem;
@@ -26,6 +27,7 @@
     font-weight: 300;
     font-size: .8em;
     line-height: 1.25em;
+    cursor: text;
 }
 .client-messages__item--client {
     margin-left: auto;
@@ -158,12 +160,11 @@
     transition: all 0.25s ease-in-out;
 }
 .uncle-icon {
-    background-color: deepskyblue;
     content: '';
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
     /*border: solid 1px darkslateblue;*/
-    border-radius: 20px;
+    // border-radius: 20px;
 }
 .uncle-name {
     color: white;
