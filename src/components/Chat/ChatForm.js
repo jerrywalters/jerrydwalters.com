@@ -9,6 +9,7 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
     if(!text || text === ' ') {
     } else {
       sendMessage(text);
+      updateIsTyping(false);
     }
   }
 
