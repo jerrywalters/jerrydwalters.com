@@ -131,6 +131,7 @@
 	z-index: 9;
 }
 @media screen and (min-width: 545px) {
+    //header 
     .header, .header__top {
         height: 500px;
     }
@@ -154,8 +155,10 @@
     .header-contact__container {
         padding: 2rem;
     }
+
 }
 @media screen and (min-width: 1036px) {
+    //header 
     .header, .header__top {
         height: 320px;
         flex-direction: row;

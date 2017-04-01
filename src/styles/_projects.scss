@@ -9,6 +9,7 @@
 	width: 100%;
 	height: 100vh;
 	display: flex;
+    flex-direction: column;
     transform: translateX(0%);
 }
 .pageSlider-leave {
@@ -32,8 +33,9 @@
     flex:auto;
     display:flex;
     align-items:center;	
-    width: 70%;
-    height: 100vh;
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
 }
 .project-images {
     cursor: default;
@@ -55,23 +57,26 @@
     display: none;
 }
 .project-images__single {
-    max-width: 80%;
-    max-height: 60%;
+    height: auto;
+    width: 90%;
+    max-width: 95%;
     -webkit-box-shadow: 0px 5px 14px 1px rgba(0,0,0,0.2);
     -moz-box-shadow: 0px 5px 14px 1px rgba(0,0,0,0.2);
     box-shadow: 0px 5px 14px 1px rgba(0,0,0,0.2);
 }
 .project-about {
     color: #140026;
-	padding: 3%;
-	width: 40%;
+	padding: 1rem;
+	width: 100%;
+    box-sizing: border-box;
 	background-color: #fff;
     font-family: Helvetica, sans-serif;
-    display: flex;
+    display: block;
     flex-direction: column;
     align-items: flex-start;
     box-shadow: 2px 0 10px 1px rgba(0,0,0,.2);
     cursor: default;
+    z-index: 99;
 }
 .project-about__heading--primary {
     margin-bottom: 2rem;
@@ -87,7 +92,7 @@
     margin-bottom: 1rem;
     background-color: #fff;
     border-bottom: 1px solid #000;
-    padding: 0.15rem 0.7rem 0.15rem 0.15rem
+    padding: 0.15rem 0.7rem 0.15rem 0.15rem;
 }
 .project-about__body {
     font-size: .95em;
@@ -106,6 +111,17 @@
 }
 .project-about__link:hover {
     color: #9e66ff;
+}
+.project-about__container {
+    display: flex;
+    flex-direction: row;
+}
+.project-about__section {
+    width: 50%;
+    max-width: 225px;
+}
+.project-about__section--tech {
+    display: none;
 }
 .project-tech {
     display: flex;
@@ -131,4 +147,41 @@
 .project-tech__link:hover {
     transition: all 0.2s;
     transform: scale(1.1)
+}
+@media screen and (min-width: 590px) {
+    .project-about__section--tech {
+        display: block;
+    }
+    .project-about__section--links {
+        padding-left: 1rem;
+    }
+}
+@media screen and (min-width: 720px) {
+    .project-single {
+        flex-direction: row;
+    }
+    .project-about {
+        width: 40%;
+        padding: 2rem;
+        box-shadow: 2px 0 10px 1px rgba(0,0,0,.2);
+    }
+    .project-about__container {
+        flex-direction: column;
+    }
+    .project-about__section {
+        width: 90%;
+        align-items: flex-start;
+    }
+    .project-about__section--links {
+        padding-left: 0;
+    }
+    .project-images__container {
+        width: 70%
+    }
+    .project-images__single {
+        width: 80%;
+        height: auto;
+        max-width: 600px;;
+
+    }
 }

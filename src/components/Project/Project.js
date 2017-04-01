@@ -125,7 +125,7 @@ class Project extends Component {
 
     // let projectImages = images.map((img, index) => <img key={index} className="project-images__single" src={img} /> );
 
-    let projectLinks = links.map((link, index) => <a key={index} className="project-about__link" href={link} target="_blank" onClick={e => e.stopPropagation()}>{link}</a>);
+    let projectLinks = links.map((link, index) => <li key={index}><a className="project-about__link" href={link} target="_blank" onClick={e => e.stopPropagation()}>{link}</a></li>);
 
     let projectTech = technology.map((tech, index) => {
       return (
@@ -145,12 +145,20 @@ class Project extends Component {
           <h2 className="project-about__heading--primary">{name}</h2>
           <p className="project-about__body">{ description }</p>
           { description2 ? <p className="project-about__body">{ description2 }</p> : '' }
-          <h3 className="project-about__heading--secondary">technology</h3>
-          <ul className="project-tech" onClick={e => e.stopPropagation()}>
-            { projectTech }
-          </ul>
-          <h3 className="project-about__heading--secondary" >links</h3>
-          { projectLinks }
+          <div className="project-about__container">
+            <div className="project-about__section project-about__section--tech">
+              <h3 className="project-about__heading--secondary">technology</h3>
+              <ul className="project-tech" onClick={e => e.stopPropagation()}>
+                { projectTech }
+              </ul>
+            </div>
+            <div className="project-about__section project-about__section--links">
+              <h3 className="project-about__heading--secondary" >links</h3>
+              <ul className="project-links">
+                { projectLinks }
+              </ul>
+            </div>
+          </div>
         </section>
         <div className="project-images__container">
           <section className="project-images">
