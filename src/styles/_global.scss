@@ -1,7 +1,7 @@
 /* dont let header push canvas down */
 #container canvas {
 	background-color: transparent;
-	-ms-transform: translateY(-500px); /* IE 9 */
-	-webkit-transform: translateY(-500px); /* Safari */
-	transform: translateY(-500px);
+	-ms-transform: translateY(-450px); /* IE 9 */
+	-webkit-transform: translateY(-450px); /* Safari */
+	transform: translateY(-450px);
 }
