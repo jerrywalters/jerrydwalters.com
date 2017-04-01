@@ -50,7 +50,7 @@ export default class Chat extends Component {
       <div className={chatClasses} id="chat-window">
         <header className="chat-header--client" onClick={(e) => stopClickThrough(e)}>
             <img src={jerryIcon} className="uncle-icon" />
-            <h3 className="uncle-name">Uncle Jerry</h3>
+            <h3 className="uncle-name">Jerry Walters</h3>
             <span className={statusClasses}></span>
         </header> 
         <div className="chat-window__content" onClick={(e) => stopClickThrough(e)}>

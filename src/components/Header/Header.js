@@ -2,8 +2,14 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import classNames from 'classnames';
 import portrait from '../../images/portrait-small.jpg'
+import portraitShort from '../../images/portrait-short.jpg';
 
 const Header = ({ location }) => {
+  let isMobile = false;
+  const width = window.innerWidth;
+  if (width < 1036) isMobile = true;
+  
+
   const headerClasses = classNames({
     'header' : true,
     'header--stuck' : location.pathname !=='/'
@@ -29,7 +35,7 @@ const Header = ({ location }) => {
           </p> 
         </section>
         <section className="header-contact">
-          <img src={portrait} className="header__portrait" />
+          <img src={isMobile ? portraitShort : portrait} className="header__portrait" />
           <div className="header-contact__container">
             <ul className="header-contact__info">
               <li className="header-contact__info--item"> jerrydwalters@gmail.com </li>
