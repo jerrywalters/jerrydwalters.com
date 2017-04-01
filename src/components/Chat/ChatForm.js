@@ -9,6 +9,7 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
     if(!text || text === ' ') {
     } else {
       sendMessage(text);
+      // tell admin that you're not typing anymore so message doesn't stack
       updateIsTyping(false);
     }
   }

@@ -4,10 +4,15 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: #ffdafa;
-    padding: 1rem 1rem .5rem 1rem;
     display: flex;
     cursor: text;
+}
+.chat-form--client {
+    background-color:  #fff;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: .6rem .8rem .6rem 1rem;
+    font-size: .85em;
 }
 .chat-form__input {
     width: 80%;
@@ -60,13 +65,6 @@
 }
 .chat-form__input:focus {
     outline: none;
-}
-.chat-form--client {
-    background-color:  #fff;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    padding: .6rem .8rem .6rem 1rem;
-    font-size: .85em;
 }
 .chat-form__actions {
     display: flex;

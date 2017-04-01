@@ -13,7 +13,7 @@ export default class Chat extends Component {
     if(messageList) {
       // very slight delay here so scrollheight is set properly for images and isTyping
       setTimeout(() => messageList[0].scrollTop = messageList[0].scrollHeight, 10)
-    } 
+    }
   }
 
   render() {
