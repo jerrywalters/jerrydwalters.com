@@ -68,7 +68,7 @@
 }
 .project-about {
     color: #140026;
-	padding: 1rem;
+	padding: 1.5rem 2rem;
 	width: 100%;
     box-sizing: border-box;
 	background-color: #fff;
@@ -87,9 +87,11 @@
     background: #fff;
     padding: .2rem 1rem .2rem .2rem;
     border-bottom: 1px solid;
+    display: inline-block;
 }
 .project-about__heading--secondary {
     font-size: 1.1em;
+    display: inline-block;
     font-weight: 200;
     margin-bottom: 1rem;
     background-color: #fff;
@@ -151,6 +153,9 @@
     transform: scale(1.1)
 }
 @media screen and (min-width: 590px) {
+    .project-about {
+        padding: 2rem 3rem 1rem 3rem;
+    }
     .project-about__section--tech {
         display: block;
     }
@@ -184,7 +189,6 @@
     .project-images__single {
         width: 80%;
         height: auto;
-        max-width: 600px;;
-
+        max-width: 600px;
     }
 }
