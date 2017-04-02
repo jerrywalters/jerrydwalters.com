@@ -17,7 +17,6 @@ const db = firebase.database();
 
 // generate a name for this fucker
 const name = fullName();
-console.log('name',name)
 let userId = getUserId();
 
 db.ref(`conversations/${userId}`).on('value', function(data) {

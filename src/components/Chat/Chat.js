@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import classNames from 'classnames';
 import ChatMessages from './ChatMessages';
 import Panel from '../Panel/PanelContainer';

@@ -19,7 +19,6 @@ class Project extends Component {
     // location.pathname===`/project/${name}` ? this.props.openProject(name)
     if(typeof this.props.params.projectName !== 'undefined' && typeof this.props.project.name === 'undefined'){
       this.props.openProject(this.props.params.projectName);
-      console.log('opening bad boy')
     }
 
     var doc = window.document,
@@ -45,7 +44,6 @@ class Project extends Component {
       i = 0;
 
       for (i; i < clones.length; i += 1) {
-        console.log('clones', clones)
         clonesHeight = clonesHeight + clones[i].offsetHeight;
       }
 
@@ -60,10 +58,6 @@ class Project extends Component {
       if (scrollPos <= 0) {
         setScrollPos(1); // Scroll 1 pixel to allow upwards scrolling
       }
-
-      console.log('scrollPos', scrollPos);
-      console.log('clonesHeight', clonesHeight);
-      console.log('scrollHeight', scrollHeight)
     }
 
     // Calculate variables

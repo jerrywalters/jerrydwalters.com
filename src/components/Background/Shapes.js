@@ -22,11 +22,36 @@ const Shapes = () => {
       return Math.floor(Math.random() * (max - min)) + min;
     }
 
+    function setNumIterations(windowWidth) {
+      var numIterations;
+      // if the expression evaluates to true, generate this number of shapes in the background
+      switch(true) {
+        case windowWidth > 1920: 
+          return numIterations = 130
+        case windowWidth > 1440:
+          return numIterations = 100
+          // break;
+        case windowWidth > 1110:
+          return numIterations = 80
+          // break;
+        case windowWidth > 800:
+          return numIterations = 60
+          // break;
+        case windowWidth < 800:
+          return numIterations = 40
+          // break;
+        default:
+          return numIterations = 60
+      }
+    }
+
     function generateShapes() {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
+      let numI = setNumIterations(windowWidth);
+      console.log(numI);
 
-      for(let i = 0; i <= 60; i++) {
+      for(let i = 0; i <= numI; i++) {
         let newShape =       
         {
             height: getRandomInt(30, 70),
@@ -42,6 +67,9 @@ const Shapes = () => {
     }
 
     generateShapes();
+    window.addEventListener('resize', function () {
+      generateShapes();
+    }, false);
 
     const generatedShapes = shapes.map(
       (shape, index) => {
