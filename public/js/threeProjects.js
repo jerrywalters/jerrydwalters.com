@@ -56,13 +56,15 @@ function onWindowResize() {
 
   // responsive models
   // morty.position.y = window.innerHeight/360;
-  morty.position.x = window.innerWidth/-510;
+  // morty.position.x = window.innerWidth/-510;
 
   // atm.position.y = window.innerHeight/-6000;
-  atm.position.x = window.innerWidth/1200;
+  // atm.position.x = window.innerWidth/1200;
+  atm.position.x = window.innerWidth/1372;
 
   // skelly.position.y = window.innerHeight/-425;
   skelly.position.x = window.innerWidth/-490;
+  skelly.position.x = window.innerWidth/-580;
 
   // praylien.position.y = window.innerHeight/2100;
   praylien.position.x = window.innerWidth/4400;

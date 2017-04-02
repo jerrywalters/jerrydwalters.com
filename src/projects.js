@@ -77,7 +77,7 @@ export const projects = [
 				link: 'https://firebase.google.com/'
 			},
 		],
-		images: [ dickPic, admin, blueberry, lemon, peach ],
+		images: [ dickPic, admin, blueberry, lemon, peach, blueberry, lemon, lemon, peach ],
 		backgroundColor: '#b3ffd9'
 	},
 	{

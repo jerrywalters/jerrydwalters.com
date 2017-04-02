@@ -43,48 +43,48 @@ function init() {
   var loader = new THREE.OBJLoader(manager);
 
   // load morty
-  loader.load(
-    // resource path
-    '../objects/morty_small.obj',
-    // pass the loaded data to the onLoad function - assumed to be object
-    // do some other shit
-    function(obj) {
-      obj.traverse(function(child) {
-        if(child instanceof THREE.Mesh) {
-          child.material.color.setHex(0x3c3c3c);
-        }
-      });
-      // add object to scene
-      obj.position.y = 1.8;
-      // obj.position.x = -2.5;
-      // obj.position.y = window.innerHeight/360;
-      obj.position.x = window.innerWidth/-510;
-      obj.position.z = 42;
-      obj.rotation.y -= 170 * Math.PI / 180;
-      // obj.rotation.x += 180 * Math.PI / 180;
-      obj.rotation.z -= 8 * Math.PI / 180;
+  // loader.load(
+  //   // resource path
+  //   '../objects/morty_small.obj',
+  //   // pass the loaded data to the onLoad function - assumed to be object
+  //   // do some other shit
+  //   function(obj) {
+  //     obj.traverse(function(child) {
+  //       if(child instanceof THREE.Mesh) {
+  //         child.material.color.setHex(0x3c3c3c);
+  //       }
+  //     });
+  //     // add object to scene
+  //     obj.position.y = 1.8;
+  //     // obj.position.x = -2.5;
+  //     // obj.position.y = window.innerHeight/360;
+  //     obj.position.x = window.innerWidth/-510;
+  //     obj.position.z = 42;
+  //     obj.rotation.y -= 170 * Math.PI / 180;
+  //     // obj.rotation.x += 180 * Math.PI / 180;
+  //     obj.rotation.z -= 8 * Math.PI / 180;
 
-      var bbox = new THREE.BoxHelper( obj, 0x552200 );
-      bbox.material.visible = false;
+  //     var bbox = new THREE.BoxHelper( obj, 0x552200 );
+  //     bbox.material.visible = false;
 
-      obj.name = 'morty';
-      bbox.name = 'morty';
-      bbox.projectName = 'resume';
-      // obj.material.transparent = true;
-      // obj.material.opacity = 1;
-      scene.add(obj);
-      scene.add(bbox);
-      models.push(obj);
-      boxes.push(bbox);
+  //     obj.name = 'morty';
+  //     bbox.name = 'morty';
+  //     bbox.projectName = 'resume';
+  //     // obj.material.transparent = true;
+  //     // obj.material.opacity = 1;
+  //     scene.add(obj);
+  //     scene.add(bbox);
+  //     models.push(obj);
+  //     boxes.push(bbox);
 
-      morty = obj;
-      // setUpTween(stove);
-    },
-    // function called when download progresses
-    onProgress,
-    // function called when download error
-    onError
-  );
+  //     morty = obj;
+  //     // setUpTween(stove);
+  //   },
+  //   // function called when download progresses
+  //   onProgress,
+  //   // function called when download error
+  //   onError
+  // );
 
   // load praylien
   loader.load(
@@ -99,10 +99,11 @@ function init() {
         }
       });
       // add object to scene
-      obj.position.y = 0.3;
+      obj.position.y = 1;
       // obj.position.x = 0.2;
       // obj.position.y = window.innerHeight/2100;
-      obj.position.x = window.innerWidth/4400;
+      // obj.position.x = window.innerWidth/4800;
+      obj.position.x = 0;
       obj.position.z = 43;
       obj.rotation.y -= 20 * Math.PI / 180;
       obj.rotation.x += 28 * Math.PI / 180;
@@ -147,7 +148,7 @@ function init() {
       obj.position.y = -0.1;
       // obj.position.x = 1;
       // obj.position.y = window.innerHeight/-6000;
-      obj.position.x = window.innerWidth/1172;
+      obj.position.x = window.innerWidth/1372;
       obj.position.z = 48;
       obj.rotation.y -= -15 * Math.PI / 180;
       obj.rotation.x += 30 * Math.PI / 180;
@@ -189,8 +190,8 @@ function init() {
         }
       });
       // add object to scene
-      obj.position.y = -1.5;
-      obj.position.x = window.innerWidth/-490;
+      obj.position.y = -1.7;
+      obj.position.x = window.innerWidth/-580;
       obj.position.z = 45.5;
       obj.rotation.y -= -40 * Math.PI / 180;
       // obj.rotation.x += 28 * Math.PI / 180;

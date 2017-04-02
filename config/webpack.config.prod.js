@@ -132,11 +132,14 @@ module.exports = {
         loader: 'babel',
         
       },
-      // {
-      //   test: /\.scss$/,
-      //   include: paths.appSrc,
-      //   loaders: ["style", "css", "sass"]
-      // },
+      // Add SASS
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract(
+            'style', // backup loader when not building .css file
+            'css!sass' // loaders to preprocess CSS
+        )
+      },
       {
           test: /\.scss$/,
           loader: ExtractTextPlugin.extract(
