@@ -3,6 +3,7 @@ import className from 'classnames';
 
 const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) => {
   let isTypingTimeout;
+  var width = window.innerWidth;
 
   function formSubmit(inputText){
     let text = inputText.trim();
@@ -56,10 +57,18 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
     }
   }
 
+  // // insurance to make sure you can't open painting on mobile
+  // function handlePainting() {
+  //   if (width < 650) {
+  //     return;
+  //   }
+  //   togglePainting();
+  // }
+
   const paintingIconClasses = className({
     'fa': true,
     'fa-paint-brush': true,
-    'fa-paint-brush-gray': isPainting,
+    'fa-paint-brush-gray': isPainting
   });
 
   return (
@@ -72,8 +81,8 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
             onKeyPress={() => isClientTyping()}>
         </div>
         <div className="chat-form__actions">
-          <div className="chat-form__icon" onClick={() => togglePainting()}>
-          <i className={paintingIconClasses} aria-hidden="true"></i> 
+          <div className="chat-form__icon chat-form__icon--painting" onClick={() => togglePainting()}>
+            <i className={paintingIconClasses} aria-hidden="true"></i> 
           </div>
           <label className="chat-form__icon">
             <i className="fa fa-paperclip" aria-hidden="true"></i>

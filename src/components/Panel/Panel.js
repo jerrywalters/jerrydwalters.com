@@ -25,7 +25,6 @@ class Panel extends Component {
 
   render() {
     const { sendMessage, isPainting } = this.props;
-    console.log('painting', isPainting);
 
     function handleImageFile() {
       var file = document.getElementById('options__file').files[0],

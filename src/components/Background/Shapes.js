@@ -49,7 +49,6 @@ const Shapes = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
       let numI = setNumIterations(windowWidth);
-      console.log(numI);
 
       for(let i = 0; i <= numI; i++) {
         let newShape =       

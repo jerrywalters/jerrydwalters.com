@@ -159,3 +159,16 @@
 input[type="file"] {
     display: none;
 }
+
+// don't show this shit on mobile
+.chat-form__icon--painting {
+	display: none;
+}
+.chat-window--painting .chat-form__icon--painting {
+	display: flex;
+}
+@media screen and (min-width: 650px) {
+	.chat-form__icon--painting {
+		display: flex;
+	}
+}
