@@ -79,8 +79,8 @@ export function getUserId(){
   let userId = '';
   let identity = '1';
   // get and or set user
-  if(localStorage.user){
-    userId = localStorage.user;
+  if(localStorage.jerryPortfolioUser){
+    userId = localStorage.jerryPortfolioUser;
     db.ref(`conversations/${userId}`).update({
       conversationId: userId,
     });
@@ -88,7 +88,7 @@ export function getUserId(){
     identity = getRandomInt(1, 6);
     userId = uid();
     
-    localStorage.user = userId;
+    localStorage.jerryPortfolioUser = userId;
     db.ref(`conversations/${userId}`).update({
       conversationId: userId,
       identity,

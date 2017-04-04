@@ -5,6 +5,8 @@ import blueberry from './images/blueberry-red.png';
 import lemon from './images/lemon-purple.png';
 import peach from './images/peach-blue.png'
 
+import admin1 from './images/admin-1.png';
+
 // portfolio-client images
 
 export const projects = [
@@ -30,7 +32,7 @@ export const projects = [
 				link: 'https://firebase.google.com/'
 			},
 		],
-		images: [ dickPic, admin, blueberry, lemon, peach ],
+		images: [ admin1, dickPic, admin, blueberry, lemon, peach ],
 		backgroundColor: '#ffc6cc'
 	},
 	{
