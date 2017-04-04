@@ -5,7 +5,12 @@ import blueberry from './images/blueberry-red.png';
 import lemon from './images/lemon-purple.png';
 import peach from './images/peach-blue.png'
 
+// admin images
 import admin1 from './images/admin-1.png';
+import admin2 from './images/admin-2.png';
+import admin3 from './images/admin-3.png';
+import adminShapes from './images/admin-shapes.png';
+import adminClose from './images/admin-close.png'
 
 // portfolio-client images
 
@@ -17,7 +22,7 @@ export const projects = [
 			'http://admin.jerrydwalters.com'
 		],
 		description: 'This project was built to allow me to chat with you and other users on jerrydwalters.com. It uses react with redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name and background generator -- to give each visitor a unique identity.',
-		description2: 'I\'m also proud to say that I designed this app myself!',
+		description2: 'I\'m also proud to say that I designed this app myself (espcially excited about the icons and background!)',
 		technology: [
 			{
 				name: 'React',
@@ -32,7 +37,7 @@ export const projects = [
 				link: 'https://firebase.google.com/'
 			},
 		],
-		images: [ admin1, dickPic, admin, blueberry, lemon, peach ],
+		images: [ adminShapes, admin1, admin2, admin3, adminClose ],
 		backgroundColor: '#ffc6cc'
 	},
 	{
