@@ -9,7 +9,7 @@ const Shapes = () => {
     let shapes = [];
     const shapeImgs = [hat, sock, glove, belt];
     let randomShape = shapeImgs[Math.floor(Math.random()*shapeImgs.length)];
-    const shapeClasses = [ 'shape1', 'shape2', 'shape3', 'shape4'];
+    const shapeClasses = [ 'shape1', 'shape2', 'shape3', 'shape4', 'shape5', 'shape6'];
 
     function getRandomShape() {
       randomShape = shapeImgs[Math.floor(Math.random()*shapeImgs.length)];

@@ -14,7 +14,8 @@ export const projects = [
 			'http://github.com/jerrywalters',
 			'http://admin.jerrydwalters.com'
 		],
-		description: 'This project was built to allow me to chat with users and easily move between all of the different conversations on jerrydwalters.com. It uses react and redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name generator -- to give each visitor a unique identity.',
+		description: 'This project was built to allow me to chat with you and other users on jerrydwalters.com. It uses react with redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name and background generator -- to give each visitor a unique identity.',
+		description2: 'I\'m also proud to say that I designed this app myself!',
 		technology: [
 			{
 				name: 'React',
@@ -62,7 +63,8 @@ export const projects = [
 			'http://github.com/jerrywalters',
 			'http://admin.jerrydwalters.com'
 		],
-		description: 'This project was built to allow me to chat with users and easily move between all of the different conversations on jerrydwalters.com. It uses react and redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name generator -- to give each visitor a unique identity.',
+		description: 'I am a Front End Developer at Capital One working on our API Platform, DevExchange. A large portion of the work I do for Capital One is UX Development on the design team. I take ideas for new features, and sometimes new products, and build them out with the technology that I think is best suited for the job and test them with our users.',
+		description2: 'That most frequently means that I do UX design, and then build apps using HTML, CSS, and JavaScript. For most projects I use React, and i\'m currently working with D3 and Three.js.',
 		technology: [
 			{
 				name: 'React',
@@ -73,9 +75,17 @@ export const projects = [
 				link: 'http://redux.js.org/'
 			},
 			{
-				name: 'Firebase',
-				link: 'https://firebase.google.com/'
+				name: 'D3',
+				link: 'https://d3js.org/'
 			},
+			{
+				name: 'Three.js',
+				link: 'https://threejs.org/'
+			},
+			{
+				name: 'Node.js',
+				link: 'https://nodejs.org/en/'
+			}
 		],
 		images: [ dickPic, admin, blueberry, lemon, peach, blueberry, lemon, lemon, peach ],
 		backgroundColor: '#b3ffd9'
@@ -86,8 +96,8 @@ export const projects = [
 			'http://github.com/jerrywalters',
 			'http://www.jerrydwalters.com'
 		],
-		description: 'This is the site you\'re on right now! Three.js is used to create a 3D scene to render objects like the cowardly dog you clicked to view this project. Once again, state is handled with React and Redux, and firebase is the realtime database for the chat app.',
-		description2: 'Did I mention the chat app is built completely from scratch? Send me a drawing! The subtle background animation is also built from scratch with vanilla JavaScript and CSS animations.',
+		description: 'This is the site you\'re on right now! Three.js is used to create a 3D scene and render objects like the sculpture you clicked to view this project. The site is built with React and uses Redux to manage state. Firebase is the realtime database for the chat app.',
+		description2: 'Did I mention that chat app is built completely from scratch? Try sending me a drawing! The shapes you see floating around in the background are randomly placed, sized, and animated using vanilla JS -- I drew them up myself in Sketch.',
 		technology: [
 			{
 				name: 'Three.js',

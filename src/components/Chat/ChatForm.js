@@ -57,7 +57,9 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
     }
   }
 
-  // // insurance to make sure you can't open painting on mobile
+  // insurance to make sure you can't open painting on mobile
+  // nevermind, this obviously runs once
+  // so if you stretch from a small screen then it no longer works
   // function handlePainting() {
   //   if (width < 650) {
   //     return;

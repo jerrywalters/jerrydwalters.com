@@ -1,7 +1,10 @@
 import firebase from 'firebase';
 import { addMessageToConversation, updateConversation } from './actions';
 import store from './index';
+
 import { fullName } from './utils/nameGenerator';
+import { getRandomInt } from './utils/utils'
+
 
 // Initialize Firebase
 const config = {
@@ -74,6 +77,7 @@ function uid(){
 
 export function getUserId(){
   let userId = '';
+  let identity = '1';
   // get and or set user
   if(localStorage.user){
     userId = localStorage.user;
@@ -81,10 +85,13 @@ export function getUserId(){
       conversationId: userId,
     });
   } else {
+    identity = getRandomInt(1, 6);
     userId = uid();
+    
     localStorage.user = userId;
     db.ref(`conversations/${userId}`).update({
       conversationId: userId,
+      identity,
       createdOn: Date.now(),
       name: name
     });
