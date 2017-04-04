@@ -117,9 +117,18 @@ class Project extends Component {
 			'project-single': true,
 	  });
 
-    // let projectImages = images.map((img, index) => <img key={index} className="project-images__single" src={img} /> );
+    let projectLinks = links.map((link, index) => {
+      // set link icon based on content
+      const iconClasses = classNames({
+        'fa': true,
+        'fa-github': link.includes('github'),
+        'fa-link' : link.includes('jerrydwalters.com')
+	     });
 
-    let projectLinks = links.map((link, index) => <li key={index}><a className="project-about__link" href={link} target="_blank" onClick={e => e.stopPropagation()}>{link}</a></li>);
+      return (
+        <li key={index}><a className="project-about__link" href={link} target="_blank" onClick={e => e.stopPropagation()}><i className={iconClasses}></i></a></li>
+      )
+    });
 
     let projectTech = technology.map((tech, index) => {
       return (

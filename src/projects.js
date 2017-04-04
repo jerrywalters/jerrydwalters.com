@@ -43,8 +43,8 @@ export const projects = [
 	{
 		name: 'resume',
 		links: [
-			'http://github.com/jerrywalters',
-			'http://admin.jerrydwalters.com'
+			'http://admin.jerrydwalters.com',
+			'https://github.com/jerrywalters/admin.jerrydwalters.com'
 		],
 		description: 'This project was built to allow me to chat with users and easily move between all of the different conversations on jerrydwalters.com. It uses react and redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name generator -- to give each visitor a unique identity.',
 		technology: [

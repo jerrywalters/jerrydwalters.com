@@ -106,17 +106,24 @@
     margin-bottom: 1rem;
     font-weight: 200;
 }
+.project-links {
+    display: flex;
+    align-items: center;
+}
 .project-about__link {
     text-decoration: none;
     margin-bottom: .5rem;
-    font-weight: 300;
-    color: #5d00ff;
-}
-.project-about__link:visited {
-    color: #5d00ff;
-}
-.project-about__link:hover {
-    color: #9e66ff;
+    margin-right: 1rem;
+    font-size: 2em;
+    color: #000;
+    transition: all 0.2s;
+        .fa {
+            &:hover {
+            color: #9e66ff;
+            transform: scale(1.2);
+            transition: all 0.3s;	
+        }
+    }
 }
 .project-about__container {
     display: flex;
