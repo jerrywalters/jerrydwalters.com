@@ -13,6 +13,28 @@ body {
     width: 100vw;
     position: absolute;
 }
+.bg-img {
+    position: absolute;
+    width: auto;
+}
+.bg-img__skelly {
+    bottom: 1.4%;
+    left: 9.1%;
+    height:484px;
+}
+.bg-img__stove {
+    height: 226px;
+    top: 7.9%;
+    left: 45.5%;
+}
+.bg-img__atm {
+    height:425px;
+    top: 24%;
+    right: 7.3%;
+}
+
+
+
 .shape1 {
     animation: gentle 12s ease-in-out 500ms infinite;
 }

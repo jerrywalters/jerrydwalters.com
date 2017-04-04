@@ -67,7 +67,7 @@ function onWindowResize() {
   skelly.position.x = window.innerWidth/-580;
 
   // praylien.position.y = window.innerHeight/2100;
-  praylien.position.x = window.innerWidth/4400;
+  praylien.position.x = 0;
 
 }
 
