@@ -1,10 +1,3 @@
-// portfolio-	admin images
-import dickPic from './images/dickpic.png';
-import admin from './images/admin.png';
-import blueberry from './images/blueberry-red.png';
-import lemon from './images/lemon-purple.png';
-import peach from './images/peach-blue.png'
-
 // admin images
 import admin1 from './images/admin-1.png';
 import admin2 from './images/admin-2.png';
@@ -12,7 +5,20 @@ import admin3 from './images/admin-3.png';
 import adminShapes from './images/admin-shapes.png';
 import adminClose from './images/admin-close.png'
 
-// portfolio-client images
+// portfolio images
+import portfolio1 from './images/portfolio-1.png';
+import portfolio2 from './images/portfolio-2.png';
+import portfolio3 from './images/portfolio-3.png';
+import portfolio4 from './images/portfolio-4.png';
+import portfolio5 from './images/portfolio-5.png';
+
+// cap1 images
+import cap1 from './images/cap-1.png';
+import cap2 from './images/cap-2.png';
+import cap3 from './images/cap-3.png';
+import cap4 from './images/cap-4.png';
+import cap5 from './images/cap-5.png';
+
 
 export const projects = [
 	{
@@ -40,30 +46,30 @@ export const projects = [
 		images: [ adminShapes, admin1, admin2, admin3, adminClose ],
 		backgroundColor: '#ffc6cc'
 	},
-	{
-		name: 'resume',
-		links: [
-			'http://admin.jerrydwalters.com',
-			'https://github.com/jerrywalters/admin.jerrydwalters.com'
-		],
-		description: 'This project was built to allow me to chat with users and easily move between all of the different conversations on jerrydwalters.com. It uses react and redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name generator -- to give each visitor a unique identity.',
-		technology: [
-			{
-				name: 'React',
-				link: 'https://facebook.github.io/react/'
-			},
-			{
-				name: 'Redux',
-				link: 'http://redux.js.org/'
-			},
-			{
-				name: 'Firebase',
-				link: 'https://firebase.google.com/'
-			},
-		],
-		images: [ dickPic, admin, blueberry, lemon, peach ],
-		backgroundColor: '#dadada'
-	},
+	// {
+	// 	name: 'resume',
+	// 	links: [
+	// 		'http://admin.jerrydwalters.com',
+	// 		'https://github.com/jerrywalters/admin.jerrydwalters.com'
+	// 	],
+	// 	description: 'This project was built to allow me to chat with users and easily move between all of the different conversations on jerrydwalters.com. It uses react and redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name generator -- to give each visitor a unique identity.',
+	// 	technology: [
+	// 		{
+	// 			name: 'React',
+	// 			link: 'https://facebook.github.io/react/'
+	// 		},
+	// 		{
+	// 			name: 'Redux',
+	// 			link: 'http://redux.js.org/'
+	// 		},
+	// 		{
+	// 			name: 'Firebase',
+	// 			link: 'https://firebase.google.com/'
+	// 		},
+	// 	],
+	// 	images: [ dickPic, admin, blueberry, lemon, peach ],
+	// 	backgroundColor: '#dadada'
+	// },
 	{
 		name: 'capital-one',
 		links: [
@@ -94,7 +100,7 @@ export const projects = [
 				link: 'https://nodejs.org/en/'
 			}
 		],
-		images: [ dickPic, admin, blueberry, lemon, peach, blueberry, lemon, lemon, peach ],
+		images: [ cap1, cap2, cap3, cap4, cap5],
 		backgroundColor: '#b3ffd9'
 	},
 	{
@@ -123,7 +129,7 @@ export const projects = [
 				link: 'https://firebase.google.com/'
 			},
 		],
-		images: [ dickPic, admin, blueberry, lemon, peach ],
+		images: [ portfolio1, portfolio2, portfolio3, portfolio4, portfolio5 ],
 		backgroundColor: '#a8d7ff'
 	}
 ]
