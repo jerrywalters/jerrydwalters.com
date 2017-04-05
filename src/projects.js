@@ -25,8 +25,8 @@ export const projects = [
 	{
 		name: 'portfolio-admin',
 		links: [
-			'http://github.com/jerrywalters',
-			'http://admin.jerrydwalters.com'
+			'https://github.com/jerrywalters/admin.jerrydwalters.com',
+			'http://admin.jerrydwalters.com/'
 		],
 		description: 'This project was built to allow me to chat with you and other users on jerrydwalters.com. It uses react with redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name and background generator -- to give each visitor a unique identity.',
 		description2: 'I\'m also proud to say that I designed this app myself (especially excited about the icons and background!)',
@@ -74,8 +74,7 @@ export const projects = [
 	{
 		name: 'capital-one',
 		links: [
-			'http://github.com/jerrywalters',
-			'http://admin.jerrydwalters.com'
+			'http://developer.capitalone.com',
 		],
 		description: 'I am a Front End Developer at Capital One working on our API Platform, DevExchange. A lot of the work I do for Capital One is UX Development on the design team. I take ideas for new features, and sometimes new products, and build them out with the technology that I think is best suited for the job and test them with our users.',
 		description2: 'That most frequently means that I do UX design, and then build apps using HTML, CSS, and JavaScript. For most projects I use React, and i\'m currently working with D3 and Three.js.',
@@ -107,8 +106,8 @@ export const projects = [
 	{
 		name: 'portfolio-client',
 		links: [
-			'http://github.com/jerrywalters',
-			'http://www.jerrydwalters.com'
+			'https://github.com/jerrywalters/jerrydwalters.com',
+			'http://www.jerrydwalters.com/'
 		],
 		description: 'This is the site you\'re on right now! Three.js is used to create a 3D scene and render objects like the sculpture you clicked to view this project. The site is built with React and uses Redux to manage state. Firebase is the realtime database for the chat app.',
 		description2: 'Did I mention that chat app is built completely from scratch? Try sending me a drawing! The shapes you see floating around in the background are randomly placed, sized, and animated using vanilla JS -- I drew them up myself in Sketch.',

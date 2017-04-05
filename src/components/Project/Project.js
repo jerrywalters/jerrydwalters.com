@@ -121,8 +121,8 @@ class Project extends Component {
       // set link icon based on content
       const iconClasses = classNames({
         'fa': true,
+        'fa-link' : link.includes('jerrydwalters.com/') || link.includes('capital'),
         'fa-github': link.includes('github'),
-        'fa-link' : link.includes('jerrydwalters.com')
 	     });
 
       return (
