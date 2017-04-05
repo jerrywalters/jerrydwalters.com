@@ -1,6 +1,5 @@
 import React from 'react';
 import Shapes from './Shapes';
-import classNames from 'classnames'
 
 import skelly from '../../images/skelly.png'
 import atm from '../../images/atm.png'
@@ -8,7 +7,6 @@ import stove from '../../images/stove.png'
 
 // this has a container because that's how I could keep it from generating a background everytime routing happened
 const Background = ({ openProject }) => {
-    console.log('projects',window.projects)
     return (
         <div>
             <Shapes />

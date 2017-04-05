@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import classNames from 'classnames';
 
 // import { projects } from '../../projects.js';
 
 class Project extends Component {
-	constructor(props){
-    super(props);
-    console.log('my props!',this.props)
-  }
-
   componentDidUpdate() {
-    
+
   }
 
   componentDidMount() {
     // let location = this.props.location.pathname
     // location.pathname===`/project/${name}` ? this.props.openProject(name)
-    if(typeof this.props.params.projectName !== 'undefined' && typeof this.props.project.name === 'undefined'){
+    if(typeof this.props.params.projectName !== 'undefined'){
       this.props.openProject(this.props.params.projectName);
     }
 
@@ -94,8 +88,7 @@ class Project extends Component {
     }
 
   render() {
-
-    const { location } = this.props;
+    // this.props.openProject(this.props.params.projectName);
     const { name, links, description, images, technology, backgroundColor, description2 } = this.props.project;
 
     // assuming atleast two images, copy for infinite loop
@@ -108,7 +101,7 @@ class Project extends Component {
       });
       return (
         <div key={index} className={imgClass}>
-          <img className="project-images__single" srcSet={img} />
+          <img alt="project" className="project-images__single" srcSet={img} />
          </div>
       )
     });

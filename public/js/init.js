@@ -1,7 +1,6 @@
 function init() {
   function hideImg(img) {
     const bgImg = document.getElementsByClassName(`bg-img__${img}`);
-    console.log('image', bgImg)
     bgImg[0].id += 'bg-img__hidden'
   }
   // const stoveImg = document.getElementsByClassName('bg-img__stove');

@@ -76,7 +76,7 @@ export const projects = [
 		links: [
 			'http://developer.capitalone.com',
 		],
-		description: 'I am a Front End Developer at Capital One working on our API Platform, DevExchange. A lot of the work I do for Capital One is UX Development on the design team. I take ideas for new features, and sometimes new products, and build them out with the technology that I think is best suited for the job and test them with our users.',
+		description: 'I am a Front End Developer at Capital One working on our API Platform, DevExchange. A lot of the work I do for Capital One is UX Development on the design team. I take ideas for new features, and sometimes new products, build them out with the technology that I think is best suited for the job, and test them with our users.',
 		description2: 'That most frequently means that I do UX design, and then build apps using HTML, CSS, and JavaScript. For most projects I use React, and i\'m currently working with D3 and Three.js.',
 		technology: [
 			{

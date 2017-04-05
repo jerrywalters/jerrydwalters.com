@@ -1,5 +1,4 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import classNames from 'classnames';
 // import portrait from '../../images/portrait-small.jpg'
 import portraitShort from '../../images/portrait-short.jpg';
@@ -36,7 +35,7 @@ const Header = ({ location }) => {
           </p> 
         </section>
         <section className="header-contact">
-          <img src={/*!isMobile ? portrait :*/ portraitShort} className="header__portrait" />
+          <img src={/*!isMobile ? portrait :*/ portraitShort} alt="jerry portrait" className="header__portrait" />
           <div className="header-contact__container">
             <ul className="header-contact__info">
               <li className="header-contact__info--item"> jerrydwalters@gmail.com </li>
