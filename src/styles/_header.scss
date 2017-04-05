@@ -139,9 +139,9 @@
         transform: translateY(-500px);
     }
     #container canvas {
-        -ms-transform: translateY(-500px); /* IE 9 */
-        -webkit-transform: translateY(-500px); /* Safari */
-        transform: translateY(-500px);
+        // -ms-transform: translateY(-500px); /* IE 9 */
+        // -webkit-transform: translateY(-500px); /* Safari */
+        // transform: translateY(-500px);
     }
     .header-bio {
         width: 500px;
@@ -179,8 +179,8 @@
         transform: translateY(-320px);
     }
     #container canvas {
-        -ms-transform: translateY(-320px); /* IE 9 */
-        -webkit-transform: translateY(-320px); /* Safari */
-        transform: translateY(-320px);
+        // -ms-transform: translateY(-320px); /* IE 9 */
+        // -webkit-transform: translateY(-320px); /* Safari */
+        // transform: translateY(-320px);
     }
 }

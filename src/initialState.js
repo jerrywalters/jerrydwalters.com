@@ -1,6 +1,7 @@
 const initialState = {
   portfolio: {
     currentProject: {
+      name: [],
       images: [],
       links: [],
       technology: []

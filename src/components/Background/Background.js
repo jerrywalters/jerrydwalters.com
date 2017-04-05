@@ -7,13 +7,26 @@ import atm from '../../images/atm.png'
 import stove from '../../images/stove.png'
 
 // this has a container because that's how I could keep it from generating a background everytime routing happened
-const Background = () => {
+const Background = ({ openProject }) => {
+    console.log('projects',window.projects)
     return (
         <div>
             <Shapes />
-            <img className="bg-img bg-img__skelly" src={skelly} alt='skelly' />
-            <img className="bg-img bg-img__atm" src={atm} alt='atm' />
-            <img className="bg-img bg-img__stove"src={stove} alt='stove' />
+            <div className="bg-img-container">
+                <img 
+                    onClick={(e)=>openProject('portfolio-client')} 
+                    className="bg-img bg-img__skelly" 
+                    src={skelly} 
+                    alt='skelly' />
+                <img onClick={(e)=>openProject('capital-one')}
+                    className="bg-img bg-img__atm" 
+                    src={atm} 
+                    alt='atm' />
+                <img onClick={(e)=>openProject('portfolio-admin')}
+                    className="bg-img bg-img__stove"
+                    src={stove} 
+                    alt='stove' />
+            </div>
         </div>
     )
 }

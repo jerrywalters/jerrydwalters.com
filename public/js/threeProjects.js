@@ -1,4 +1,3 @@
-var courageContainer, stoveContainer, broomContainer;
 var camera, scene, raycaster, renderer;
 
 // React
@@ -14,6 +13,15 @@ function openProject(projectName) {
   }
 }
 
+// found a better way!
+//  const adminImg = document.getElementsByClassName('bg-img__stove');
+//  const capImg = document.getElementsByClassName('bg-img__atm');
+//  const portfolioImg = document.getElementsByClassName('bg-img__skelly');
+
+//  portfolioImg[0].addEventListener("click", () => (openProject('portfolio-client')))
+//  adminImg[0].addEventListener("click", () => (openProject('portfolio-admin')))
+//  capImg[0].addEventListener("click", () => (openProject('capital-one')))
+
 // on click dispatch said dirty action and update my state
 function onClick(event) {
   raycaster.setFromCamera( mouse, camera );
@@ -21,7 +29,7 @@ function onClick(event) {
   if (intersects.length > 0) {
     const projectName = intersects[0].object.projectName;
     window.store.dispatch(openProject(projectName));
-  } else if (intersects.length <= 0 && window.location.pathname !== '/') window.browserHistory.push('/')
+  } 
 }
 
 // Three
@@ -60,16 +68,19 @@ function onWindowResize() {
 
   // atm.position.y = window.innerHeight/-6000;
   // atm.position.x = window.innerWidth/1200;
+  if(window.innerWidth < 700) {
+    // skelly.position.y = -1000;
+    // atm.position.y = -1000;
+    // praylien.position.y = -1000;
+  }
   atm.position.x = window.innerWidth/1372;
 
   // skelly.position.y = window.innerHeight/-425;
   skelly.position.x = window.innerWidth/-490;
   skelly.position.x = window.innerWidth/-580;
 
-  // praylien.position.y = window.innerHeight/2100;
-  praylien.position.x = 0;
+  }
 
-}
 
 function onMouseMove(event) {
 	// calculate mouse position in normalized device coordinates
@@ -82,7 +93,9 @@ function animate() {
   // from WebGL, this works like setInterval but stops running when you switch tabs!
   requestAnimationFrame(animate);
   // TWEEN.update();
-  render();
+  if(window.innerWidth > 700) {
+    render();
+  }
 }
 
 function render() {

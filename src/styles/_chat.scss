@@ -115,7 +115,8 @@
 .chat-window {
     min-width: 290px;
     height: 405px;
-    position: absolute;
+    // position: absolute;
+    position: fixed;
     bottom: 80px;
     right: 20px;
     background-color: #f7f7ff;
@@ -193,7 +194,7 @@
 
 // open chat button
 .chat-button {
-    position: absolute;
+    position: fixed;;
     display: flex;
     align-items: center;
     justify-content: center;

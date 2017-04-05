@@ -1,4 +1,11 @@
 function init() {
+  function hideImg(img) {
+    const bgImg = document.getElementsByClassName(`bg-img__${img}`);
+    console.log('image', bgImg)
+    bgImg[0].id += 'bg-img__hidden'
+  }
+  // const stoveImg = document.getElementsByClassName('bg-img__stove');
+
   container = document.getElementById('container');
 
   // PerspectiveCamera( fov, aspect, near, far )
@@ -112,7 +119,6 @@ function init() {
 
       var bbox = new THREE.BoxHelper( obj, 0xffff00 );
       bbox.material.visible = false;
-      console.log('bbox', bbox);
       obj.name = 'praylien'
       bbox.name = 'praylien'
 
@@ -123,6 +129,9 @@ function init() {
       boxes.push(bbox);
 
       praylien = obj;
+
+      // hide png of obj
+      hideImg('stove');
     },
     // function called when download progresses
     // in this case defined globally
@@ -157,7 +166,7 @@ function init() {
 
       var bbox = new THREE.BoxHelper( obj, 0xffff00 );
       bbox.material.visible = false;
-      console.log('bbox', bbox);
+
       obj.name = 'atm'
       bbox.name = 'atm'
 
@@ -168,6 +177,8 @@ function init() {
       boxes.push(bbox);
 
       atm = obj;
+
+      hideImg('atm');
     },
     // function called when download progresses
     // in this case defined globally
@@ -190,7 +201,7 @@ function init() {
         }
       });
       // add object to scene
-      obj.position.y = -1.7;
+      obj.position.y = -1.55;
       obj.position.x = window.innerWidth/-580;
       obj.position.z = 45.5;
       obj.rotation.y -= -40 * Math.PI / 180;
@@ -200,7 +211,7 @@ function init() {
 
       var bbox = new THREE.BoxHelper( obj, 0xffff00 );
       bbox.material.visible = false;
-      console.log('bbox', bbox);
+
       obj.name = 'skelly'
       bbox.name = 'skelly'
 
@@ -211,6 +222,8 @@ function init() {
       boxes.push(bbox);
 
       skelly = obj;
+
+      hideImg('skelly');
     },
     // function called when download progresses
     // in this case defined globally

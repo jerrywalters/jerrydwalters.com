@@ -27,7 +27,7 @@ const Shapes = () => {
       // if the expression evaluates to true, generate this number of shapes in the background
       switch(true) {
         case windowWidth > 1920: 
-          return numIterations = 130
+          return numIterations = 140
         case windowWidth > 1440:
           return numIterations = 100
           // break;
@@ -38,10 +38,10 @@ const Shapes = () => {
           return numIterations = 60
           // break;
         case windowWidth < 800:
-          return numIterations = 40
+          return numIterations = 30
           // break;
         default:
-          return numIterations = 60
+          return numIterations = 50
       }
     }
 
@@ -50,13 +50,15 @@ const Shapes = () => {
       const windowHeight = window.innerHeight;
       let numI = setNumIterations(windowWidth);
 
+      let shapesWidth = windowWidth < 700 ? windowWidth + 60 : windowWidth + 400;
+
       for(let i = 0; i <= numI; i++) {
         let newShape =       
         {
             height: getRandomInt(30, 70),
             width: getRandomInt(30, 70),
-            posX: getRandomInt(1, windowWidth),
-            posY: getRandomInt(1, windowHeight),
+            posX: getRandomInt(-20, shapesWidth),
+            posY: getRandomInt(-20, windowHeight + 80),
             transform: `rotate(${getRandomInt(0, 360)}deg)`,
             // fucking lol at me being too lazy to just not make another function 
             opacity: `0.${getRandomInt(25, 70)}`
