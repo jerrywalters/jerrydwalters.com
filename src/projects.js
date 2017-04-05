@@ -11,6 +11,7 @@ import portfolio2 from './images/portfolio-2.png';
 import portfolio3 from './images/portfolio-3.png';
 import portfolio4 from './images/portfolio-4.png';
 import portfolio5 from './images/portfolio-5.png';
+import portfolio6 from './images/portfolio-6.png';
 
 // cap1 images
 import cap1 from './images/cap-1.png';
@@ -28,7 +29,7 @@ export const projects = [
 			'http://admin.jerrydwalters.com'
 		],
 		description: 'This project was built to allow me to chat with you and other users on jerrydwalters.com. It uses react with redux to manage state, firebase as a realtime database, and various custom scripts -- such as a random name and background generator -- to give each visitor a unique identity.',
-		description2: 'I\'m also proud to say that I designed this app myself (espcially excited about the icons and background!)',
+		description2: 'I\'m also proud to say that I designed this app myself (especially excited about the icons and background!)',
 		technology: [
 			{
 				name: 'React',
@@ -76,7 +77,7 @@ export const projects = [
 			'http://github.com/jerrywalters',
 			'http://admin.jerrydwalters.com'
 		],
-		description: 'I am a Front End Developer at Capital One working on our API Platform, DevExchange. A large portion of the work I do for Capital One is UX Development on the design team. I take ideas for new features, and sometimes new products, and build them out with the technology that I think is best suited for the job and test them with our users.',
+		description: 'I am a Front End Developer at Capital One working on our API Platform, DevExchange. A lot of the work I do for Capital One is UX Development on the design team. I take ideas for new features, and sometimes new products, and build them out with the technology that I think is best suited for the job and test them with our users.',
 		description2: 'That most frequently means that I do UX design, and then build apps using HTML, CSS, and JavaScript. For most projects I use React, and i\'m currently working with D3 and Three.js.',
 		technology: [
 			{
@@ -129,7 +130,7 @@ export const projects = [
 				link: 'https://firebase.google.com/'
 			},
 		],
-		images: [ portfolio1, portfolio2, portfolio3, portfolio4, portfolio5 ],
+		images: [ portfolio1, portfolio2, portfolio5, portfolio3, portfolio6, portfolio4 ],
 		backgroundColor: '#a8d7ff'
 	}
 ]
