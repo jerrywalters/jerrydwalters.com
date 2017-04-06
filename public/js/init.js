@@ -27,17 +27,13 @@ function init() {
   // handles and keeps track of loaded and pending data
   var manager = new THREE.LoadingManager();
   manager.onProgress = function(item, loaded, total) {
-    console.log(item, loaded, total)
   };
 
   // Texture( image, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy )
   var texture = new THREE.Texture();
 
   var onProgress = function(xhr) {
-    if(xhr.lengthComputable) {
-      var percentComplete = xhr.loaded/xhr.total*100;
-      console.log(Math.round(percentComplete, 2) + '% downloaded');
-    }
+
   };
 
   var onError = function(xhr) {

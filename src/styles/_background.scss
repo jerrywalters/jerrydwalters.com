@@ -4,6 +4,8 @@
 }
 body {
     overflow: hidden;
+    width: 100%;
+    height:100%;
     /*background-color: #ccd4ff;*/
     background: #1a0033; /* For browsers that do not support gradients */
     background: linear-gradient(to bottom right, #390080, #29004d 5%, #200039 15%, #1b0033 20%, #0d001a 60%);  
@@ -70,9 +72,9 @@ body {
 }
 @media screen and (min-width: 700px) {
     body {
-        overflow: hidden;
+        // overflow: hidden;
         // height: 100vh;
-        // width: 100vw;
+    //    width: 100vw;
     }
     // .chat-button {
     //     position: absolute;
