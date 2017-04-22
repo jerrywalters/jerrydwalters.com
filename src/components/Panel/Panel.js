@@ -1,94 +1,94 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import { initPainting } from './Painting';
+import React, { Component } from 'react'
+import classNames from 'classnames'
+import { initPainting } from './Painting'
 
 //this works out here :/ but hey! it works!
 // set emptyDataURL globally
-var emptyDataURL;
+var emptyDataURL
 
 class Panel extends Component {
   // useless constructor
   // constructor(props) {
-  //   super(props);
+  //   super(props)
   // }
 
   componentDidMount() {
     // wait until the transition is done so it doesn't mess up my canvas
     // lord is there another way?
     setTimeout(function() {
-      initPainting();
+      initPainting()
       // get dataURL of empty canvas, to compare later
-      let canvas = document.getElementById('panel');
-      emptyDataURL = canvas.toDataURL();
+      let canvas = document.getElementById('panel')
+      emptyDataURL = canvas.toDataURL()
     }, 200)
   }
 
   render() {
-    const { sendMessage, isPainting } = this.props;
+    const { sendMessage, isPainting } = this.props
 
     function handleImageFile() {
       var file = document.getElementById('options__file').files[0],
       canvas   = document.getElementById('panel'),
       ctx      = canvas.getContext('2d'),
-      reader   = new FileReader();
+      reader   = new FileReader()
 
       reader.addEventListener("load", function () {
-        var base_image = new Image();
-        base_image.src = reader.result;
+        var base_image = new Image()
+        base_image.src = reader.result
         base_image.onload = function(){
-          var width = base_image.width;
-          var height = base_image.height;
-          var ratio = calculateAspectRatioFit(width, height, canvas.width, canvas.height);
-          var scaledWidth = ratio * width;
-          var scaledHeight = ratio * height;
-          ctx.drawImage(base_image, 0, 0, width, height, 0, 0, scaledWidth, scaledHeight);
-          ctx.beginPath();
+          var width = base_image.width
+          var height = base_image.height
+          var ratio = calculateAspectRatioFit(width, height, canvas.width, canvas.height)
+          var scaledWidth = ratio * width
+          var scaledHeight = ratio * height
+          ctx.drawImage(base_image, 0, 0, width, height, 0, 0, scaledWidth, scaledHeight)
+          ctx.beginPath()
         }
-      }, false);
+      }, false)
 
       if (file) {
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file)
       }
     }
 
     function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
-      var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-      return ratio;
+      var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight)
+      return ratio
     }
 
     function submitImage() {
-      var canvas = document.getElementById('panel');
-      var ctx = canvas.getContext('2d');
-      var dataURL = canvas.toDataURL();
-      var optionBlack = document.getElementById('options__color--black');
-      var optionTen = document.getElementById('options__size--ten');
+      var canvas = document.getElementById('panel')
+      var ctx = canvas.getContext('2d')
+      var dataURL = canvas.toDataURL()
+      var optionBlack = document.getElementById('options__color--black')
+      var optionTen = document.getElementById('options__size--ten')
       // only send this message if the dataURL doesn't match the empty canvas
       if(dataURL !== emptyDataURL) {
-        sendMessage(dataURL);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
-        ctx.lineWidth = "10";
-        ctx.lineJoin = ctx.lineCap = 'round';
-        ctx.strokeStyle = "black"; 
-        removeClassFromElements('.options__color--active');
-        removeClassFromElements('.options__size--active');
-        optionTen.classList.add('options__size--active');
-        optionBlack.classList.add('options__color--active');
+        sendMessage(dataURL)
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.beginPath()
+        ctx.lineWidth = "10"
+        ctx.lineJoin = ctx.lineCap = 'round'
+        ctx.strokeStyle = "black" 
+        removeClassFromElements('.options__color--active')
+        removeClassFromElements('.options__size--active')
+        optionTen.classList.add('options__size--active')
+        optionBlack.classList.add('options__color--active')
       }
     }
 
     function removeClassFromElements(selector){
-      var className = selector.startsWith('.') === true ? selector.substr(1) : selector;
-      var active = [].slice.call(document.querySelectorAll(selector));
+      var className = selector.startsWith('.') === true ? selector.substr(1) : selector
+      var active = [].slice.call(document.querySelectorAll(selector))
       active.forEach(function(el){
-        el.classList.remove(className);
-      });
+        el.classList.remove(className)
+      })
     }
 
     const panelClasses = classNames({
       'panel-container': true,
       'panel-container--painting': isPainting,
-    });
+    })
 
     return (
       <div className={panelClasses}>

@@ -1,5 +1,5 @@
 import { INIT_BACKGROUND } from '../actions'
-const OPEN_PROJECT = 'OPEN_PROJECT'; 
+const OPEN_PROJECT = 'OPEN_PROJECT'
 
 const portfolioReducer = (state = {}, action) => {
   switch (action.type) {
@@ -13,8 +13,8 @@ const portfolioReducer = (state = {}, action) => {
         shapesGenerated: true
       });
     default:
-      return state;
+      return state
   }
 }
 
-export default portfolioReducer;
+export default portfolioReducer

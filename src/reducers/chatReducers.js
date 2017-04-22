@@ -10,18 +10,18 @@ const chatReducer = (state = {}, action) => {
     case TOGGLE_CHAT:
       return Object.assign({}, state, {
           isChatOpen: !state.isChatOpen,
-      });
+      })
     case TOGGLE_PAINTING:
       return Object.assign({}, state, {
         isPainting: !state.isPainting
-      });
+      })
     case ADD_MESSAGE_TO_CONVERSATION:
       return Object.assign({}, state, {
         conversation:
           Object.assign({}, state.conversation, {
             messages: [...state.conversation.messages, action.message]
           })
-      });
+      })
     case UPDATE_CONVERSATION:
       return Object.assign({}, state, {
         conversation: {
@@ -30,10 +30,10 @@ const chatReducer = (state = {}, action) => {
           lastChat: action.conversation.lastChat,
           messages: state.conversation.messages
         }
-      });
+      })
    default:
-    return state;
+    return state
   }
 }
 
-export default chatReducer;
+export default chatReducer

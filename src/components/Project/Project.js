@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
+import React, { Component } from 'react'
+import classNames from 'classnames'
 
-// import { projects } from '../../projects.js';
+// import { projects } from '../../projects.js'
 
 class Project extends Component {
   componentDidUpdate() {
@@ -11,104 +11,105 @@ class Project extends Component {
   componentDidMount() {
     // let location = this.props.location.pathname
     // location.pathname===`/project/${name}` ? this.props.openProject(name)
-    if(typeof this.props.params.projectName !== 'undefined'){
-      this.props.openProject(this.props.params.projectName);
+    if(typeof this.props.params.projectName !== 'undefined') {
+      this.props.openProject(this.props.params.projectName)
     }
 
-    var doc = window.document,
-    context = doc.getElementsByClassName('project-images')[0],
-    clones = context.getElementsByClassName('project-images__item--clone'),
-    disableScroll = false,
-    scrollHeight = 0,
-    scrollPos = 0,
-    clonesHeight = 0,
-    i = 0;
-    setScrollPos(1);
+    const doc = window.document
+    let context = doc.getElementsByClassName('project-images')[0]
+    let clones = context.getElementsByClassName('project-images__item--clone')
+    let disableScroll = false
+    let scrollHeight = 0
+    let scrollPos = 0
+    let clonesHeight = 0
+    let i = 0
+    setScrollPos(1)
 
     function getScrollPos() {
-      return (context.pageYOffset || context.scrollTop) - (context.clientTop || 0);
+      return (context.pageYOffset || context.scrollTop) - (context.clientTop || 0)
     }
 
     function setScrollPos(pos) {
-      context.scrollTop = pos;
+      context.scrollTop = pos
     }
 
     function getClonesHeight() {
-      clonesHeight = 0;
-      i = 0;
+      clonesHeight = 0
+      i = 0
 
       for (i; i < clones.length; i += 1) {
-        clonesHeight = clonesHeight + clones[i].offsetHeight;
+        clonesHeight += clones[i].offsetHeight
       }
 
-      return clonesHeight;
+      return clonesHeight
     }
 
     function reCalc() {
-      scrollPos = getScrollPos();
-      scrollHeight = context.scrollHeight;
-      clonesHeight = getClonesHeight();
+      scrollPos = getScrollPos()
+      scrollHeight = context.scrollHeight
+      clonesHeight = getClonesHeight()
 
       if (scrollPos <= 0) {
-        setScrollPos(1); // Scroll 1 pixel to allow upwards scrolling
+        setScrollPos(1) // Scroll 1 pixel to allow upwards scrolling
       }
     }
 
     // Calculate variables
-    window.requestAnimationFrame(reCalc);
+    window.requestAnimationFrame(reCalc)
 
     function scrollUpdate() {
       if (!disableScroll) {
-        scrollPos = getScrollPos();
+        scrollPos = getScrollPos()
         if (clonesHeight + scrollPos >= scrollHeight) {
-          setScrollPos(1); // Scroll down 1 pixel to allow upwards scrolling
-          disableScroll = true;
+          setScrollPos(1) // Scroll down 1 pixel to allow upwards scrolling
+          disableScroll = true
         } else if (scrollPos <= 0) {
           // Scroll to the bottom when you reach the top
-          setScrollPos(scrollHeight - clonesHeight - 1);
-          disableScroll = true;
+          setScrollPos(scrollHeight - clonesHeight - 1)
+          disableScroll = true
           }
         }
 
         if (disableScroll) {
           // Disable scroll-jumping for a short time to avoid flickering
           window.setTimeout(function () {
-            disableScroll = false;
-          }, 40);
+            disableScroll = false
+          }, 40)
         }
       }
 
       context.addEventListener('scroll', function () {
-        window.requestAnimationFrame(scrollUpdate);
-      }, false);
+        window.requestAnimationFrame(scrollUpdate)
+      }, false)
 
       window.addEventListener('resize', function () {
-        window.requestAnimationFrame(reCalc);
-      }, false);
+        window.requestAnimationFrame(reCalc)
+      }, false)
     }
 
   render() {
-    // this.props.openProject(this.props.params.projectName);
-    const { name, links, description, images, technology, backgroundColor, description2 } = this.props.project;
+    // this.props.openProject(this.props.params.projectName)
+    const { name, links, description, images, technology, backgroundColor, description2 } = this.props.project
 
     // assuming atleast two images, copy for infinite loop
     // cloning two images for looping scroll
-    const imgsArray = Array.isArray(images) ? [...images, images[0], images[1]] : [];
+    const imgsArray = Array.isArray(images) ? [...images, images[0], images[1]] : []
+
     let projectImages = imgsArray.map((img, index) => {
       let imgClass = classNames({
         'project-images__item': true,
         'project-images__item--clone': imgsArray.length - index <= 2,
-      });
+      })
       return (
         <div key={index} className={imgClass}>
           <img alt="project" className="project-images__single" srcSet={img} />
          </div>
       )
-    });
+    })
 
     const projectClasses = classNames({
 			'project-single': true,
-	  });
+	  })
 
     let projectLinks = links.map((link, index) => {
       // set link icon based on content
@@ -116,22 +117,22 @@ class Project extends Component {
         'fa': true,
         'fa-link' : link.includes('jerrydwalters.com/') || link.includes('capital'),
         'fa-github': link.includes('github'),
-	     });
+	     })
 
       return (
         <li key={index}><a className="project-about__link" href={link} target="_blank" onClick={e => e.stopPropagation()}><i className={iconClasses}></i></a></li>
       )
-    });
+    })
 
     let projectTech = technology.map((tech, index) => {
       return (
         <li key={ index } className="project-tech__item"><a className="project-tech__link" target="_blank" href={tech.link}>{ tech.name }</a></li>
       )
-    });
+    })
 
-    function stopClickThrough(e){
-      e.stopPropagation();
-      e.nativeEvent.stopImmediatePropagation();
+    function stopClickThrough(e) {
+      e.stopPropagation()
+      e.nativeEvent.stopImmediatePropagation()
       window.browserHistory.push('/')
     }
 

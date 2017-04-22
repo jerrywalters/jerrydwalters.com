@@ -1,25 +1,25 @@
-import { connect } from 'react-redux';
-import Project from './Project';
+import { connect } from 'react-redux'
+import Project from './Project'
 
-import { openProject } from '../../actions';
+import { openProject } from '../../actions'
 
 const mapStateToProps = (state) => {
   return {
     project: state.portfolio.currentProject,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
     openProject: (project) => {
-      dispatch(openProject(project));
+      dispatch(openProject(project))
     },
-  };
-};
+  }
+}
 
 const ProjectContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Project);
+)(Project)
 
-export default ProjectContainer;
+export default ProjectContainer
