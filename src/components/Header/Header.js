@@ -1,23 +1,23 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from 'react'
+import classNames from 'classnames'
 // import portrait from '../../images/portrait-small.jpg'
-import portraitShort from '../../images/portrait-short.jpg';
+import portraitShort from '../../images/portrait-short.jpg'
 
 const Header = ({ location }) => {
   // for smaller portrait
-  // let isMobile = false;
-  // const width = window.innerWidth;
-  // if (width < 1036) isMobile = true;
+  // let isMobile = false
+  // const width = window.innerWidth
+  // if (width < 1036) isMobile = true
   
 
   const headerClasses = classNames({
     'header' : true,
     'header--stuck' : location.pathname !=='/'
-  });
+  })
 
-  function stopClickThrough(e){
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+  function stopClickThrough(e) {
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
   }
 
   return (
@@ -52,4 +52,4 @@ const Header = ({ location }) => {
   )
 }
 
-export default Header;
+export default Header

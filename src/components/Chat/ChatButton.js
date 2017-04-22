@@ -1,8 +1,8 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from 'react'
+import classNames from 'classnames'
 
-const ChatButton = ({ toggleChat, isChatOpen }) =>  {
-
+const ChatButton = ({ toggleChat, isChatOpen }) => {
+  
   const chatIconClasses = classNames({
     'fa' : true,
     'chat-icon' : true,
@@ -14,7 +14,7 @@ const ChatButton = ({ toggleChat, isChatOpen }) =>  {
     <div className="chat-button" onClick={() => toggleChat()}>
       <i className={chatIconClasses} aria-hidden="true"></i>
     </div>
-  );
+  )
 }
 
-export default ChatButton;
+export default ChatButton

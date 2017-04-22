@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import classNames from 'classnames';
-import ChatMessages from './ChatMessages';
-import Panel from '../Panel/PanelContainer';
+import classNames from 'classnames'
+import ChatMessages from './ChatMessages'
+import Panel from '../Panel/PanelContainer'
 import ChatForm from './ChatForm'
 
 import jerryIcon from '../../images/jerry-icon2.png'
@@ -10,7 +10,7 @@ import jerryIcon from '../../images/jerry-icon2.png'
 export default class Chat extends Component {
 
   componentDidUpdate() {
-    const messageList = document.getElementsByClassName('client-messages');
+    const messageList = document.getElementsByClassName('client-messages')
     if(messageList) {
       // very slight delay here so scrollheight is set properly for images and isTyping
       setTimeout(() => messageList[0].scrollTop = messageList[0].scrollHeight, 10)
@@ -18,28 +18,19 @@ export default class Chat extends Component {
   }
 
   render() {
-    const { 
-      sendMessage, 
-      isUncleOnline, 
-      uncleIsTyping, 
-      messages, 
-      isChatOpen, 
-      updateIsTyping, 
-      togglePainting, 
-      isPainting 
-    } = this.props;
+    const { sendMessage, isUncleOnline, uncleIsTyping, messages, isChatOpen, updateIsTyping, togglePainting,isPainting } = this.props
 
     // don't allow click through to projects
-    function stopClickThrough(e){
-      e.stopPropagation();
-      e.nativeEvent.stopImmediatePropagation();
+    function stopClickThrough(e) {
+      e.stopPropagation()
+      e.nativeEvent.stopImmediatePropagation()
     }
 
     const chatClasses = classNames({
       'chat-window': true,
       'chat-window--painting' : isPainting,
       'hidden' : !isChatOpen
-    });
+    })
 
     const statusClasses = classNames({
       'uncle-status' : true,
