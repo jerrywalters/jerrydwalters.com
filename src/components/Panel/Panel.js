@@ -2,20 +2,17 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { initPainting } from './Painting'
 
-//this works out here :/ but hey! it works!
+// this works out here :/ but hey! it works!
 // set emptyDataURL globally
 var emptyDataURL
 
+// TODO: read more about 'class extends' and try to avoid constructors
 class Panel extends Component {
-  // useless constructor
-  // constructor(props) {
-  //   super(props)
-  // }
 
   componentDidMount() {
     // wait until the transition is done so it doesn't mess up my canvas
     // lord is there another way?
-    setTimeout(function() {
+    setTimeout(() => {
       initPainting()
       // get dataURL of empty canvas, to compare later
       let canvas = document.getElementById('panel')
@@ -27,20 +24,20 @@ class Panel extends Component {
     const { sendMessage, isPainting } = this.props
 
     function handleImageFile() {
-      var file = document.getElementById('options__file').files[0],
-      canvas   = document.getElementById('panel'),
-      ctx      = canvas.getContext('2d'),
-      reader   = new FileReader()
+      let file = document.getElementById('options__file').files[0]
+      const canvas = document.getElementById('panel')
+      const ctx = canvas.getContext('2d')
+      const reader = new FileReader()
 
       reader.addEventListener("load", function () {
         var base_image = new Image()
         base_image.src = reader.result
         base_image.onload = function(){
-          var width = base_image.width
-          var height = base_image.height
-          var ratio = calculateAspectRatioFit(width, height, canvas.width, canvas.height)
-          var scaledWidth = ratio * width
-          var scaledHeight = ratio * height
+          let width = base_image.width
+          let height = base_image.height
+          let ratio = calculateAspectRatioFit(width, height, canvas.width, canvas.height)
+          let scaledWidth = ratio * width
+          let scaledHeight = ratio * height
           ctx.drawImage(base_image, 0, 0, width, height, 0, 0, scaledWidth, scaledHeight)
           ctx.beginPath()
         }
@@ -52,16 +49,16 @@ class Panel extends Component {
     }
 
     function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
-      var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight)
+      let ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight)
       return ratio
     }
 
     function submitImage() {
-      var canvas = document.getElementById('panel')
-      var ctx = canvas.getContext('2d')
-      var dataURL = canvas.toDataURL()
-      var optionBlack = document.getElementById('options__color--black')
-      var optionTen = document.getElementById('options__size--ten')
+      const canvas = document.getElementById('panel')
+      const ctx = canvas.getContext('2d')
+      const dataURL = canvas.toDataURL()
+      const optionBlack = document.getElementById('options__color--black')
+      const optionTen = document.getElementById('options__size--ten')
       // only send this message if the dataURL doesn't match the empty canvas
       if(dataURL !== emptyDataURL) {
         sendMessage(dataURL)
@@ -78,9 +75,9 @@ class Panel extends Component {
     }
 
     function removeClassFromElements(selector){
-      var className = selector.startsWith('.') === true ? selector.substr(1) : selector
-      var active = [].slice.call(document.querySelectorAll(selector))
-      active.forEach(function(el){
+      let className = selector.startsWith('.') === true ? selector.substr(1) : selector
+      let active = [].slice.call(document.querySelectorAll(selector))
+      active.forEach((el) => {
         el.classList.remove(className)
       })
     }
