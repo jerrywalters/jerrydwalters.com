@@ -1,24 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-// import './styles/App.css';
-import { Provider } from 'react-redux';
+import React from 'react'
+import ReactDOM from 'react-dom'
+// import './styles/App.css'
+import { Provider } from 'react-redux'
 import { configureStore } from './store'
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-import { projects } from './projects'; 
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+import { projects } from './projects' 
 
-import App from './components/App/App';
+import App from './components/App/App'
 import Project from './components/Project/ProjectContainer'
 
-const store = configureStore();
-const mountApp = document.getElementById('root');
+const store = configureStore()
+const mountApp = document.getElementById('root')
 
 const MockIndex = () => {
   return <div></div>
 }
 
-window.store = store;
-window.browserHistory = browserHistory;
-window.projects = projects;
+window.store = store
+window.browserHistory = browserHistory
+window.projects = projects
 
 ReactDOM.render(
   <Provider store={store}>
@@ -31,6 +31,6 @@ ReactDOM.render(
     </Router>
   </Provider>,
   mountApp
-);
+)
 
-export default store;
+export default store

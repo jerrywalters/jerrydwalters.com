@@ -1,5 +1,5 @@
-import React from 'react';
-import Shapes from './Shapes';
+import React from 'react'
+import Shapes from './Shapes'
 
 import skelly from '../../images/skelly.png'
 import atm from '../../images/atm.png'
@@ -29,4 +29,4 @@ const Background = ({ openProject }) => {
     )
 }
 
-export default Background;
+export default Background

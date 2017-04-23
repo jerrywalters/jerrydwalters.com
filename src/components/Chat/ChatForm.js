@@ -1,59 +1,58 @@
-import React from 'react';
-import className from 'classnames';
+import React from 'react'
+import className from 'classnames'
 
 const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) => {
-  let isTypingTimeout;
-  var width = window.innerWidth;
+  let isTypingTimeout
 
   function formSubmit(inputText){
-    let text = inputText.trim();
+    let text = inputText.trim()
     if(!text || text === ' ') {
     } else {
-      sendMessage(text);
+      sendMessage(text)
       // tell admin that you're not typing anymore so message doesn't stack
-      updateIsTyping(false);
+      updateIsTyping(false)
     }
   }
 
   function submitByIcon(e) {
-    const input = document.getElementById('chat__input');
+    const input = document.getElementById('chat__input')
 
-    formSubmit(input.innerText);
-    input.innerHTML = '';
-    e.preventDefault();
+    formSubmit(input.innerText)
+    input.innerHTML = ''
+    e.preventDefault()
   }
 
   function isClientTyping() {
-    if (isTypingTimeout !== undefined) clearTimeout(isTypingTimeout);
+    if (isTypingTimeout !== undefined) clearTimeout(isTypingTimeout)
 
-    updateIsTyping(true);
+    updateIsTyping(true)
     isTypingTimeout = setTimeout(function() {
-      updateIsTyping(false);
-    }, 2000);
+      updateIsTyping(false)
+    }, 2000)
   }
 
   function handleTyping(e) {
-    const keyCode = e.keyCode;
+    const keyCode = e.keyCode
 
     if (keyCode === 13 && e.shiftKey) {
     } else if (keyCode === 13) {
-      const input = document.getElementById('chat__input');
-      formSubmit(input.innerText);
-      input.innerHTML = '';
-      e.preventDefault();
+      const input = document.getElementById('chat__input')
+      formSubmit(input.innerText)
+      input.innerHTML = ''
+      e.preventDefault()
     }
   }
 
   function attachImage(){
-    var file    = document.getElementById('chat-form__file').files[0];
-    var reader  = new FileReader();
+    var file    = document.getElementById('chat-form__file').files[0]
+    var reader  = new FileReader()
     
     reader.addEventListener("load", function () {
-      sendMessage(reader.result);
-    }, false);
+      sendMessage(reader.result)
+    }, false)
 
     if (file) {
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file)
     }
   }
 
@@ -62,16 +61,16 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
   // so if you stretch from a small screen then it no longer works
   // function handlePainting() {
   //   if (width < 650) {
-  //     return;
+  //     return
   //   }
-  //   togglePainting();
+  //   togglePainting()
   // }
 
   const paintingIconClasses = className({
     'fa': true,
     'fa-paint-brush': true,
     'fa-paint-brush-gray': isPainting
-  });
+  })
 
   return (
     <form className="chat-form chat-form--client">
@@ -100,4 +99,4 @@ const ChatForm = ({ sendMessage, togglePainting, isPainting, updateIsTyping}) =>
   )
 }
 
-export default ChatForm;
+export default ChatForm

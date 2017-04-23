@@ -1,9 +1,13 @@
-import firstNames from './firstNames';
-import lastNames from './lastNames';
+import firstNames from './firstNames'
+import lastNames from './lastNames'
 
 export function random(array) {
-  var i = Math.floor(Math.random() * array.length);
-  return array[i];
+  let i = Math.floor(Math.random() * array.length)
+  return array[i]
 }
 
-export var fullName = () => random(firstNames) + ' ' + random(lastNames)
+export const fullName = () => {
+  const firstName = random(firstNames)
+  const lastName = random(lastNames)
+  return `${firstName} ${lastName}`
+}

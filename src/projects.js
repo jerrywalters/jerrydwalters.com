@@ -1,24 +1,24 @@
 // admin images
-import admin1 from './images/admin-1.png';
-import admin2 from './images/admin-2.png';
-import admin3 from './images/admin-3.png';
-import adminShapes from './images/admin-shapes.png';
+import admin1 from './images/admin-1.png'
+import admin2 from './images/admin-2.png'
+import admin3 from './images/admin-3.png'
+import adminShapes from './images/admin-shapes.png'
 import adminClose from './images/admin-close.png'
 
 // portfolio images
-import portfolio1 from './images/portfolio-1.png';
-import portfolio2 from './images/portfolio-2.png';
-import portfolio3 from './images/portfolio-3.png';
-import portfolio4 from './images/portfolio-4.png';
-import portfolio5 from './images/portfolio-5.png';
-import portfolio6 from './images/portfolio-6.png';
+import portfolio1 from './images/portfolio-1.png'
+import portfolio2 from './images/portfolio-2.png'
+import portfolio3 from './images/portfolio-3.png'
+import portfolio4 from './images/portfolio-4.png'
+import portfolio5 from './images/portfolio-5.png'
+import portfolio6 from './images/portfolio-6.png'
 
 // cap1 images
-import cap1 from './images/cap-1.png';
-import cap2 from './images/cap-2.png';
-import cap3 from './images/cap-3.png';
-import cap4 from './images/cap-4.png';
-import cap5 from './images/cap-5.png';
+import cap1 from './images/cap-1.png'
+import cap2 from './images/cap-2.png'
+import cap3 from './images/cap-3.png'
+import cap4 from './images/cap-4.png'
+import cap5 from './images/cap-5.png'
 
 
 export const projects = [

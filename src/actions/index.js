@@ -1,17 +1,17 @@
-import firebaseDb, { getUserId } from '../firebaseDb';
+import firebaseDb, { getUserId } from '../firebaseDb'
 
-export const ADD_MESSAGE_TO_CONVERSATION = 'ADD_MESSAGE_TO_CONVERSATION';
-export const UPDATE_CONVERSATION = 'UPDATE_CONVERSATION';
-export const TOGGLE_CHAT = 'TOGGLE_CHAT';
-export const TOGGLE_PAINTING = 'TOGGLE_PAINTING';
-export const SEND_MESSAGE = 'SEND_MESSAGE';
-export const UPDATE_IS_TYPING = 'UPDATE_IS_TYPING';
-export const OPEN_PROJECT = 'OPEN_PROJECT';
-export const INIT_BACKGROUND = 'INIT_BACKGROUND';
+export const ADD_MESSAGE_TO_CONVERSATION = 'ADD_MESSAGE_TO_CONVERSATION'
+export const UPDATE_CONVERSATION = 'UPDATE_CONVERSATION'
+export const TOGGLE_CHAT = 'TOGGLE_CHAT'
+export const TOGGLE_PAINTING = 'TOGGLE_PAINTING'
+export const SEND_MESSAGE = 'SEND_MESSAGE'
+export const UPDATE_IS_TYPING = 'UPDATE_IS_TYPING'
+export const OPEN_PROJECT = 'OPEN_PROJECT'
+export const INIT_BACKGROUND = 'INIT_BACKGROUND'
 
 export function openProject(projectName) {
   window.browserHistory.push(`/project/${projectName}`)
-  let projects = window.projects;
+  let projects = window.projects
   return {
     type: OPEN_PROJECT,
     project: projects[projects.findIndex(project => project.name === projectName)]
@@ -53,7 +53,7 @@ export function togglePainting() {
 export function updateIsTyping(typing){
   firebaseDb.ref(`conversations/${getUserId()}`).update({
     clientIsTyping: typing
-  });
+  })
   return {
     type: UPDATE_IS_TYPING
   }
@@ -67,7 +67,7 @@ export function sendMessage(message) {
     conversationId: getUserId(),
     createdOn: Date.now(),
   }, function(){
-    console.log('success');
+    console.log('success')
   })
   return {
     type: SEND_MESSAGE
