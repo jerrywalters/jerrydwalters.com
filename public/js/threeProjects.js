@@ -1,6 +1,5 @@
 var camera
 var scene
-var raycaster
 var renderer
 
 // React
@@ -36,10 +35,10 @@ function onClick(event) {
 }
 
 // declare objects that exist
-const morty
-const skelly
-const atm
-const praylien
+let morty
+let skelly
+let atm
+let praylien
 let models = []
 let boxes = []
 
