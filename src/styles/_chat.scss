@@ -117,8 +117,8 @@
     height: 405px;
     position: absolute;
     // position: fixed;
-    bottom: 80px;
-    right: 20px;
+    bottom: 94px;
+    right: 24px;
     background-color: #f7f7ff;
     border-radius: 5px;
     z-index: 11;
@@ -198,11 +198,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    bottom: 20px;
-    right: 20px;
+    bottom: 24px;
+    right: 24px;
     content: 'open';
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     background-color: #e1f1ff;
     border-radius: 50%;
     cursor: pointer;
@@ -223,11 +223,22 @@
     color: #5d00ff;
 }
 .fa-times {
-    transform: rotate(360deg);
+    transform: rotateZ(90deg);
+    animation: twirl .1s linear; 
     transition: all 0.3s;
     color: #300065;
 }
 @keyframes spin {
     from {transform:rotateY(180deg);}
     to {transform:rotateY(540deg);}
+}
+@keyframes twirl {
+    from { 
+        transform:rotateZ(0deg);
+        opacity: .1;
+    }
+    to {
+        transform:rotateZ(90deg);
+        opacity: 1;
+    }
 }
