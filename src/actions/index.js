@@ -61,13 +61,17 @@ export function updateIsTyping(typing){
 
 // pushes message to firebase
 export function sendMessage(message) {
+  let userId = getUserId()
   firebaseDb.ref('messages').push({
     message,
     author: 'client',
-    conversationId: getUserId(),
+    conversationId: userId,
     createdOn: Date.now(),
   }, function(){
     console.log('success')
+  })
+  firebaseDb.ref(`conversations/${userId}`).update({
+    adminNewMessage: true
   })
   return {
     type: SEND_MESSAGE

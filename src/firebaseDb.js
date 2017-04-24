@@ -31,7 +31,7 @@ db.ref(`conversations/${userId}`).on('value', function(data) {
     conversationId,
     isUncleOnline,
     uncleIsTyping,
-    lastChat
+    lastChat,
   }
   store.dispatch(updateConversation(conversation))
 })
@@ -93,7 +93,9 @@ export function getUserId(){
       conversationId: userId,
       identity,
       createdOn: Date.now(),
-      name: name
+      name: name,
+      adminNewMessage: true,
+      clientNewMessage: true
     })
   }
   return userId
