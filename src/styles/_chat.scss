@@ -194,7 +194,7 @@
 
 // open chat button
 .chat-button {
-    position: fixed;;
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -211,6 +211,24 @@
         box-shadow: 0 0 10px 1px #fff;
     }
 }
+.chat-button--newMessage::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-color: #d31d4b;
+    border: 6px solid #fc3f6e;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    z-index: 9999;
+    animation: blip ease-in-out 2s infinite;
+}
+@keyframes blip {
+    0% {transform:scale(1);}
+    50% {transform:scale(1.25);}
+    100% {transform:scale(1);}
+}
 .chat-icon {
     font-size: 1.7em;
     font-weight: 100;
@@ -219,7 +237,7 @@
 }
 .fa-comment {
     transform: rotateY(180deg);
-    animation: spin 4s linear infinite;
+    // animation: spin 4s linear infinite;
     color: #5d00ff;
 }
 .fa-times {

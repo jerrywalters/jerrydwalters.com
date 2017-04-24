@@ -25,10 +25,12 @@ const chatReducer = (state = {}, action) => {
     case UPDATE_CONVERSATION:
       return Object.assign({}, state, {
         conversation: {
+          conversationId: action.conversation.conversationId,
           uncleIsTyping: action.conversation.uncleIsTyping,
           isUncleOnline: action.conversation.isUncleOnline,
           lastChat: action.conversation.lastChat,
-          messages: state.conversation.messages
+          messages: state.conversation.messages,
+          clientNewMessage: action.conversation.clientNewMessage
         }
       })
    default:

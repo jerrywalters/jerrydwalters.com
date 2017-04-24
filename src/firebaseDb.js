@@ -27,11 +27,13 @@ db.ref(`conversations/${userId}`).on('value', function(data) {
   const isUncleOnline = data.val().isUncleOnline
   const uncleIsTyping = data.val().uncleIsTyping
   const lastChat = data.val().lastChat
+  const clientNewMessage = data.val().clientNewMessage
   const conversation = {
     conversationId,
     isUncleOnline,
     uncleIsTyping,
     lastChat,
+    clientNewMessage
   }
   store.dispatch(updateConversation(conversation))
 })

@@ -1,5 +1,6 @@
 import firebaseDb, { getUserId } from '../firebaseDb'
 
+export const UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE'
 export const ADD_MESSAGE_TO_CONVERSATION = 'ADD_MESSAGE_TO_CONVERSATION'
 export const UPDATE_CONVERSATION = 'UPDATE_CONVERSATION'
 export const TOGGLE_CHAT = 'TOGGLE_CHAT'
@@ -8,6 +9,16 @@ export const SEND_MESSAGE = 'SEND_MESSAGE'
 export const UPDATE_IS_TYPING = 'UPDATE_IS_TYPING'
 export const OPEN_PROJECT = 'OPEN_PROJECT'
 export const INIT_BACKGROUND = 'INIT_BACKGROUND'
+
+export function updateNewMessage(conversationId, newMessage) {
+  let convoRef = firebaseDb.ref('conversations/' + conversationId)
+  convoRef.update({
+    clientNewMessage: newMessage
+  })
+  return {
+    type: UPDATE_NEW_MESSAGE
+  }
+}
 
 export function openProject(projectName) {
   window.browserHistory.push(`/project/${projectName}`)
