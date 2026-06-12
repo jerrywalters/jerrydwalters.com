@@ -29,8 +29,9 @@ const TINTS: [number, number, number][] = [
 
 function palette(theme: string) {
   if (theme === 'light') {
-    // faint specks slightly darker than the off-white background
-    return { base: [70, 86, 96] as [number, number, number], maxAlpha: 0.16, tintChance: 0 };
+    // faint specks slightly darker than the off-white background — enough to
+    // read as a deliberate starfield, still low-contrast
+    return { base: [48, 66, 80] as [number, number, number], maxAlpha: 0.28, tintChance: 0 };
   }
   // soft cyan-white just above the near-black background
   return { base: [198, 226, 226] as [number, number, number], maxAlpha: 0.5, tintChance: 0.12 };
