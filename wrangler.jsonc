@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "jerrydwalters-com",
+  "name": "personal-site",
   "main": "worker/index.ts",
   "compatibility_date": "2026-06-01",
 
