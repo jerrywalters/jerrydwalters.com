@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import { readdirSync, existsSync, readFileSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+
+type Tier = 'no-build' | 'built';
+interface Project {
+  slug: string;
+  title: string;
+  blurb?: string;
+  tier: Tier;
+}
+
+const root = process.cwd();
+
+function readMeta(dir: string): { title?: string; blurb?: string } {
+  const metaPath = join(dir, 'meta.json');
+  if (!existsSync(metaPath)) return {};
+  try {
+    return JSON.parse(readFileSync(metaPath, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Scan a base directory for project folders. A folder counts as a project
+ * only if it contains `requiredFile` (index.html for no-build, package.json
+ * for built) — this naturally excludes shared asset folders like public/models.
+ */
+function scan(baseDir: string, tier: Tier, requiredFile: string): Project[] {
+  const abs = join(root, baseDir);
+  if (!existsSync(abs)) return [];
+  return readdirSync(abs)
+    .filter((name) => {
+      const dir = join(abs, name);
+      return statSync(dir).isDirectory() && existsSync(join(dir, requiredFile));
+    })
+    .map((name) => {
+      const meta = readMeta(join(abs, name));
+      return { slug: name, tier, title: meta.title ?? name, blurb: meta.blurb };
+    });
+}
+
+const projects: Project[] = [
+  ...scan('public', 'no-build', 'index.html'),
+  ...scan('projects', 'built', 'package.json'),
+].sort((a, b) => a.title.localeCompare(b.title));
+---
+
+<Base title="Projects · Jerry Walters" fixed={false}>
+  <section class="projects">
+    <h1>projects</h1>
+    <p class="lede">Little apps and game prototypes. Built to see what sticks.</p>
+
+    {
+      projects.length === 0 ? (
+        <p class="empty">Nothing here yet — check back soon.</p>
+      ) : (
+        <ul class="grid">
+          {projects.map((p) => (
+            <li>
+              <a href={`/${p.slug}`}>
+                <span class="title">{p.title}</span>
+                {p.blurb && <span class="blurb">{p.blurb}</span>}
+                <span class="tier">{p.tier}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</Base>
+
+<style>
+  .projects {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 4rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.4rem;
+  }
+
+  .lede {
+    color: var(--muted);
+    margin: 0 0 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .empty {
+    color: var(--muted);
+  }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 0.75rem;
+  }
+
+  .grid a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    height: 100%;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--hairline);
+    border-radius: 0.75rem;
+    color: var(--fg);
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .grid a:hover {
+    border-color: var(--fg);
+    transform: translateY(-2px);
+  }
+
+  .title {
+    font-weight: 600;
+  }
+
+  .blurb {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.35;
+  }
+
+  .tier {
+    margin-top: auto;
+    align-self: flex-start;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 0.1rem 0.5rem;
+  }
+</style>
