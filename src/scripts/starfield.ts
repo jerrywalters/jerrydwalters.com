@@ -1,7 +1,8 @@
 // Subtle, slowly-drifting starfield behind the whole umbrella.
-// Smooth sub-pixel "sky rotation" drift (like stars wheeling overnight),
-// theme-aware colored stars, respects prefers-reduced-motion, pauses when
-// the tab is hidden.
+// Crisp pixel "+" stars, but positions snapped to the DEVICE-pixel grid (much
+// finer than the art-pixel grid), so the slow sky-drift stays smooth without
+// going fully soft. Theme-aware colored stars, livelier twinkle, respects
+// prefers-reduced-motion, pauses when the tab is hidden.
 
 interface StarColor {
   rgb: [number, number, number];
@@ -11,7 +12,6 @@ interface StarColor {
 const ROT_SPEED = 0.00055; // rad/sec — gentle sky drift
 const DENSITY = 1 / 6500; // visible stars per CSS px²
 const MAX_STARS = 2200;
-const BRIGHT_CHANCE = 0.1; // fraction that get diffraction spikes
 
 // Stellar colours, same order in both themes so a star keeps its identity when
 // you toggle. Dark = luminous tints on near-black; light = deeper, more
@@ -36,71 +36,14 @@ interface Star {
   cosA: number;
   sinA: number;
   colorIdx: number;
-  bright: boolean;
-  scale: number;
+  size: 0 | 1 | 2; // 0 = dot, 1 = +, 2 = big + with outer arms + diagonals
   baseAlpha: number;
   twAmp: number;
   twSpeed: number;
   twPhase: number;
 }
 
-interface Sprite {
-  canvas: HTMLCanvasElement;
-  size: number;
-}
-
 const isLight = () => document.documentElement.dataset.theme === 'light';
-
-// Pre-render a star to an offscreen canvas once; drawing it at sub-pixel
-// positions (with smoothing) is what makes the drift glide instead of jump.
-function makeSprite(rgb: [number, number, number], bright: boolean, light: boolean): Sprite {
-  const size = bright ? 40 : 16;
-  const c = document.createElement('canvas');
-  c.width = c.height = size;
-  const g = c.getContext('2d')!;
-  const cx = size / 2;
-  const cy = size / 2;
-  const [r, gn, b] = rgb;
-
-  const coreR = bright ? 5.5 : 3.4;
-  const glow = g.createRadialGradient(cx, cy, 0, cx, cy, coreR);
-  glow.addColorStop(0, `rgba(${r},${gn},${b},1)`);
-  glow.addColorStop(0.45, `rgba(${r},${gn},${b},0.55)`);
-  glow.addColorStop(1, `rgba(${r},${gn},${b},0)`);
-  g.fillStyle = glow;
-  g.fillRect(0, 0, size, size);
-
-  if (bright) {
-    const len = size / 2 - 1;
-    g.lineCap = 'round';
-    g.lineWidth = 1.1;
-    const ends: [number, number][] = [
-      [cx, cy - len],
-      [cx, cy + len],
-      [cx - len, cy],
-      [cx + len, cy],
-    ];
-    for (const [x2, y2] of ends) {
-      const sg = g.createLinearGradient(cx, cy, x2, y2);
-      sg.addColorStop(0, `rgba(${r},${gn},${b},0.8)`);
-      sg.addColorStop(1, `rgba(${r},${gn},${b},0)`);
-      g.strokeStyle = sg;
-      g.beginPath();
-      g.moveTo(cx, cy);
-      g.lineTo(x2, y2);
-      g.stroke();
-    }
-    // hot white core for dark mode only (would look wrong on a light bg)
-    if (!light) {
-      const hot = g.createRadialGradient(cx, cy, 0, cx, cy, 2.4);
-      hot.addColorStop(0, 'rgba(255,255,255,0.95)');
-      hot.addColorStop(1, `rgba(${r},${gn},${b},0)`);
-      g.fillStyle = hot;
-      g.fillRect(0, 0, size, size);
-    }
-  }
-  return { canvas: c, size };
-}
 
 export function initStarfield(): void {
   const canvas = document.getElementById('starfield') as HTMLCanvasElement | null;
@@ -111,25 +54,22 @@ export function initStarfield(): void {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rand = (lo: number, hi: number) => lo + Math.random() * (hi - lo);
 
+  let dpr = 1;
   let cssW = 0;
   let cssH = 0;
   let pivotX = 0;
   let pivotY = 0;
+  let unit = 2; // pixel-block size in DEVICE px (the "chunkiness")
   let stars: Star[] = [];
   let colors: StarColor[] = isLight() ? LIGHT_COLORS : DARK_COLORS;
-  let maxAlpha = isLight() ? 0.6 : 0.55;
-  let sprites: Sprite[][] = [];
+  let maxAlpha = isLight() ? 0.58 : 0.5;
   const startT = performance.now();
   let running = true;
 
-  function buildSprites() {
+  function applyTheme() {
     const light = isLight();
     colors = light ? LIGHT_COLORS : DARK_COLORS;
-    maxAlpha = light ? 0.6 : 0.55;
-    sprites = colors.map((col) => [
-      makeSprite(col.rgb, false, light),
-      makeSprite(col.rgb, true, light),
-    ]);
+    maxAlpha = light ? 0.58 : 0.5;
   }
 
   function pickColor(): number {
@@ -143,12 +83,16 @@ export function initStarfield(): void {
   }
 
   function build() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     cssW = window.innerWidth;
     cssH = window.innerHeight;
+    // Draw in DEVICE pixels (identity transform) so blocks land on the device
+    // grid and stay crisp; positions snap to whole device px → fine, smooth steps.
     canvas.width = Math.round(cssW * dpr);
     canvas.height = Math.round(cssH * dpr);
-    ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx!.setTransform(1, 0, 0, 1, 0, 0);
+    ctx!.imageSmoothingEnabled = false;
+    unit = Math.max(2, Math.round(1.7 * dpr)); // ~1.7 CSS px chunk
 
     // Pivot off the bottom-right corner → rotation reads as a slow one-way arc.
     pivotX = cssW * 1.25;
@@ -161,15 +105,15 @@ export function initStarfield(): void {
     for (let i = 0; i < count; i++) {
       const rr = Math.sqrt(rMin * rMin + Math.random() * (rMax * rMax - rMin * rMin));
       const a = rand(0, Math.PI * 2);
-      const bright = Math.random() < BRIGHT_CHANCE;
+      const roll = Math.random();
+      const size: 0 | 1 | 2 = roll > 0.93 ? 2 : roll > 0.74 ? 1 : 0;
       stars.push({
         r: rr,
         cosA: Math.cos(a),
         sinA: Math.sin(a),
         colorIdx: pickColor(),
-        bright,
-        scale: bright ? rand(0.7, 1.15) : rand(0.55, 1.1),
-        baseAlpha: rand(0.35, 1) * (bright ? 1 : 0.85),
+        size,
+        baseAlpha: rand(0.4, 1) * (size === 0 ? 0.8 : 1),
         twAmp: rand(0.4, 0.95),
         twSpeed: rand(0.6, 2.4),
         twPhase: rand(0, Math.PI * 2),
@@ -177,8 +121,39 @@ export function initStarfield(): void {
     }
   }
 
+  function block(dx: number, dy: number, a: number, rgb: [number, number, number]) {
+    if (a <= 0.004) return;
+    ctx!.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`;
+    ctx!.fillRect(dx, dy, unit, unit);
+  }
+
+  function drawStar(cx: number, cy: number, size: number, alpha: number, rgb: [number, number, number]) {
+    const h = unit >> 1;
+    const u = unit;
+    block(cx - h, cy - h, alpha, rgb); // bright core
+    if (size >= 1) {
+      const a1 = alpha * 0.5;
+      block(cx - h - u, cy - h, a1, rgb);
+      block(cx - h + u, cy - h, a1, rgb);
+      block(cx - h, cy - h - u, a1, rgb);
+      block(cx - h, cy - h + u, a1, rgb);
+    }
+    if (size >= 2) {
+      const a2 = alpha * 0.24;
+      block(cx - h - 2 * u, cy - h, a2, rgb);
+      block(cx - h + 2 * u, cy - h, a2, rgb);
+      block(cx - h, cy - h - 2 * u, a2, rgb);
+      block(cx - h, cy - h + 2 * u, a2, rgb);
+      const a3 = alpha * 0.12; // faint diagonal glints
+      block(cx - h - u, cy - h - u, a3, rgb);
+      block(cx - h + u, cy - h - u, a3, rgb);
+      block(cx - h - u, cy - h + u, a3, rgb);
+      block(cx - h + u, cy - h + u, a3, rgb);
+    }
+  }
+
   function draw(t: number) {
-    ctx!.clearRect(0, 0, cssW, cssH);
+    ctx!.clearRect(0, 0, canvas.width, canvas.height);
     const ang = reduce ? 0 : t * ROT_SPEED;
     const cos = Math.cos(ang);
     const sin = Math.sin(ang);
@@ -186,7 +161,7 @@ export function initStarfield(): void {
     for (const s of stars) {
       const x = pivotX + s.r * (s.cosA * cos - s.sinA * sin);
       const y = pivotY + s.r * (s.sinA * cos + s.cosA * sin);
-      if (x < -30 || y < -30 || x > cssW + 30 || y > cssH + 30) continue;
+      if (x < -8 || y < -8 || x > cssW + 8 || y > cssH + 8) continue;
 
       // two flicker frequencies → a livelier, less regular twinkle
       const tw = reduce
@@ -194,15 +169,14 @@ export function initStarfield(): void {
         : 0.5 +
           0.34 * Math.sin(t * s.twSpeed + s.twPhase) +
           0.16 * Math.sin(t * s.twSpeed * 2.7 + s.twPhase * 1.6);
-      const alpha = maxAlpha * s.baseAlpha * (1 - s.twAmp + s.twAmp * tw);
+      const alpha = maxAlpha * s.baseAlpha * tw;
       if (alpha <= 0.004) continue;
 
-      const sp = sprites[s.colorIdx][s.bright ? 1 : 0];
-      const d = sp.size * s.scale;
-      ctx!.globalAlpha = alpha;
-      ctx!.drawImage(sp.canvas, x - d / 2, y - d / 2, d, d);
+      // snap centre to the device-pixel grid → crisp blocks, fine motion steps
+      const cx = Math.round(x * dpr);
+      const cy = Math.round(y * dpr);
+      drawStar(cx, cy, s.size, alpha, colors[s.colorIdx].rgb);
     }
-    ctx!.globalAlpha = 1;
   }
 
   function frame(now: number) {
@@ -212,7 +186,7 @@ export function initStarfield(): void {
   }
 
   new MutationObserver(() => {
-    buildSprites();
+    applyTheme();
     if (reduce) draw((performance.now() - startT) / 1000);
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
@@ -234,7 +208,7 @@ export function initStarfield(): void {
     }
   });
 
-  buildSprites();
+  applyTheme();
   build();
   if (reduce) draw(0);
   else requestAnimationFrame(frame);
