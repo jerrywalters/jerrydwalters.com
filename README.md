@@ -85,8 +85,9 @@ the `Bindings` type in `worker/index.ts`.
 Hosted on **Cloudflare Workers** (static assets + the `/api/*` Hono worker).
 
 ```bash
-pnpm cf:dev     # run the worker + assets locally (workerd) → http://localhost:8788
-pnpm deploy     # wrangler deploy (needs `wrangler login` once)
+pnpm cf:dev      # run the worker + assets locally (workerd) → http://localhost:8788
+pnpm run deploy  # wrangler deploy (needs `wrangler login` once)
+                 # note: `pnpm run deploy`, not `pnpm deploy` (that's a pnpm built-in)
 ```
 
 Preferred: connect the repo to **Workers Builds** in the Cloudflare dashboard so every

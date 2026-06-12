@@ -27,15 +27,16 @@ Nothing is deployed yet — that needs your Cloudflare account. Order below matt
 
 **Option A — Workers Builds (recommended; gives push-to-deploy CI + preview URLs):**
 1. Cloudflare dashboard → **Workers & Pages → Create → Connect to Git**.
-2. Pick `jerrywalters/jerrydwalters.com`. Build command: `pnpm build`. It auto-detects
-   `wrangler.jsonc` and deploys.
+2. Pick `jerrywalters/jerrydwalters.com`. **Build command:** `pnpm build` ·
+   **Deploy command:** `npx wrangler deploy` · **Root directory:** default (`/`).
+   (pnpm install is automatic — detected from the lockfile.)
 3. Turn on **non-production branch builds** (Settings → Builds) if you want PR preview URLs.
 
 **Option B — one-off from your machine (fastest):**
 ```bash
 cd ~/personal-projects/jerrydwalters.com
 wrangler login        # one-time browser auth
-pnpm deploy           # → https://jerrydwalters-com.<account>.workers.dev
+pnpm run deploy       # → https://jerrydwalters-com.<account>.workers.dev
 ```
 
 **Either way, verify the workers.dev URL:** plunger landing, `/projects`, `/catch/`,
