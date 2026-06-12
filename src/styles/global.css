@@ -19,7 +19,7 @@
   box-sizing: border-box;
 }
 
-/* Subtle pixel starfield behind everything (drawn by scripts/starfield.ts) */
+/* Subtle drifting starfield behind everything (drawn by scripts/starfield.ts) */
 .starfield {
   position: fixed;
   inset: 0;
@@ -27,7 +27,6 @@
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  image-rendering: pixelated;
 }
 
 html,
