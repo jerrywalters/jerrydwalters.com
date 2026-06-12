@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  /** Set false on interior pages that should scroll normally. */
+  fixed?: boolean;
+}
+
+const { title = 'Jerry Walters', fixed = true } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Jerry Walters — personal site and a hub of small apps and game prototypes." />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {fixed && <style>{`html,body{overflow:hidden}`}</style>}
+    {/* Apply theme before paint to avoid a flash (dark is the default). */}
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          document.documentElement.dataset.theme =
+            stored === 'light' || stored === 'dark' ? stored : 'dark';
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <p class="site-name">{title}</p>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme"></button>
+
+    <slot />
+
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById('theme-toggle');
+        function render() {
+          var t = document.documentElement.dataset.theme;
+          btn.textContent = t === 'dark' ? '☀' : '☾';
+          btn.setAttribute(
+            'aria-label',
+            t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          );
+        }
+        render();
+        btn.addEventListener('click', function () {
+          var next =
+            document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {}
+          render();
+        });
+      })();
+    </script>
+  </body>
+</html>
