@@ -4,6 +4,13 @@
   "main": "worker/index.ts",
   "compatibility_date": "2026-06-01",
 
+  // Custom domains — apex + www both serve this Worker. On deploy, Cloudflare
+  // provisions the DNS records + TLS certs automatically (zone must be active).
+  "routes": [
+    { "pattern": "jerrydwalters.com", "custom_domain": true },
+    { "pattern": "www.jerrydwalters.com", "custom_domain": true }
+  ],
+
   // Static site (dist/) served free from the edge; the Worker (main) only runs
   // for /api/* thanks to run_worker_first. Everything else bypasses the Worker.
   "assets": {
