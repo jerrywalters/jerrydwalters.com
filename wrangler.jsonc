@@ -4,6 +4,10 @@
   "main": "worker/index.ts",
   "compatibility_date": "2026-06-01",
 
+  // Per-branch preview URLs on workers.dev (needs the workers.dev subdomain
+  // enabled in the dashboard, + non-production branch builds in Workers Builds).
+  "preview_urls": true,
+
   // Custom domains — apex + www both serve this Worker. On deploy, Cloudflare
   // provisions the DNS records + TLS certs automatically (zone must be active).
   "routes": [
