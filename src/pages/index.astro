@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Scene from '../components/Scene.tsx';
 ---
 
 <Base title="Jerry Walters">
   <main class="stage">
-    {/* The spinning 3D plunger island mounts here (next task). */}
+    <Scene client:only="react" />
   </main>
 </Base>
