@@ -1,39 +1,105 @@
-// Subtle, slowly-rotating pixel starfield behind the whole umbrella.
-// Theme-aware (dark/light), low-contrast, crisp pixels, respects
-// prefers-reduced-motion, pauses when the tab is hidden.
+// Subtle, slowly-drifting starfield behind the whole umbrella.
+// Smooth sub-pixel "sky rotation" drift (like stars wheeling overnight),
+// theme-aware colored stars, respects prefers-reduced-motion, pauses when
+// the tab is hidden.
 
-interface Star {
-  r: number; // polar radius from the off-screen rotation pivot (art-pixels)
-  cosA: number;
-  sinA: number;
-  size: 0 | 1 | 2; // 0 = dot, 1 = small +, 2 = big + (with optional ring)
-  baseAlpha: number;
-  twAmp: number; // twinkle depth (0..1)
-  twSpeed: number;
-  twPhase: number;
-  tint: [number, number, number] | null;
-  ring: boolean;
+interface StarColor {
+  rgb: [number, number, number];
+  weight: number;
 }
 
-const PIXEL = 2; // art-pixel size in CSS px (chunkiness)
-const ROT_SPEED = 0.0009; // rad/sec — a slow rotating sky
-const DENSITY = 1 / 2600; // visible stars per art-pixel²
-const MAX_STARS = 4000;
+const ROT_SPEED = 0.00055; // rad/sec — gentle sky drift
+const DENSITY = 1 / 6500; // visible stars per CSS px²
+const MAX_STARS = 2200;
+const BRIGHT_CHANCE = 0.1; // fraction that get diffraction spikes
 
-const TINTS: [number, number, number][] = [
-  [120, 200, 255], // cool blue
-  [255, 184, 140], // warm
-  [255, 150, 200], // pink
-  [160, 255, 180], // green
+// Stellar colours, same order in both themes so a star keeps its identity when
+// you toggle. Dark = luminous tints on near-black; light = deeper, more
+// saturated tints that read against the off-white.
+const DARK_COLORS: StarColor[] = [
+  { rgb: [240, 244, 255], weight: 30 }, // white / blue-white
+  { rgb: [150, 190, 255], weight: 22 }, // blue
+  { rgb: [255, 222, 170], weight: 18 }, // gold
+  { rgb: [255, 176, 198], weight: 16 }, // rose
+  { rgb: [168, 250, 232], weight: 14 }, // cyan / teal
+];
+const LIGHT_COLORS: StarColor[] = [
+  { rgb: [84, 98, 132], weight: 30 }, // slate blue-grey
+  { rgb: [52, 104, 198], weight: 22 }, // blue
+  { rgb: [176, 122, 40], weight: 18 }, // amber
+  { rgb: [186, 78, 122], weight: 16 }, // rose
+  { rgb: [38, 140, 128], weight: 14 }, // teal
 ];
 
-function palette(theme: string) {
-  if (theme === 'light') {
-    // faint specks slightly darker than the off-white background
-    return { base: [70, 86, 96] as [number, number, number], maxAlpha: 0.16, tintChance: 0 };
+interface Star {
+  r: number;
+  cosA: number;
+  sinA: number;
+  colorIdx: number;
+  bright: boolean;
+  scale: number;
+  baseAlpha: number;
+  twAmp: number;
+  twSpeed: number;
+  twPhase: number;
+}
+
+interface Sprite {
+  canvas: HTMLCanvasElement;
+  size: number;
+}
+
+const isLight = () => document.documentElement.dataset.theme === 'light';
+
+// Pre-render a star to an offscreen canvas once; drawing it at sub-pixel
+// positions (with smoothing) is what makes the drift glide instead of jump.
+function makeSprite(rgb: [number, number, number], bright: boolean, light: boolean): Sprite {
+  const size = bright ? 40 : 16;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const g = c.getContext('2d')!;
+  const cx = size / 2;
+  const cy = size / 2;
+  const [r, gn, b] = rgb;
+
+  const coreR = bright ? 5.5 : 3.4;
+  const glow = g.createRadialGradient(cx, cy, 0, cx, cy, coreR);
+  glow.addColorStop(0, `rgba(${r},${gn},${b},1)`);
+  glow.addColorStop(0.45, `rgba(${r},${gn},${b},0.55)`);
+  glow.addColorStop(1, `rgba(${r},${gn},${b},0)`);
+  g.fillStyle = glow;
+  g.fillRect(0, 0, size, size);
+
+  if (bright) {
+    const len = size / 2 - 1;
+    g.lineCap = 'round';
+    g.lineWidth = 1.1;
+    const ends: [number, number][] = [
+      [cx, cy - len],
+      [cx, cy + len],
+      [cx - len, cy],
+      [cx + len, cy],
+    ];
+    for (const [x2, y2] of ends) {
+      const sg = g.createLinearGradient(cx, cy, x2, y2);
+      sg.addColorStop(0, `rgba(${r},${gn},${b},0.8)`);
+      sg.addColorStop(1, `rgba(${r},${gn},${b},0)`);
+      g.strokeStyle = sg;
+      g.beginPath();
+      g.moveTo(cx, cy);
+      g.lineTo(x2, y2);
+      g.stroke();
+    }
+    // hot white core for dark mode only (would look wrong on a light bg)
+    if (!light) {
+      const hot = g.createRadialGradient(cx, cy, 0, cx, cy, 2.4);
+      hot.addColorStop(0, 'rgba(255,255,255,0.95)');
+      hot.addColorStop(1, `rgba(${r},${gn},${b},0)`);
+      g.fillStyle = hot;
+      g.fillRect(0, 0, size, size);
+    }
   }
-  // soft cyan-white just above the near-black background
-  return { base: [198, 226, 226] as [number, number, number], maxAlpha: 0.5, tintChance: 0.12 };
+  return { canvas: c, size };
 }
 
 export function initStarfield(): void {
@@ -45,118 +111,109 @@ export function initStarfield(): void {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rand = (lo: number, hi: number) => lo + Math.random() * (hi - lo);
 
-  let cw = 0;
-  let ch = 0;
+  let cssW = 0;
+  let cssH = 0;
   let pivotX = 0;
   let pivotY = 0;
   let stars: Star[] = [];
-  let pal = palette(document.documentElement.dataset.theme || 'dark');
-  const start = performance.now();
+  let colors: StarColor[] = isLight() ? LIGHT_COLORS : DARK_COLORS;
+  let maxAlpha = isLight() ? 0.6 : 0.55;
+  let sprites: Sprite[][] = [];
+  const startT = performance.now();
   let running = true;
 
+  function buildSprites() {
+    const light = isLight();
+    colors = light ? LIGHT_COLORS : DARK_COLORS;
+    maxAlpha = light ? 0.6 : 0.55;
+    sprites = colors.map((col) => [
+      makeSprite(col.rgb, false, light),
+      makeSprite(col.rgb, true, light),
+    ]);
+  }
+
+  function pickColor(): number {
+    const total = colors.reduce((s, c) => s + c.weight, 0);
+    let x = Math.random() * total;
+    for (let i = 0; i < colors.length; i++) {
+      x -= colors[i].weight;
+      if (x <= 0) return i;
+    }
+    return 0;
+  }
+
   function build() {
-    cw = Math.max(1, Math.ceil(window.innerWidth / PIXEL));
-    ch = Math.max(1, Math.ceil(window.innerHeight / PIXEL));
-    canvas.width = cw;
-    canvas.height = ch;
-    ctx!.imageSmoothingEnabled = false;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cssW = window.innerWidth;
+    cssH = window.innerHeight;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Pivot off the bottom-right corner so rotation reads as a gentle arc.
-    pivotX = cw * 1.25;
-    pivotY = ch * 1.35;
-
-    // Scatter over the annulus that the viewport sweeps, so density stays
-    // uniform at any rotation. Nearest viewport point is the (cw,ch) corner.
-    const rMin = Math.hypot(pivotX - cw, pivotY - ch);
-    const rMax = Math.hypot(pivotX, pivotY); // pivot → (0,0), farthest corner
-    const ringArea = Math.PI * (rMax * rMax - rMin * rMin);
-    const count = Math.min(MAX_STARS, Math.round(ringArea * DENSITY));
+    // Pivot off the bottom-right corner → rotation reads as a slow one-way arc.
+    pivotX = cssW * 1.25;
+    pivotY = cssH * 1.4;
+    const rMin = Math.hypot(pivotX - cssW, pivotY - cssH);
+    const rMax = Math.hypot(pivotX, pivotY);
+    const count = Math.min(MAX_STARS, Math.round(Math.PI * (rMax * rMax - rMin * rMin) * DENSITY));
 
     stars = [];
     for (let i = 0; i < count; i++) {
-      const r = Math.sqrt(rMin * rMin + Math.random() * (rMax * rMax - rMin * rMin));
+      const rr = Math.sqrt(rMin * rMin + Math.random() * (rMax * rMax - rMin * rMin));
       const a = rand(0, Math.PI * 2);
-      const roll = Math.random();
-      const size: 0 | 1 | 2 = roll > 0.95 ? 2 : roll > 0.78 ? 1 : 0;
+      const bright = Math.random() < BRIGHT_CHANCE;
       stars.push({
-        r,
+        r: rr,
         cosA: Math.cos(a),
         sinA: Math.sin(a),
-        size,
-        baseAlpha: rand(0.25, 1) * (size === 0 ? 0.6 : 1),
-        twAmp: rand(0.3, 0.9),
-        twSpeed: rand(0.6, 2.2),
+        colorIdx: pickColor(),
+        bright,
+        scale: bright ? rand(0.7, 1.15) : rand(0.55, 1.1),
+        baseAlpha: rand(0.35, 1) * (bright ? 1 : 0.85),
+        twAmp: rand(0.4, 0.95),
+        twSpeed: rand(0.6, 2.4),
         twPhase: rand(0, Math.PI * 2),
-        tint: Math.random() < pal.tintChance ? TINTS[(Math.random() * TINTS.length) | 0] : null,
-        ring: size === 2 && Math.random() < 0.25,
       });
     }
   }
 
-  function dot(x: number, y: number, alpha: number, c: [number, number, number]) {
-    if (alpha <= 0.003 || x < 0 || y < 0 || x >= cw || y >= ch) return;
-    ctx!.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${alpha})`;
-    ctx!.fillRect(x, y, 1, 1);
-  }
-
-  function draw(tSec: number) {
-    ctx!.clearRect(0, 0, cw, ch);
-    const angle = reduce ? 0 : tSec * ROT_SPEED;
-    const cos = Math.cos(angle);
-    const sin = Math.sin(angle);
+  function draw(t: number) {
+    ctx!.clearRect(0, 0, cssW, cssH);
+    const ang = reduce ? 0 : t * ROT_SPEED;
+    const cos = Math.cos(ang);
+    const sin = Math.sin(ang);
 
     for (const s of stars) {
       const x = pivotX + s.r * (s.cosA * cos - s.sinA * sin);
       const y = pivotY + s.r * (s.sinA * cos + s.cosA * sin);
-      if (x < -4 || y < -4 || x > cw + 4 || y > ch + 4) continue;
+      if (x < -30 || y < -30 || x > cssW + 30 || y > cssH + 30) continue;
 
-      const tw = reduce ? 0.7 : 0.5 + 0.5 * Math.sin(tSec * s.twSpeed + s.twPhase);
-      const alpha = pal.maxAlpha * s.baseAlpha * (1 - s.twAmp + s.twAmp * tw);
-      const c = s.tint ?? pal.base;
-      const ix = x | 0;
-      const iy = y | 0;
+      // two flicker frequencies → a livelier, less regular twinkle
+      const tw = reduce
+        ? 0.8
+        : 0.5 +
+          0.34 * Math.sin(t * s.twSpeed + s.twPhase) +
+          0.16 * Math.sin(t * s.twSpeed * 2.7 + s.twPhase * 1.6);
+      const alpha = maxAlpha * s.baseAlpha * (1 - s.twAmp + s.twAmp * tw);
+      if (alpha <= 0.004) continue;
 
-      dot(ix, iy, alpha, c);
-      if (s.size >= 1) {
-        const a1 = alpha * 0.45;
-        dot(ix - 1, iy, a1, c);
-        dot(ix + 1, iy, a1, c);
-        dot(ix, iy - 1, a1, c);
-        dot(ix, iy + 1, a1, c);
-      }
-      if (s.size >= 2) {
-        const a2 = alpha * 0.2;
-        dot(ix - 2, iy, a2, c);
-        dot(ix + 2, iy, a2, c);
-        dot(ix, iy - 2, a2, c);
-        dot(ix, iy + 2, a2, c);
-        if (s.ring) {
-          const ar = alpha * 0.1;
-          dot(ix - 3, iy, ar, c);
-          dot(ix + 3, iy, ar, c);
-          dot(ix, iy - 3, ar, c);
-          dot(ix, iy + 3, ar, c);
-          dot(ix - 2, iy - 2, ar, c);
-          dot(ix + 2, iy - 2, ar, c);
-          dot(ix - 2, iy + 2, ar, c);
-          dot(ix + 2, iy + 2, ar, c);
-        }
-      }
+      const sp = sprites[s.colorIdx][s.bright ? 1 : 0];
+      const d = sp.size * s.scale;
+      ctx!.globalAlpha = alpha;
+      ctx!.drawImage(sp.canvas, x - d / 2, y - d / 2, d, d);
     }
+    ctx!.globalAlpha = 1;
   }
 
   function frame(now: number) {
     if (!running) return;
-    draw((now - start) / 1000);
+    draw((now - startT) / 1000);
     requestAnimationFrame(frame);
   }
 
   new MutationObserver(() => {
-    pal = palette(document.documentElement.dataset.theme || 'dark');
-    for (const s of stars) {
-      s.tint = Math.random() < pal.tintChance ? TINTS[(Math.random() * TINTS.length) | 0] : null;
-    }
-    if (reduce) draw((performance.now() - start) / 1000);
+    buildSprites();
+    if (reduce) draw((performance.now() - startT) / 1000);
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   let resizeTimer: number | undefined;
@@ -164,7 +221,7 @@ export function initStarfield(): void {
     window.clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
       build();
-      if (reduce) draw((performance.now() - start) / 1000);
+      if (reduce) draw((performance.now() - startT) / 1000);
     }, 200);
   });
 
@@ -177,6 +234,7 @@ export function initStarfield(): void {
     }
   });
 
+  buildSprites();
   build();
   if (reduce) draw(0);
   else requestAnimationFrame(frame);
