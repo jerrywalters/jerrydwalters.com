@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Catch</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #0b0b0f;
+        color: #ececee;
+        font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      }
+      canvas {
+        display: block;
+        touch-action: none;
+      }
+      .hud {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        font-size: 0.95rem;
+        letter-spacing: 0.04em;
+      }
+      .hud b {
+        font-variant-numeric: tabular-nums;
+      }
+      .back {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        color: #7a7a85;
+        text-decoration: none;
+        font-size: 0.8rem;
+      }
+      .back:hover {
+        color: #ececee;
+      }
+      .hint {
+        position: fixed;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #7a7a85;
+        font-size: 0.8rem;
+        text-align: center;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hud">caught <b id="score">0</b> · missed <b id="missed">0</b></div>
+    <a class="back" href="/projects">← projects</a>
+    <div class="hint">move with mouse / arrow keys — catch the dots</div>
+    <canvas id="c"></canvas>
+    <script>
+      (function () {
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const missedEl = document.getElementById('missed');
+
+        let W, H, dpr;
+        function resize() {
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          W = window.innerWidth;
+          H = window.innerHeight;
+          canvas.width = W * dpr;
+          canvas.height = H * dpr;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const basket = { x: W / 2, w: 90, h: 16, y: 0 };
+        let targetX = basket.x;
+        window.addEventListener('pointermove', (e) => {
+          targetX = e.clientX;
+        });
+
+        const keys = {};
+        window.addEventListener('keydown', (e) => {
+          keys[e.key] = true;
+        });
+        window.addEventListener('keyup', (e) => {
+          keys[e.key] = false;
+        });
+
+        const drops = [];
+        let score = 0;
+        let missed = 0;
+        let spawnTimer = 0;
+        let spawnEvery = 0.8;
+        let last = performance.now();
+
+        function spawn() {
+          drops.push({
+            x: 30 + Math.random() * (W - 60),
+            y: -20,
+            r: 9 + Math.random() * 6,
+            vy: 140 + Math.random() * 120,
+            hue: Math.floor(Math.random() * 360),
+          });
+        }
+
+        function frame(now) {
+          const dt = Math.min((now - last) / 1000, 0.05);
+          last = now;
+
+          basket.y = H - 60;
+          if (keys['ArrowLeft'] || keys['a']) targetX -= 420 * dt;
+          if (keys['ArrowRight'] || keys['d']) targetX += 420 * dt;
+          targetX = Math.max(basket.w / 2, Math.min(W - basket.w / 2, targetX));
+          basket.x += (targetX - basket.x) * Math.min(1, dt * 14);
+
+          spawnTimer += dt;
+          if (spawnTimer >= spawnEvery) {
+            spawnTimer = 0;
+            spawn();
+            if (spawnEvery > 0.4) spawnEvery -= 0.01;
+          }
+
+          ctx.clearRect(0, 0, W, H);
+
+          for (let i = drops.length - 1; i >= 0; i--) {
+            const d = drops[i];
+            d.y += d.vy * dt;
+
+            const caught =
+              d.y + d.r >= basket.y &&
+              d.y - d.r <= basket.y + basket.h &&
+              d.x >= basket.x - basket.w / 2 &&
+              d.x <= basket.x + basket.w / 2;
+
+            if (caught) {
+              score++;
+              scoreEl.textContent = score;
+              drops.splice(i, 1);
+              continue;
+            }
+            if (d.y - d.r > H) {
+              missed++;
+              missedEl.textContent = missed;
+              drops.splice(i, 1);
+              continue;
+            }
+
+            ctx.beginPath();
+            ctx.fillStyle = 'hsl(' + d.hue + ' 70% 60%)';
+            ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          ctx.fillStyle = '#ececee';
+          ctx.beginPath();
+          ctx.roundRect(basket.x - basket.w / 2, basket.y, basket.w, basket.h, 8);
+          ctx.fill();
+
+          requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      })();
+    </script>
+  </body>
+</html>
