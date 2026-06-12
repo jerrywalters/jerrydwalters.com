@@ -170,8 +170,8 @@ export function initStarfield(): void {
         bright,
         scale: bright ? rand(0.7, 1.15) : rand(0.55, 1.1),
         baseAlpha: rand(0.35, 1) * (bright ? 1 : 0.85),
-        twAmp: rand(0.25, 0.8),
-        twSpeed: rand(0.5, 1.8),
+        twAmp: rand(0.4, 0.95),
+        twSpeed: rand(0.6, 2.4),
         twPhase: rand(0, Math.PI * 2),
       });
     }
@@ -188,7 +188,12 @@ export function initStarfield(): void {
       const y = pivotY + s.r * (s.sinA * cos + s.cosA * sin);
       if (x < -30 || y < -30 || x > cssW + 30 || y > cssH + 30) continue;
 
-      const tw = reduce ? 0.75 : 0.5 + 0.5 * Math.sin(t * s.twSpeed + s.twPhase);
+      // two flicker frequencies → a livelier, less regular twinkle
+      const tw = reduce
+        ? 0.8
+        : 0.5 +
+          0.34 * Math.sin(t * s.twSpeed + s.twPhase) +
+          0.16 * Math.sin(t * s.twSpeed * 2.7 + s.twPhase * 1.6);
       const alpha = maxAlpha * s.baseAlpha * (1 - s.twAmp + s.twAmp * tw);
       if (alpha <= 0.004) continue;
 
