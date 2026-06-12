@@ -19,8 +19,8 @@ function Model() {
     const root = scene.clone(true);
     const mat = new THREE.MeshStandardMaterial({
       color: new THREE.Color(COLOR),
-      roughness: 0.95,
-      metalness: 0.04,
+      roughness: 0.8, // a touch of sheen — was 0.95 (too matte)
+      metalness: 0.07,
       flatShading: true, // hard facets → reads as rough rock
     });
     root.traverse((o) => {
