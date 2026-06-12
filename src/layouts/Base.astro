@@ -33,10 +33,16 @@ const { title = 'Jerry Walters', fixed = true } = Astro.props;
     </script>
   </head>
   <body>
+    <canvas id="starfield" class="starfield" aria-hidden="true"></canvas>
     <a class="site-name" href="/">Jerry Walters</a>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme"></button>
 
     <slot />
+
+    <script>
+      import { initStarfield } from '../scripts/starfield';
+      initStarfield();
+    </script>
 
     <script is:inline>
       (function () {
