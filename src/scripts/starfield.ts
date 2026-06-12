@@ -1,8 +1,8 @@
 // Subtle, slowly-drifting starfield behind the whole umbrella.
 // Crisp pixel "+" stars, but positions snapped to the DEVICE-pixel grid (much
 // finer than the art-pixel grid), so the slow sky-drift stays smooth without
-// going fully soft. Theme-aware colored stars, livelier twinkle, respects
-// prefers-reduced-motion, pauses when the tab is hidden.
+// going fully soft. Theme-aware colored stars, livelier twinkle, the occasional
+// faint shooting star, respects prefers-reduced-motion, pauses when tab hidden.
 
 interface StarColor {
   rgb: [number, number, number];
@@ -12,6 +12,10 @@ interface StarColor {
 const ROT_SPEED = 0.00055; // rad/sec — gentle sky drift
 const DENSITY = 1 / 6500; // visible stars per CSS px²
 const MAX_STARS = 2200;
+
+// Shooting-star cadence (seconds): wait until the first, then a gap between.
+const METEOR_FIRST: [number, number] = [4, 9];
+const METEOR_GAP: [number, number] = [9, 22];
 
 // Stellar colours, same order in both themes so a star keeps its identity when
 // you toggle. Dark = luminous tints on near-black; light = deeper, more
@@ -43,6 +47,18 @@ interface Star {
   twPhase: number;
 }
 
+interface Meteor {
+  x0: number; // start, CSS px
+  y0: number;
+  vx: number; // velocity, CSS px/sec
+  vy: number;
+  nx: number; // unit direction
+  ny: number;
+  spawnT: number;
+  dur: number;
+  len: number; // trail length, CSS px
+}
+
 const isLight = () => document.documentElement.dataset.theme === 'light';
 
 export function initStarfield(): void {
@@ -61,6 +77,8 @@ export function initStarfield(): void {
   let pivotY = 0;
   let unit = 2; // pixel-block size in DEVICE px (the "chunkiness")
   let stars: Star[] = [];
+  let meteors: Meteor[] = [];
+  let nextMeteorT = rand(METEOR_FIRST[0], METEOR_FIRST[1]);
   let colors: StarColor[] = isLight() ? LIGHT_COLORS : DARK_COLORS;
   let maxAlpha = isLight() ? 0.58 : 0.5;
   const startT = performance.now();
@@ -82,6 +100,25 @@ export function initStarfield(): void {
     return 0;
   }
 
+  function spawnMeteor(t: number) {
+    const dir = Math.random() < 0.5 ? 1 : -1; // left or right
+    const slope = rand(0.1, 0.4); // radians below horizontal
+    const nx = dir * Math.cos(slope);
+    const ny = Math.sin(slope); // +y is downward on screen
+    const speed = rand(0.22, 0.34) * cssW; // px/sec → travels ~a quarter screen
+    meteors.push({
+      x0: dir > 0 ? rand(0.05, 0.5) * cssW : rand(0.5, 0.95) * cssW,
+      y0: rand(0.06, 0.42) * cssH,
+      vx: nx * speed,
+      vy: ny * speed,
+      nx,
+      ny,
+      spawnT: t,
+      dur: rand(0.7, 1.2),
+      len: rand(45, 95),
+    });
+  }
+
   function build() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     cssW = window.innerWidth;
@@ -93,6 +130,7 @@ export function initStarfield(): void {
     ctx!.setTransform(1, 0, 0, 1, 0, 0);
     ctx!.imageSmoothingEnabled = false;
     unit = Math.max(3, Math.round(2.6 * dpr)); // ~2.6 CSS px chunk
+    meteors = [];
 
     // Pivot off the bottom-right corner → rotation reads as a slow one-way arc.
     pivotX = cssW * 1.25;
@@ -152,6 +190,46 @@ export function initStarfield(): void {
     }
   }
 
+  function drawMeteors(t: number) {
+    if (reduce) return;
+    if (t >= nextMeteorT) {
+      spawnMeteor(t);
+      if (Math.random() < 0.25) spawnMeteor(t); // occasionally a pair
+      nextMeteorT = t + rand(METEOR_GAP[0], METEOR_GAP[1]);
+    }
+    const c = colors[0].rgb; // brightest star colour
+    const peak = isLight() ? 0.5 : 0.85;
+    for (let i = meteors.length - 1; i >= 0; i--) {
+      const m = meteors[i];
+      const age = t - m.spawnT;
+      if (age > m.dur) {
+        meteors.splice(i, 1);
+        continue;
+      }
+      const env = Math.sin((age / m.dur) * Math.PI); // 0 → 1 → 0: appear & vanish
+      const a = peak * env;
+      if (a <= 0.01) continue;
+
+      const hx = (m.x0 + m.vx * age) * dpr;
+      const hy = (m.y0 + m.vy * age) * dpr;
+      const tx = hx - m.nx * m.len * dpr;
+      const ty = hy - m.ny * m.len * dpr;
+      const grad = ctx!.createLinearGradient(tx, ty, hx, hy);
+      grad.addColorStop(0, `rgba(${c[0]},${c[1]},${c[2]},0)`);
+      grad.addColorStop(1, `rgba(${c[0]},${c[1]},${c[2]},${a})`);
+      ctx!.strokeStyle = grad;
+      ctx!.lineWidth = 1.4 * dpr;
+      ctx!.lineCap = 'round';
+      ctx!.beginPath();
+      ctx!.moveTo(tx, ty);
+      ctx!.lineTo(hx, hy);
+      ctx!.stroke();
+      // tiny bright head
+      ctx!.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+      ctx!.fillRect(Math.round(hx) - dpr, Math.round(hy) - dpr, 2 * dpr, 2 * dpr);
+    }
+  }
+
   function draw(t: number) {
     ctx!.clearRect(0, 0, canvas.width, canvas.height);
     const ang = reduce ? 0 : t * ROT_SPEED;
@@ -177,6 +255,8 @@ export function initStarfield(): void {
       const cy = Math.round(y * dpr);
       drawStar(cx, cy, s.size, alpha, colors[s.colorIdx].rgb);
     }
+
+    drawMeteors(t);
   }
 
   function frame(now: number) {
