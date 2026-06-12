@@ -14,8 +14,8 @@ const DENSITY = 1 / 6500; // visible stars per CSS px²
 const MAX_STARS = 2200;
 
 // Shooting-star cadence (seconds): wait until the first, then a gap between.
-const METEOR_FIRST: [number, number] = [4, 9];
-const METEOR_GAP: [number, number] = [9, 22];
+const METEOR_FIRST: [number, number] = [15, 40];
+const METEOR_GAP: [number, number] = [90, 220];
 
 // Stellar colours, same order in both themes so a star keeps its identity when
 // you toggle. Dark = luminous tints on near-black; light = deeper, more
@@ -115,7 +115,7 @@ export function initStarfield(): void {
       ny,
       spawnT: t,
       dur: rand(0.7, 1.2),
-      len: rand(45, 95),
+      len: rand(20, 42),
     });
   }
 
