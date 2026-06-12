@@ -92,7 +92,7 @@ export function initStarfield(): void {
     canvas.height = Math.round(cssH * dpr);
     ctx!.setTransform(1, 0, 0, 1, 0, 0);
     ctx!.imageSmoothingEnabled = false;
-    unit = Math.max(2, Math.round(1.7 * dpr)); // ~1.7 CSS px chunk
+    unit = Math.max(3, Math.round(2.6 * dpr)); // ~2.6 CSS px chunk
 
     // Pivot off the bottom-right corner → rotation reads as a slow one-way arc.
     pivotX = cssW * 1.25;
@@ -106,7 +106,7 @@ export function initStarfield(): void {
       const rr = Math.sqrt(rMin * rMin + Math.random() * (rMax * rMax - rMin * rMin));
       const a = rand(0, Math.PI * 2);
       const roll = Math.random();
-      const size: 0 | 1 | 2 = roll > 0.93 ? 2 : roll > 0.74 ? 1 : 0;
+      const size: 0 | 1 | 2 = roll > 0.9 ? 2 : roll > 0.66 ? 1 : 0;
       stars.push({
         r: rr,
         cosA: Math.cos(a),
