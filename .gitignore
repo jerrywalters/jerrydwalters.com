@@ -20,5 +20,10 @@ node_modules/
 .vscode/*
 !.vscode/extensions.json
 
-# Claude preview config (local dev aid)
-.claude/
+# git worktrees (parallel agents)
+.worktrees/
+
+# Claude: ignore local-only bits, but keep shared config (skills, commands,
+# settings.json) committable so all agents pick it up.
+.claude/launch.json
+.claude/settings.local.json
