@@ -1,0 +1,227 @@
+.wz-game {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: #f3f3ef;
+  z-index: 5;
+}
+
+.wz-bladder {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 46px;
+  height: 60px;
+  filter: drop-shadow(0 1px 3px #0008);
+}
+.wz-bladder .wz-bfill {
+  transition: y 0.12s linear, height 0.12s linear;
+}
+
+.wz-pressure {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 16px;
+  height: 180px;
+  background: #ffffff1f;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px #0006;
+}
+.wz-pfill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: #e9c84a;
+  transition: height 0.05s linear;
+}
+.wz-pressure.red .wz-pfill {
+  background: #e24b4a;
+  animation: wz-pulse 0.5s infinite alternate;
+}
+@keyframes wz-pulse {
+  to { opacity: 0.5; }
+}
+
+/* Position/size are set per-frame from JS (setCensor) to track the nozzle on screen. */
+.wz-censor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  border-radius: 12px 12px 0 0;
+  background: #ffffff0a;
+}
+
+.wz-controls {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: #14141bcc;
+  border: 1px solid #ffffff1a;
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  font-size: 12px;
+  line-height: 1.4;
+  max-width: 18rem;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.wz-ctitle {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c9b88a;
+  margin-bottom: 0.4rem;
+}
+.wz-ctl {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 0.22rem;
+}
+.wz-key {
+  flex: 0 0 auto;
+  min-width: 6.4rem;
+  font-weight: 600;
+  color: #f3f3ef;
+  white-space: nowrap;
+}
+.wz-cdesc {
+  color: #a7a7a2;
+}
+
+.wz-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  background: #07070bcc;
+  z-index: 10;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: #f3f3ef;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+.wz-overlay.show {
+  display: grid;
+}
+
+.wz-card {
+  width: min(30rem, 100%);
+  background: #14141b;
+  border: 1px solid #ffffff1a;
+  border-radius: 16px;
+  padding: 1.8rem;
+  text-align: center;
+  box-shadow: 0 12px 40px #000a;
+}
+
+.wz-title {
+  margin: 0 0 0.3rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.wz-flavor {
+  margin: 0 0 0.6rem;
+  color: #c9b88a;
+  font-style: italic;
+}
+.wz-sub {
+  margin: 0 0 1.1rem;
+  color: #a7a7a2;
+  font-size: 0.92rem;
+}
+
+.wz-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+.wz-lvl {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.8rem 0.9rem;
+  background: #1d1d26;
+  border: 1px solid #ffffff14;
+  border-radius: 10px;
+  color: #f3f3ef;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.wz-lvl:hover {
+  border-color: #e9c84a;
+  transform: translateY(-2px);
+}
+.wz-lname { font-size: 0.9rem; }
+.wz-stars { color: #e9c84a; letter-spacing: 0.15em; font-size: 0.85rem; }
+
+.wz-bigstars {
+  color: #e9c84a;
+  font-size: 2rem;
+  letter-spacing: 0.2em;
+  margin: 0.2rem 0 0.9rem;
+}
+
+.wz-splitbar {
+  display: flex;
+  height: 14px;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #1d1d26;
+  margin: 0 0 0.6rem;
+}
+.wz-cap { background: #e9c84a; }
+.wz-spl { background: #6b5a2a; }
+
+.wz-row {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.wz-btn {
+  pointer-events: auto;
+  padding: 0.6rem 1.2rem;
+  background: transparent;
+  border: 1px solid #ffffff2e;
+  border-radius: 10px;
+  color: #f3f3ef;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.wz-btn:hover { background: #ffffff14; }
+.wz-btn:active { transform: scale(0.97); }
+.wz-primary {
+  background: #e9c84a;
+  border-color: #e9c84a;
+  color: #14141b;
+  font-weight: 600;
+}
+.wz-primary:hover { background: #f0d666; }
+
+.wz-fallback {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 2rem;
+  color: #c9c9c4;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
