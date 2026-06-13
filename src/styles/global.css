@@ -1,20 +1,22 @@
 :root {
-  /* dark is the default theme */
-  --bg: #0b0b0f;
-  --fg: #ececee;
-  --muted: #7a7a85;
-  --hairline: rgba(255, 255, 255, 0.10);
+  /* dark is the default theme — soft ink-black with a faint cool cast, not pure #000 */
+  --bg: #0c0c13;
+  --fg: #e9e8ee;
+  --muted: #807f8b;
+  --hairline: rgba(255, 255, 255, 0.11);
   /* accent = the 3D hover-outline colour, reused for menu hovers + links */
   --accent: #cf9bf0;
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color-scheme: dark;
 }
 
 :root[data-theme='light'] {
-  --bg: #f6f6f3;
-  --fg: #16161a;
-  --muted: #6a6a72;
+  /* warm off-white paper + soft near-black, not pure #000/#fff */
+  --bg: #f5f3ee;
+  --fg: #19181f;
+  --muted: #6b6975;
   --hairline: rgba(0, 0, 0, 0.12);
-  --accent: #b07fd8;
+  --accent: #9a5fd0;
   color-scheme: light;
 }
 
@@ -47,7 +49,7 @@ html {
 
 body {
   color: var(--fg);
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   transition: color 0.4s ease;
 }
@@ -223,6 +225,37 @@ body {
   color: var(--muted);
   font-size: 0.82rem;
   white-space: nowrap;
+}
+
+/* Nested roles under one company get a vertical timeline rail with a dot per role. */
+.resume-roles.has-rail {
+  position: relative;
+}
+
+.resume-roles.has-rail::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0.85rem;
+  bottom: 0.85rem;
+  width: 1px;
+  background: var(--hairline);
+}
+
+.resume-roles.has-rail .resume-role {
+  position: relative;
+  padding-left: 20px;
+}
+
+.resume-roles.has-rail .resume-role::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
 .section-back {

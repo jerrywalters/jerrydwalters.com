@@ -215,12 +215,14 @@ function PanelBody({ id, projects }: { id: string; projects: Project[] }) {
           {EXPERIENCE.map((g) => (
             <div className="resume-group" key={g.org}>
               <div className="resume-org">{g.org}</div>
-              {g.roles.map((r) => (
-                <div className="resume-role" key={r.title}>
-                  <span className="resume-title">{r.title}</span>
-                  <span className="resume-dates">{r.dates}</span>
-                </div>
-              ))}
+              <div className={g.roles.length > 1 ? 'resume-roles has-rail' : 'resume-roles'}>
+                {g.roles.map((r) => (
+                  <div className="resume-role" key={r.title}>
+                    <span className="resume-title">{r.title}</span>
+                    <span className="resume-dates">{r.dates}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
           <h3 className="resume-h">Education</h3>
