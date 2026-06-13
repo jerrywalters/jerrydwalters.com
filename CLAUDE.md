@@ -68,6 +68,33 @@ in `public/<name>/`, or a Vite app in `projects/<name>/`. Engine toolkit and the
 backend/auth path are documented there too. A dedicated skill for scaffolding new
 games/projects may land under `.claude/skills/` later.
 
+## Assets — high-res models (STL → GLB)
+
+3D scene models start as high-poly STLs and must be compressed before they ship
+(a raw STL is multi-MB and slow to load). Use the one-shot script:
+
+```bash
+scripts/stl-to-glb.sh <input.stl> public/models/<name>.glb [simplify-ratio]
+# ratio defaults to 0.4 — keep ~40% of the triangles
+```
+
+What it does, and why:
+1. **STL → GLB (trimesh):** welds duplicate vertices, centers on the bounding-box
+   center, and scales so the longest axis spans 2 units — every model arrives at a
+   predictable size (fine-tune per-model with `SCALE` in the scene).
+2. **Simplify (gltf-transform / meshoptimizer):** reduces to the target triangle
+   ratio. ~0.4 both shrinks the file and gives the rough-hewn, faceted look.
+3. **Quantize (gltf-transform):** stores positions as 16-bit
+   (`KHR_mesh_quantization`) — decoded **natively by three.js**, so there is *no*
+   runtime decoder dependency (unlike Draco). It just loads.
+
+The GLB carries **geometry only — no normals, no materials.** The scene applies
+its own `MeshStandardMaterial` (per-model colour) with `flatShading: true`, which
+derives facet normals from positions. Recolour/orient in `Scene.tsx`, not the asset.
+
+Verified example: `ranuelphe.glb` — `Ranuelphe-de-kyme.stl` (6.1 MB, 122k tris) →
+489 KB, 48.8k tris (40%), position-quantized.
+
 ## Code style
 - TypeScript throughout; match the style of the surrounding files (2-space
   indent, single quotes, small focused components/modules).
