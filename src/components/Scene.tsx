@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
+import { EffectComposer, Outline, Select, Selection } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
@@ -72,7 +73,7 @@ function applyMaterials(root: THREE.Object3D, id: string) {
 const _pos = new THREE.Vector3();
 const _scale = new THREE.Vector3();
 
-function Model({ def, slot, isFocused, index, onSelect }: { def: SectionDef; slot: Slot; isFocused: boolean; index: number; onSelect: (id: string) => void }) {
+function Model({ def, slot, isFocused, isHovered, index, onSelect, onHover }: { def: SectionDef; slot: Slot; isFocused: boolean; isHovered: boolean; index: number; onSelect: (id: string) => void; onHover: (id: string | null) => void }) {
   const { scene } = useGLTF(def.url);
   const grp = useRef<THREE.Group>(null);
   const spin = useRef<THREE.Group>(null);
@@ -121,10 +122,12 @@ function Model({ def, slot, isFocused, index, onSelect }: { def: SectionDef; slo
       ref={grp}
       onPointerOver={(e) => {
         e.stopPropagation();
+        onHover(def.id);
         document.body.style.cursor = 'pointer';
       }}
       onPointerOut={(e) => {
         e.stopPropagation();
+        onHover(null);
         document.body.style.cursor = '';
       }}
       onClick={(e) => {
@@ -132,13 +135,15 @@ function Model({ def, slot, isFocused, index, onSelect }: { def: SectionDef; slo
         onSelect(def.id);
       }}
     >
-      <group ref={spin}>
-        <group scale={norm} rotation={def.orient}>
-          <group position={[-center.x, -center.y, -center.z]}>
-            <primitive object={obj} />
+      <Select enabled={isHovered}>
+        <group ref={spin}>
+          <group scale={norm} rotation={def.orient}>
+            <group position={[-center.x, -center.y, -center.z]}>
+              <primitive object={obj} />
+            </group>
           </group>
         </group>
-      </group>
+      </Select>
     </group>
   );
 }
@@ -163,6 +168,7 @@ SECTIONS.forEach((s) => useGLTF.preload(s.url));
 
 export default function Scene() {
   const [focused, setFocused] = useState('about');
+  const [hovered, setHovered] = useState<string | null>(null);
   const others = SECTIONS.filter((s) => s.id !== focused);
   const slotOf = (id: string): Slot => {
     if (id === focused) return CENTER;
@@ -176,18 +182,33 @@ export default function Scene() {
       dpr={[1, 2]}
       style={{ width: '100%', height: '100%' }}
     >
-      <StudioEnv />
-      <ambientLight intensity={0.14} />
-      {/* Key light rakes in from the upper-left side, not from the camera. */}
-      <directionalLight position={[-7, 4, 2]} intensity={2.9} />
-      {/* Subtle cool fill from the opposite side so shadows aren't pure black. */}
-      <directionalLight position={[6, 1, -2]} intensity={0.35} color="#9bb4d6" />
+      <Selection>
+        <StudioEnv />
+        <ambientLight intensity={0.14} />
+        {/* Key light rakes in from the upper-left side, not from the camera. */}
+        <directionalLight position={[-7, 4, 2]} intensity={2.9} />
+        {/* Subtle cool fill from the opposite side so shadows aren't pure black. */}
+        <directionalLight position={[6, 1, -2]} intensity={0.35} color="#9bb4d6" />
 
-      <Suspense fallback={null}>
-        {SECTIONS.map((def, i) => (
-          <Model key={def.id} def={def} index={i} slot={slotOf(def.id)} isFocused={focused === def.id} onSelect={setFocused} />
-        ))}
-      </Suspense>
+        <Suspense fallback={null}>
+          {SECTIONS.map((def, i) => (
+            <Model
+              key={def.id}
+              def={def}
+              index={i}
+              slot={slotOf(def.id)}
+              isFocused={focused === def.id}
+              isHovered={hovered === def.id}
+              onSelect={setFocused}
+              onHover={setHovered}
+            />
+          ))}
+        </Suspense>
+
+        <EffectComposer autoClear={false} multisampling={4}>
+          <Outline blur edgeStrength={6} pulseSpeed={0} visibleEdgeColor={0xffffff} hiddenEdgeColor={0x1a2433} xRay={false} />
+        </EffectComposer>
+      </Selection>
     </Canvas>
   );
 }
