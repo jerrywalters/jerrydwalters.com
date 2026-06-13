@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Scene from './Scene.tsx';
+import { getProjects } from '../lib/projects';
+
+// Renders the 3D landing. The optional `section` opens that panel on load, which is
+// how the prerendered /about, /physical, /digital routes deep-link into a section.
+interface Props {
+  section?: 'about' | 'physical' | 'digital';
+}
+const { section } = Astro.props;
+
+const LABELS: Record<string, string> = {
+  about: 'About',
+  physical: 'Physical projects',
+  digital: 'Digital projects',
+};
+const title = section ? `${LABELS[section]} · Jerry Walters` : 'Jerry Walters';
+const projects = getProjects();
+---
+
+<Base title={title}>
+  <main class="stage">
+    <Scene client:only="react" projects={projects} initialSection={section} />
+  </main>
+</Base>

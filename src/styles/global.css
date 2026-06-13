@@ -1,17 +1,22 @@
 :root {
-  /* dark is the default theme */
-  --bg: #0b0b0f;
-  --fg: #ececee;
-  --muted: #7a7a85;
-  --hairline: rgba(255, 255, 255, 0.10);
+  /* dark is the default theme — soft ink-black with a faint cool cast, not pure #000 */
+  --bg: #0c0c13;
+  --fg: #e9e8ee;
+  --muted: #807f8b;
+  --hairline: rgba(255, 255, 255, 0.11);
+  /* accent = the 3D hover-outline colour, reused for menu hovers + links */
+  --accent: #cf9bf0;
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color-scheme: dark;
 }
 
 :root[data-theme='light'] {
-  --bg: #f6f6f3;
-  --fg: #16161a;
-  --muted: #6a6a72;
+  /* warm off-white paper + soft near-black, not pure #000/#fff */
+  --bg: #f5f3ee;
+  --fg: #19181f;
+  --muted: #6b6975;
   --hairline: rgba(0, 0, 0, 0.12);
+  --accent: #9a5fd0;
   color-scheme: light;
 }
 
@@ -44,7 +49,7 @@ html {
 
 body {
   color: var(--fg);
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   transition: color 0.4s ease;
 }
@@ -66,24 +71,6 @@ body {
 }
 
 .site-name:hover {
-  color: var(--fg);
-}
-
-/* Small muted link, bottom center (e.g. "projects" on the landing) */
-.bottom-link {
-  position: fixed;
-  bottom: 1.6rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.bottom-link:hover {
   color: var(--fg);
 }
 
@@ -123,4 +110,233 @@ body {
   inset: 0;
   display: grid;
   place-items: center;
+}
+
+/* Section content panel — slides in from the right when a section is opened.
+   The 3D hero slides to the left of it; on mobile it becomes a full overlay. */
+.section-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50vw;
+  z-index: 20;
+  padding: 4.5rem 2.5rem 2.5rem;
+  background: var(--bg);
+  border-left: 1px solid var(--hairline);
+  overflow-y: auto;
+  transform: translateX(110%);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.section-panel[data-open='true'] {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+@media (max-width: 700px) {
+  .section-panel {
+    width: 100%;
+    border-left: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-panel {
+    transition: none;
+  }
+}
+
+.section-panel h2 {
+  margin: 0 0 0.9rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.section-panel p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.section-panel a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.section-panel a:hover {
+  border-bottom-color: var(--accent);
+}
+
+.about-links {
+  margin-bottom: 0.5rem;
+}
+
+/* Inline résumé under the About bio. */
+.resume {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--hairline);
+  padding-top: 1.25rem;
+}
+
+.resume-h {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1.75rem 0 0.85rem;
+}
+
+.resume-h:first-child {
+  margin-top: 0;
+}
+
+.resume-group {
+  margin-bottom: 1.15rem;
+}
+
+.resume-org {
+  font-weight: 500;
+  color: var(--fg);
+  margin-bottom: 0.35rem;
+}
+
+.resume-role {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.12rem 0;
+}
+
+.resume-title {
+  flex: 1;
+  min-width: 0;
+  color: var(--fg);
+  font-size: 0.92rem;
+}
+
+.resume-dates {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+/* Nested roles under one company get a vertical timeline rail with a dot per role. */
+.resume-roles.has-rail {
+  position: relative;
+}
+
+.resume-roles.has-rail::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0.85rem;
+  bottom: 0.85rem;
+  width: 1px;
+  background: var(--hairline);
+}
+
+.resume-roles.has-rail .resume-role {
+  position: relative;
+  padding-left: 20px;
+}
+
+.resume-roles.has-rail .resume-role::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.section-back {
+  position: absolute;
+  top: 1.5rem;
+  left: 2.5rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.section-back:hover {
+  color: var(--accent);
+}
+
+/* Digital-projects list inside the panel (vertically scrollable with the panel). */
+.proj-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.proj-list a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--hairline);
+  border-radius: 0.7rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.proj-list a:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.proj-list a:hover .proj-title {
+  color: var(--accent);
+}
+
+.proj-title {
+  color: var(--fg);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.proj-blurb {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.proj-all {
+  display: inline-block;
+  color: var(--accent) !important;
+  font-size: 0.85rem;
+  border-bottom: none !important;
+}
+
+.proj-all:hover {
+  border-bottom: 1px solid var(--accent) !important;
+}
+
+/* When a section panel is open, fade out the centered site-name so it doesn't
+   collide with the panel's left edge ("← back"). */
+.site-name {
+  transition: color 0.2s ease, opacity 0.3s ease;
+}
+
+html[data-panel='open'] .site-name {
+  opacity: 0;
+  pointer-events: none;
 }
