@@ -16,11 +16,18 @@ export class ContainerViews {
   private entries = new Map<string, Entry>();
   private geometries: THREE.BufferGeometry[] = [];
   private materials: THREE.Material[] = [];
+  private textures: THREE.Texture[] = [];
 
   /** Track a material so it's disposed on level reload (factories make one per container). */
   private mat<T extends THREE.Material>(m: T): T {
     this.materials.push(m);
     return m;
+  }
+
+  /** Track a texture so it's disposed on level reload. */
+  private tex<T extends THREE.Texture>(t: T): T {
+    this.textures.push(t);
+    return t;
   }
 
   constructor(level: Level) {
@@ -32,6 +39,20 @@ export class ContainerViews {
       this.group.add(root);
       this.entries.set(c.id, { root, fill, innerDepth });
     }
+    for (const h of level.hazards) this.group.add(this.buildHazard(h));
+  }
+
+  /** A flat "rug" plane marking a no-pee hazard zone on the floor. */
+  private buildHazard(h: { x0: number; z0: number; x1: number; z1: number }): THREE.Mesh {
+    const w = Math.abs(h.x1 - h.x0);
+    const d = Math.abs(h.z1 - h.z0);
+    const geo = new THREE.PlaneGeometry(w, d);
+    this.geometries.push(geo);
+    const tex = this.tex(makeRugTexture());
+    const mesh = new THREE.Mesh(geo, this.mat(new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95 })));
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.position.set((h.x0 + h.x1) / 2, 0.012, (h.z0 + h.z1) / 2);
+    return mesh;
   }
 
   /** Advance movers; writes the new world XZ back into the matching Container. */
@@ -62,8 +83,10 @@ export class ContainerViews {
   dispose() {
     for (const g of this.geometries) g.dispose();
     for (const m of this.materials) m.dispose();
+    for (const t of this.textures) t.dispose();
     this.geometries.length = 0;
     this.materials.length = 0;
+    this.textures.length = 0;
   }
 
   private buildContainer(c: Container): { body: THREE.Object3D; fill: THREE.Mesh; innerDepth: number } {
@@ -129,4 +152,28 @@ export class ContainerViews {
     fill.visible = false;
     return { body, fill, innerDepth };
   }
+}
+
+/** A simple ornate-ish rug: maroon field, gold borders, a center diamond. Reads as "don't hit this". */
+function makeRugTexture(): THREE.CanvasTexture {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const ctx = c.getContext('2d')!;
+  ctx.fillStyle = '#7a1f2b';
+  ctx.fillRect(0, 0, 256, 256);
+  ctx.strokeStyle = '#d8b24a';
+  ctx.lineWidth = 10;
+  ctx.strokeRect(14, 14, 228, 228);
+  ctx.lineWidth = 4;
+  ctx.strokeRect(30, 30, 196, 196);
+  ctx.beginPath();
+  ctx.moveTo(128, 60);
+  ctx.lineTo(196, 128);
+  ctx.lineTo(128, 196);
+  ctx.lineTo(60, 128);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.fillStyle = '#9c2a38';
+  ctx.fill();
+  return new THREE.CanvasTexture(c);
 }

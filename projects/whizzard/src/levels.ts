@@ -11,6 +11,8 @@ export interface Level {
   stars: [number, number, number]; // capture-% thresholds for ★, ★★, ★★★ (0..1)
   containers: Container[];
   hazards: Rect[];
+  /** Fraction of bladder allowed to land on hazards before the level fails. 0/undefined = any drop fails. */
+  hazardTolerance?: number;
   movers: Record<string, MoverPath>; // keyed by container id
 }
 
@@ -45,11 +47,12 @@ export const LEVELS: Level[] = [
   },
   {
     id: 5, name: 'The Persian Rug',
-    flavor: 'Behold the rug. The rug abides no error.',
+    flavor: 'Mind the rug. It tolerates a little. Not a lot.',
     bladder: 110, stars: [0.4, 0.65, 0.85],
-    hazards: [{ x0: -1.1, z0: 2.3, x1: 1.1, z1: 4.2 }],
+    hazards: [{ x0: -1.1, z0: 2.3, x1: 1.1, z1: 4.0 }],
+    hazardTolerance: 0.2, // up to 20% of the bladder may hit the rug before it fails
     movers: {},
-    containers: [cup('cup', 0, 4.7, { capacity: 45 })],
+    containers: [cup('cup', 0, 4.6, { capacity: 45 })],
   },
   {
     id: 6, name: 'Roomba Finale',
