@@ -169,6 +169,62 @@ body {
   border-bottom-color: var(--accent);
 }
 
+.about-links {
+  margin-bottom: 0.5rem;
+}
+
+/* Inline résumé under the About bio. */
+.resume {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--hairline);
+  padding-top: 1.25rem;
+}
+
+.resume-h {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1.75rem 0 0.85rem;
+}
+
+.resume-h:first-child {
+  margin-top: 0;
+}
+
+.resume-group {
+  margin-bottom: 1.15rem;
+}
+
+.resume-org {
+  font-weight: 500;
+  color: var(--fg);
+  margin-bottom: 0.35rem;
+}
+
+.resume-role {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.12rem 0;
+}
+
+.resume-title {
+  flex: 1;
+  min-width: 0;
+  color: var(--fg);
+  font-size: 0.92rem;
+}
+
+.resume-dates {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
 .section-back {
   position: absolute;
   top: 1.5rem;

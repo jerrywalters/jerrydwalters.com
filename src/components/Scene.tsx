@@ -170,14 +170,68 @@ function StudioEnv() {
   return null;
 }
 
+const EXPERIENCE = [
+  {
+    org: 'Postscript',
+    roles: [
+      { title: 'Senior Engineering Manager', dates: 'Apr 2025 – Present' },
+      { title: 'Engineering Manager', dates: 'Jul 2022 – Apr 2025' },
+      { title: 'Staff Software Engineer', dates: 'Mar 2021 – Jul 2022' },
+    ],
+  },
+  {
+    org: 'Robin',
+    roles: [
+      { title: 'Senior Software Engineer', dates: 'Apr 2019 – Mar 2021' },
+      { title: 'Software Engineer', dates: 'May 2018 – Apr 2019' },
+    ],
+  },
+  { org: 'Alley', roles: [{ title: 'Front End Engineer', dates: 'Jun 2017 – May 2018' }] },
+  { org: 'Capital One', roles: [{ title: 'Front End Engineer', dates: 'May 2015 – Jun 2017' }] },
+];
+
+const EDUCATION = {
+  school: 'Virginia Commonwealth University',
+  detail: 'Bachelor of Fine Arts (BFA), Sculpture & Extended Media',
+  dates: '2010 – 2015',
+};
+
 function PanelBody({ id, projects }: { id: string; projects: Project[] }) {
   if (id === 'about') {
     return (
       <>
-        <p>Placeholder bio — a couple of sentences about Jerry go here. Photo, résumé, and social links land in the next pass.</p>
-        <p>
-          <a href="#">Résumé</a> · <a href="#">GitHub</a> · <a href="#">LinkedIn</a>
+        <p>Engineer and engineering manager with a sculpture degree — currently Senior Engineering Manager at Postscript.</p>
+        <p className="about-links">
+          <a href="https://github.com/jerrywalters" target="_blank" rel="noreferrer">
+            GitHub
+          </a>{' '}
+          ·{' '}
+          <a href="https://www.linkedin.com/in/jerrydwalters/" target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
         </p>
+        <div className="resume">
+          <h3 className="resume-h">Experience</h3>
+          {EXPERIENCE.map((g) => (
+            <div className="resume-group" key={g.org}>
+              <div className="resume-org">{g.org}</div>
+              {g.roles.map((r) => (
+                <div className="resume-role" key={r.title}>
+                  <span className="resume-title">{r.title}</span>
+                  <span className="resume-dates">{r.dates}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+          <h3 className="resume-h">Education</h3>
+          <div className="resume-group">
+            <div className="resume-org">{EDUCATION.school}</div>
+            <div className="resume-role">
+              <span className="resume-title">{EDUCATION.detail}</span>
+              <span className="resume-dates">{EDUCATION.dates}</span>
+            </div>
+          </div>
+        </div>
       </>
     );
   }
