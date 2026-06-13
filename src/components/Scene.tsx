@@ -206,7 +206,7 @@ export default function Scene() {
         </Suspense>
 
         <EffectComposer autoClear={false} multisampling={4}>
-          <Outline blur edgeStrength={6} pulseSpeed={0} visibleEdgeColor={0xffffff} hiddenEdgeColor={0x1a2433} xRay={false} />
+          <Outline blur edgeStrength={6} pulseSpeed={0} visibleEdgeColor={0xcf9bf0} hiddenEdgeColor={0x4a2f63} xRay={false} />
         </EffectComposer>
       </Selection>
     </Canvas>
