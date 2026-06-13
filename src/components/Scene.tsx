@@ -20,8 +20,8 @@ interface SectionDef {
 
 const SECTIONS: SectionDef[] = [
   { id: 'about', route: '/about', label: 'About', url: '/models/ranuelphe.glb', scale: 1.0, orient: [0, 0, -Math.PI / 2], spin: 0.26, tilt: [0.1, -0.05] },
-  { id: 'physical', route: '/physical', label: 'Physical projects', url: '/models/radiator.glb', scale: 1.0, orient: [0, 0, 0], spin: 0.5, tilt: [-0.08, 0.13] },
-  { id: 'digital', route: '/digital', label: 'Digital projects', url: '/models/cd.glb', scale: 1.05, orient: [Math.PI / 2.4, 0, 0], spin: 0.72, tilt: [0.18, 0.06] },
+  { id: 'physical', route: '/physical', label: 'Physical projects', url: '/models/radiator.glb', scale: 0.8, orient: [0, 0, 0], spin: 0.5, tilt: [-0.08, 0.13] },
+  { id: 'digital', route: '/digital', label: 'Digital projects', url: '/models/cd.glb', scale: 0.84, orient: [Math.PI / 2.4, 0, 0], spin: 0.72, tilt: [0.18, 0.06] },
 ];
 
 // Layout slots. CENTER = focused hero; the other two recede with depth on the x-axis.
