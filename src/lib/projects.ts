@@ -42,5 +42,12 @@ export function getProjects(): Project[] {
   return [
     ...scan('public', 'no-build', 'index.html'),
     ...scan('projects', 'built', 'package.json'),
-  ].sort((a, b) => a.title.localeCompare(b.title));
+  ].sort((a, b) => {
+    // Example/placeholder projects (e.g. "Dodge (Example)") sink below real ones;
+    // within each group, sort alphabetically.
+    const ax = /\(example\)/i.test(a.title) ? 1 : 0;
+    const bx = /\(example\)/i.test(b.title) ? 1 : 0;
+    if (ax !== bx) return ax - bx;
+    return a.title.localeCompare(b.title);
+  });
 }
