@@ -245,6 +245,12 @@ Everything procedural, in code — no binary assets in v1:
   in v2).
 - Side-view camera option, real GLB art, leaderboards (KV), more levels
   (urinal cake target, moving train bathroom, wind = outdoor levels).
+- **Persistent room direction:** longer-term, the fixed room could become a
+  real explorable space you return to between levels (a bathroom/hub you
+  decorate, walk around, pick targets in) rather than a flat backdrop. v1's
+  scene is built as a real 3D room (floor, walls, lights) partly to keep that
+  door open — the camera rig and container placement are world-space, so
+  "stand somewhere else and look around" is an additive change, not a rewrite.
 
 ---
 
