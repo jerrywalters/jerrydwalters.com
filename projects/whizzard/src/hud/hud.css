@@ -70,7 +70,7 @@
   padding: 0.7rem 0.85rem;
   font-size: 12px;
   line-height: 1.4;
-  max-width: 14rem;
+  max-width: 18rem;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
@@ -90,9 +90,10 @@
 }
 .wz-key {
   flex: 0 0 auto;
-  min-width: 5.4rem;
+  min-width: 6.4rem;
   font-weight: 600;
   color: #f3f3ef;
+  white-space: nowrap;
 }
 .wz-cdesc {
   color: #a7a7a2;

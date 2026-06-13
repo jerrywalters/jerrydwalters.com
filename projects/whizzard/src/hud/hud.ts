@@ -91,10 +91,9 @@ export class Hud {
     const controls = el('div', 'wz-controls');
     controls.append(
       el('div', 'wz-ctitle', 'How to play'),
-      ctl('Hold', 'build pressure'),
-      ctl('Release', 'fire the stream'),
-      ctl('← →  ·  drag', 'aim left / right'),
-      ctl('Tap while flowing', 'clench to stop'),
+      ctl('Space / click', 'hold to charge, release to fire'),
+      ctl('← →  ·  A D', 'aim left / right (or drag)'),
+      ctl('Space / click', 'tap while flowing to clench'),
     );
     this.gameLayer.appendChild(controls);
 
