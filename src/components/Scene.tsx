@@ -5,9 +5,11 @@ import { EffectComposer, Outline, Select, Selection } from '@react-three/postpro
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
-// One floating object per section. The focused one is the centered, zoomed hero; the
-// other two recede as smaller background "planets". Clicking a background object brings
-// it to center. See docs/superpowers/specs/2026-06-12-landing-3d-orbit-nav-design.md.
+// One floating object per section. In overview the focused one is the centered, zoomed
+// hero and the other two recede as background "planets"; clicking a background object
+// brings it to center. Clicking the centered hero opens its section: the model slides to
+// a left slot and a content panel slides in on the right (full-overlay on mobile).
+// See docs/superpowers/specs/2026-06-12-landing-3d-orbit-nav-design.md.
 interface SectionDef {
   id: string;
   route: string;
@@ -25,7 +27,8 @@ const SECTIONS: SectionDef[] = [
   { id: 'digital', route: '/digital', label: 'Digital projects', url: '/models/cd.glb', scale: 0.84, orient: [Math.PI / 2.4, 0, 0], spin: 0.72, tilt: [0.18, 0.06] },
 ];
 
-// Layout slots. CENTER = focused hero; the other two recede with depth on the x-axis.
+// Layout slots. Overview: CENTER hero + two background planets. Section view: the hero
+// moves to LEFT_HERO and the others tuck away (HIDE) to clear the room for the panel.
 interface Slot {
   position: [number, number, number];
   scale: number;
@@ -33,6 +36,9 @@ interface Slot {
 const CENTER: Slot = { position: [0, -0.1, 0.4], scale: 1.7 };
 const BG_LEFT: Slot = { position: [-3.9, 0.5, -4.5], scale: 0.48 };
 const BG_RIGHT: Slot = { position: [3.9, -0.5, -4.5], scale: 0.48 };
+const LEFT_HERO: Slot = { position: [-2.4, -0.1, 0.4], scale: 1.45 };
+const HIDE_LEFT: Slot = { position: [-8, 1.5, -7], scale: 0.05 };
+const HIDE_RIGHT: Slot = { position: [8, -1.5, -7], scale: 0.05 };
 
 const IRON = new THREE.MeshStandardMaterial({ color: '#86888d', metalness: 0.82, roughness: 0.5, envMapIntensity: 1.6 });
 const BRASS = new THREE.MeshStandardMaterial({ color: '#9c8348', metalness: 0.9, roughness: 0.45, envMapIntensity: 1.6 });
@@ -100,7 +106,7 @@ function Model({ def, slot, isFocused, isHovered, index, onSelect, onHover }: { 
       g.scale.setScalar(ts);
       placed.current = true;
     } else {
-      // Ease position + scale toward the current slot on focus change.
+      // Ease position + scale toward the current slot (focus change / section open-close).
       const k = 1 - Math.pow(0.0016, Math.min(dt, 0.05));
       g.position.lerp(_pos.set(slot.position[0], slot.position[1], slot.position[2]), k);
       g.scale.lerp(_scale.set(ts, ts, ts), k);
@@ -164,51 +170,106 @@ function StudioEnv() {
   return null;
 }
 
+function PanelBody({ id }: { id: string }) {
+  if (id === 'about') {
+    return (
+      <>
+        <p>Placeholder bio — a couple of sentences about Jerry go here. Photo, résumé, and social links land in the next pass.</p>
+        <p>
+          <a href="#">Résumé</a> · <a href="#">GitHub</a> · <a href="#">LinkedIn</a>
+        </p>
+      </>
+    );
+  }
+  if (id === 'physical') {
+    return <p>Physical builds — a grid of things made by hand. Images get added here over time.</p>;
+  }
+  return (
+    <p>
+      Digital projects — apps and game prototypes. <a href="/projects">Browse all projects →</a>
+    </p>
+  );
+}
+
 SECTIONS.forEach((s) => useGLTF.preload(s.url));
 
 export default function Scene() {
   const [focused, setFocused] = useState('about');
   const [hovered, setHovered] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+
   const others = SECTIONS.filter((s) => s.id !== focused);
+  const focusedDef = SECTIONS.find((s) => s.id === focused)!;
+
   const slotOf = (id: string): Slot => {
-    if (id === focused) return CENTER;
-    return others[0]?.id === id ? BG_LEFT : BG_RIGHT;
+    const isLeft = others[0]?.id === id;
+    if (id === focused) return open ? LEFT_HERO : CENTER;
+    if (open) return isLeft ? HIDE_LEFT : HIDE_RIGHT;
+    return isLeft ? BG_LEFT : BG_RIGHT;
   };
 
+  const handleSelect = (id: string) => {
+    if (open) {
+      setOpen(false); // clicking the model in section view returns to overview
+    } else if (id === focused) {
+      setOpen(true); // clicking the centered hero opens its section
+    } else {
+      setFocused(id); // clicking a background planet brings it to center
+    }
+  };
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   return (
-    <Canvas
-      camera={{ position: [0, 0, 9], fov: 34 }}
-      gl={{ antialias: true, alpha: true }}
-      dpr={[1, 2]}
-      style={{ width: '100%', height: '100%' }}
-    >
-      <Selection>
-        <StudioEnv />
-        <ambientLight intensity={0.14} />
-        {/* Key light rakes in from the upper-left side, not from the camera. */}
-        <directionalLight position={[-7, 4, 2]} intensity={2.9} />
-        {/* Subtle cool fill from the opposite side so shadows aren't pure black. */}
-        <directionalLight position={[6, 1, -2]} intensity={0.35} color="#9bb4d6" />
+    <>
+      <Canvas
+        camera={{ position: [0, 0, 9], fov: 34 }}
+        gl={{ antialias: true, alpha: true }}
+        dpr={[1, 2]}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <Selection>
+          <StudioEnv />
+          <ambientLight intensity={0.14} />
+          {/* Key light rakes in from the upper-left side, not from the camera. */}
+          <directionalLight position={[-7, 4, 2]} intensity={2.9} />
+          {/* Subtle cool fill from the opposite side so shadows aren't pure black. */}
+          <directionalLight position={[6, 1, -2]} intensity={0.35} color="#9bb4d6" />
 
-        <Suspense fallback={null}>
-          {SECTIONS.map((def, i) => (
-            <Model
-              key={def.id}
-              def={def}
-              index={i}
-              slot={slotOf(def.id)}
-              isFocused={focused === def.id}
-              isHovered={hovered === def.id}
-              onSelect={setFocused}
-              onHover={setHovered}
-            />
-          ))}
-        </Suspense>
+          <Suspense fallback={null}>
+            {SECTIONS.map((def, i) => (
+              <Model
+                key={def.id}
+                def={def}
+                index={i}
+                slot={slotOf(def.id)}
+                isFocused={focused === def.id}
+                isHovered={hovered === def.id}
+                onSelect={handleSelect}
+                onHover={setHovered}
+              />
+            ))}
+          </Suspense>
 
-        <EffectComposer autoClear={false} multisampling={4}>
-          <Outline blur edgeStrength={6} pulseSpeed={0} visibleEdgeColor={0xcf9bf0} hiddenEdgeColor={0x4a2f63} xRay={false} />
-        </EffectComposer>
-      </Selection>
-    </Canvas>
+          <EffectComposer autoClear={false} multisampling={4}>
+            <Outline blur edgeStrength={6} pulseSpeed={0} visibleEdgeColor={0xcf9bf0} hiddenEdgeColor={0x4a2f63} xRay={false} />
+          </EffectComposer>
+        </Selection>
+      </Canvas>
+
+      <aside className="section-panel" data-open={open} aria-hidden={!open}>
+        <button className="section-close" type="button" aria-label="Close" onClick={() => setOpen(false)}>
+          ✕
+        </button>
+        <h2>{focusedDef.label}</h2>
+        <PanelBody id={focused} />
+      </aside>
+    </>
   );
 }
