@@ -285,7 +285,7 @@ export default function Scene({ projects = [], initialSection }: { projects?: Pr
       >
         <Selection>
           <StudioEnv />
-          <ambientLight intensity={0.14} />
+          <ambientLight intensity={0.07} />
           <directionalLight position={[-7, 4, 2]} intensity={2.9} />
           <directionalLight position={[6, 1, -2]} intensity={0.35} color="#9bb4d6" />
 

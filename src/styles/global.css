@@ -4,6 +4,8 @@
   --fg: #ececee;
   --muted: #7a7a85;
   --hairline: rgba(255, 255, 255, 0.10);
+  /* accent = the 3D hover-outline colour, reused for menu hovers + links */
+  --accent: #cf9bf0;
   color-scheme: dark;
 }
 
@@ -12,6 +14,7 @@
   --fg: #16161a;
   --muted: #6a6a72;
   --hairline: rgba(0, 0, 0, 0.12);
+  --accent: #b07fd8;
   color-scheme: light;
 }
 
@@ -175,13 +178,13 @@ body {
 }
 
 .section-panel a {
-  color: var(--fg);
+  color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 .section-panel a:hover {
-  border-bottom-color: var(--fg);
+  border-bottom-color: var(--accent);
 }
 
 .section-back {
@@ -200,7 +203,7 @@ body {
 }
 
 .section-back:hover {
-  color: var(--fg);
+  color: var(--accent);
 }
 
 /* Digital-projects list inside the panel (vertically scrollable with the panel). */
@@ -225,8 +228,12 @@ body {
 }
 
 .proj-list a:hover {
-  border-color: var(--fg);
+  border-color: var(--accent);
   transform: translateY(-1px);
+}
+
+.proj-list a:hover .proj-title {
+  color: var(--accent);
 }
 
 .proj-title {
@@ -243,13 +250,13 @@ body {
 
 .proj-all {
   display: inline-block;
-  color: var(--muted) !important;
+  color: var(--accent) !important;
   font-size: 0.85rem;
   border-bottom: none !important;
 }
 
 .proj-all:hover {
-  color: var(--fg) !important;
+  border-bottom: 1px solid var(--accent) !important;
 }
 
 /* When a section panel is open, fade out the centered site-name / bottom link so
