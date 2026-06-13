@@ -20,7 +20,13 @@ export function stepPressure(s: PressureState, input: PressureInput, dt: number)
 
   switch (n.phase) {
     case 'idle': {
-      if (input.pressed) { n.phase = 'charging'; n.pressure = 0; n.overchargeTimer = 0; }
+      if (input.pressed) {
+        n.phase = 'charging'; n.pressure = 0; n.overchargeTimer = 0;
+        // If a press and release coalesce into the same tick (a very fast tap, or a slow
+        // frame), honor the release now — otherwise we'd strand in charging with no further
+        // input and silently climb to an overcharge panic blast seconds later.
+        if (input.released) n.phase = 'flowing';
+      }
       break;
     }
     case 'charging': {

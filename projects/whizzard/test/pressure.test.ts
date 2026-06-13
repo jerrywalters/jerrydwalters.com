@@ -78,4 +78,14 @@ describe('pressure model', () => {
     expect(s.phase).toBe('flowing');
     expect(s.panicTimer).toBeGreaterThan(0);
   });
+
+  it('a tap (press+release in one tick) does not strand in charging → no panic blast', () => {
+    const tap: PressureInput = { pressed: true, released: true, held: false };
+    let s = stepPressure(initialPressure(), tap, 1 / 120);
+    // The tap must not leave us charging; it resolves to a (negligible) flow that ends.
+    expect(s.phase).not.toBe('charging');
+    s = run(s, idle, OVERCHARGE_FUSE + CHARGE_TIME + 0.5); // let plenty of time pass
+    expect(s.phase).toBe('idle');
+    expect(s.panicTimer).toBe(0); // crucially, no delayed overcharge panic
+  });
 });
