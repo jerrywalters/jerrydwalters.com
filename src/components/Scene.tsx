@@ -4,22 +4,24 @@ import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
-// One floating object per section. The focused one sits centered & zoomed (the hero);
-// the other two hang back as smaller "planets" with x-spread + z-depth. Clicking a
-// background object brings it to center. See the design spec (2026-06-12).
+// One floating object per section. The focused one is the centered, zoomed hero; the
+// other two recede as smaller background "planets". Clicking a background object brings
+// it to center. See docs/superpowers/specs/2026-06-12-landing-3d-orbit-nav-design.md.
 interface SectionDef {
   id: string;
   route: string;
   label: string;
   url: string;
   scale: number; // per-model fine-tune on top of the slot scale
-  orient: [number, number, number];
+  orient: [number, number, number]; // base "stand it up" orientation
+  spin: number; // base Y spin speed (rad/s)
+  tilt: [number, number]; // resting lean on x / z, so each spins at its own angle
 }
 
 const SECTIONS: SectionDef[] = [
-  { id: 'about', route: '/about', label: 'About', url: '/models/ranuelphe.glb', scale: 1.0, orient: [0, 0, -Math.PI / 2] },
-  { id: 'physical', route: '/physical', label: 'Physical projects', url: '/models/radiator.glb', scale: 1.0, orient: [0, 0, 0] },
-  { id: 'digital', route: '/digital', label: 'Digital projects', url: '/models/cd.glb', scale: 1.05, orient: [Math.PI / 2.4, 0, 0] },
+  { id: 'about', route: '/about', label: 'About', url: '/models/ranuelphe.glb', scale: 1.0, orient: [0, 0, -Math.PI / 2], spin: 0.26, tilt: [0.1, -0.05] },
+  { id: 'physical', route: '/physical', label: 'Physical projects', url: '/models/radiator.glb', scale: 1.0, orient: [0, 0, 0], spin: 0.5, tilt: [-0.08, 0.13] },
+  { id: 'digital', route: '/digital', label: 'Digital projects', url: '/models/cd.glb', scale: 1.05, orient: [Math.PI / 2.4, 0, 0], spin: 0.72, tilt: [0.18, 0.06] },
 ];
 
 // Layout slots. CENTER = focused hero; the other two recede with depth on the x-axis.
@@ -31,11 +33,11 @@ const CENTER: Slot = { position: [0, -0.1, 0.4], scale: 1.7 };
 const BG_LEFT: Slot = { position: [-3.9, 0.5, -4.5], scale: 0.48 };
 const BG_RIGHT: Slot = { position: [3.9, -0.5, -4.5], scale: 0.48 };
 
-// Materials applied in-scene. Iron/brass + statue signed off 2026-06-12; the CD keeps
-// its own textures and gets a true thin-film iridescent foil for the rainbow shimmer.
 const IRON = new THREE.MeshStandardMaterial({ color: '#86888d', metalness: 0.82, roughness: 0.5 });
 const BRASS = new THREE.MeshStandardMaterial({ color: '#9c8348', metalness: 0.9, roughness: 0.45 });
-const STATUE = new THREE.MeshStandardMaterial({ color: '#73726d', roughness: 0.8, metalness: 0.07, flatShading: true });
+// The statue ignores the environment map (envMapIntensity 0) so it keeps the original
+// dramatic, directional lighting instead of the flat image-based wash.
+const STATUE = new THREE.MeshStandardMaterial({ color: '#73726d', roughness: 0.8, metalness: 0.07, flatShading: true, envMapIntensity: 0 });
 
 function applyMaterials(root: THREE.Object3D, id: string) {
   root.traverse((o) => {
@@ -70,7 +72,7 @@ function applyMaterials(root: THREE.Object3D, id: string) {
 const _pos = new THREE.Vector3();
 const _scale = new THREE.Vector3();
 
-function Model({ def, slot, isFocused, onSelect }: { def: SectionDef; slot: Slot; isFocused: boolean; onSelect: (id: string) => void }) {
+function Model({ def, slot, isFocused, index, onSelect }: { def: SectionDef; slot: Slot; isFocused: boolean; index: number; onSelect: (id: string) => void }) {
   const { scene } = useGLTF(def.url);
   const grp = useRef<THREE.Group>(null);
   const spin = useRef<THREE.Group>(null);
@@ -87,7 +89,7 @@ function Model({ def, slot, isFocused, onSelect }: { def: SectionDef; slot: Slot
     return { obj: root, center, norm };
   }, [scene, def.id]);
 
-  useFrame((_, dt) => {
+  useFrame((state, dt) => {
     const g = grp.current;
     if (!g) return;
     const ts = slot.scale * def.scale;
@@ -97,12 +99,21 @@ function Model({ def, slot, isFocused, onSelect }: { def: SectionDef; slot: Slot
       g.scale.setScalar(ts);
       placed.current = true;
     } else {
-      // Ease position + scale toward the current slot on focus change (framerate-independent).
+      // Ease position + scale toward the current slot on focus change.
       const k = 1 - Math.pow(0.0016, Math.min(dt, 0.05));
       g.position.lerp(_pos.set(slot.position[0], slot.position[1], slot.position[2]), k);
       g.scale.lerp(_scale.set(ts, ts, ts), k);
     }
-    if (spin.current) spin.current.rotation.y += dt * (isFocused ? 0.35 : 0.5);
+    const s = spin.current;
+    if (s) {
+      s.rotation.y += dt * def.spin * (isFocused ? 0.85 : 1);
+      // Per-object resting tilt + a slow, phase-offset wobble so none spin alike.
+      const t = state.clock.elapsedTime;
+      const wob = 0.4 + index * 0.18;
+      const ph = index * 2.1;
+      s.rotation.x = def.tilt[0] + 0.07 * Math.sin(t * wob + ph);
+      s.rotation.z = def.tilt[1] + 0.06 * Math.sin(t * wob * 0.8 + ph * 1.4);
+    }
   });
 
   return (
@@ -132,7 +143,7 @@ function Model({ def, slot, isFocused, onSelect }: { def: SectionDef; slot: Slot
   );
 }
 
-// No-network studio environment so the metals and the CD foil actually reflect.
+// No-network studio environment so the metals and the CD foil reflect (the statue opts out).
 function StudioEnv() {
   const { gl, scene } = useThree();
   useEffect(() => {
@@ -165,13 +176,13 @@ export default function Scene() {
       style={{ width: '100%', height: '100%' }}
     >
       <StudioEnv />
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[4, 6, 3]} intensity={1.6} />
-      <directionalLight position={[-5, 2, -3]} intensity={0.5} color="#9bb4d6" />
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[4, 6, 3]} intensity={1.7} />
+      <directionalLight position={[-5, 2, -3]} intensity={0.4} color="#9bb4d6" />
 
       <Suspense fallback={null}>
-        {SECTIONS.map((def) => (
-          <Model key={def.id} def={def} slot={slotOf(def.id)} isFocused={focused === def.id} onSelect={setFocused} />
+        {SECTIONS.map((def, i) => (
+          <Model key={def.id} def={def} index={i} slot={slotOf(def.id)} isFocused={focused === def.id} onSelect={setFocused} />
         ))}
       </Suspense>
     </Canvas>
