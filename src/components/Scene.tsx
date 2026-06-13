@@ -33,8 +33,8 @@ const CENTER: Slot = { position: [0, -0.1, 0.4], scale: 1.7 };
 const BG_LEFT: Slot = { position: [-3.9, 0.5, -4.5], scale: 0.48 };
 const BG_RIGHT: Slot = { position: [3.9, -0.5, -4.5], scale: 0.48 };
 
-const IRON = new THREE.MeshStandardMaterial({ color: '#86888d', metalness: 0.82, roughness: 0.5 });
-const BRASS = new THREE.MeshStandardMaterial({ color: '#9c8348', metalness: 0.9, roughness: 0.45 });
+const IRON = new THREE.MeshStandardMaterial({ color: '#86888d', metalness: 0.82, roughness: 0.5, envMapIntensity: 1.6 });
+const BRASS = new THREE.MeshStandardMaterial({ color: '#9c8348', metalness: 0.9, roughness: 0.45, envMapIntensity: 1.6 });
 // The statue ignores the environment map (envMapIntensity 0) so it keeps the original
 // dramatic, directional lighting instead of the flat image-based wash.
 const STATUE = new THREE.MeshStandardMaterial({ color: '#73726d', roughness: 0.8, metalness: 0.07, flatShading: true, envMapIntensity: 0 });
@@ -59,7 +59,7 @@ function applyMaterials(root: THREE.Object3D, id: string) {
           iridescence: 1,
           iridescenceIOR: 1.32,
           iridescenceThicknessRange: [120, 520],
-          envMapIntensity: 1.9,
+          envMapIntensity: 3.2,
         });
       } else if (mat) {
         mat.envMapIntensity = 1.3;
@@ -150,6 +150,7 @@ function StudioEnv() {
     const pmrem = new THREE.PMREMGenerator(gl);
     const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
     scene.environment = env;
+    scene.environmentIntensity = 0.3; // reflections only — let the side key light carry the drama
     return () => {
       env.dispose();
       pmrem.dispose();
@@ -176,9 +177,11 @@ export default function Scene() {
       style={{ width: '100%', height: '100%' }}
     >
       <StudioEnv />
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[4, 6, 3]} intensity={1.7} />
-      <directionalLight position={[-5, 2, -3]} intensity={0.4} color="#9bb4d6" />
+      <ambientLight intensity={0.14} />
+      {/* Key light rakes in from the upper-left side, not from the camera. */}
+      <directionalLight position={[-7, 4, 2]} intensity={2.9} />
+      {/* Subtle cool fill from the opposite side so shadows aren't pure black. */}
+      <directionalLight position={[6, 1, -2]} intensity={0.35} color="#9bb4d6" />
 
       <Suspense fallback={null}>
         {SECTIONS.map((def, i) => (
