@@ -40,7 +40,13 @@ function inRect(x: number, z: number, r: Rect): boolean {
 // composes with the rest of the sim (pressure/emission/movers) which also advance by dt.
 // Tunnelling isn't a concern: capture/floor use plane-crossing tests (py0 vs new py),
 // catching a droplet even if it skips far past the boundary within a single step.
-export function integrate(pool: DropletPool, containers: Container[], hazards: Rect[], dt: number): IntegrateResult {
+export function integrate(
+  pool: DropletPool,
+  containers: Container[],
+  hazards: Rect[],
+  dt: number,
+  onSpill?: (x: number, z: number, vol: number) => void,
+): IntegrateResult {
   let capturedVolume = 0;
   let spilledVolume = 0;
   let hazardHit = false;
@@ -84,7 +90,12 @@ export function integrate(pool: DropletPool, containers: Container[], hazards: R
       const fz = d.pz - d.vz * dt * (1 - t);
       let onHazard = false;
       for (let h = 0; h < hazards.length; h++) if (inRect(fx, fz, hazards[h])) { onHazard = true; break; }
-      if (onHazard) hazardHit = true; else spilledVolume += d.vol;
+      if (onHazard) {
+        hazardHit = true;
+      } else {
+        spilledVolume += d.vol;
+        onSpill?.(fx, fz, d.vol);
+      }
       pool.kill(i);
     }
   }
