@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { integrate, predictLanding, launchVelocity } from '../src/sim/ballistics';
+import { integrate, predictLanding, predictArc, launchVelocity } from '../src/sim/ballistics';
 import { DropletPool } from '../src/sim/pool';
 import type { Container, Rect } from '../src/sim/types';
 import { NOZZLE_HEIGHT, NOZZLE_FORWARD } from '../src/tuning';
@@ -25,6 +25,29 @@ describe('predictLanding', () => {
   });
 });
 
+describe('predictArc', () => {
+  it('starts at the nozzle and ends on the floor', () => {
+    const arc = predictArc(0.7, 0, origin);
+    expect(arc.length).toBeGreaterThan(2);
+    expect(arc[0]).toEqual(origin);
+    expect(arc[arc.length - 1].y).toBe(0);
+  });
+
+  it('its landing matches predictLanding for the same shot', () => {
+    const arc = predictArc(0.6, 0.1, origin);
+    const land = predictLanding(0.6, 0.1, origin);
+    const end = arc[arc.length - 1];
+    expect(end.z).toBeCloseTo(land.z, 1);
+    expect(end.x).toBeCloseTo(land.x, 1);
+  });
+
+  it('reaches farther at higher pressure', () => {
+    const lo = predictArc(0.3, 0, origin);
+    const hi = predictArc(1, 0, origin);
+    expect(hi[hi.length - 1].z).toBeGreaterThan(lo[lo.length - 1].z);
+  });
+});
+
 describe('integrate', () => {
   function cup(over: Partial<Container> = {}): Container {
     return { id: 'c', kind: 'cup', px: 0, py: 0, pz: 2, rimRadius: 0.3, rimHeight: 0.4, capacity: 100, fill: 0, ...over };
@@ -33,14 +56,15 @@ describe('integrate', () => {
   // integrate() advances exactly dt per call, just like the game loop. Drive a droplet
   // through successive frames until the pool drains (or a guard trips), accumulating results.
   function settle(pool: DropletPool, containers: Container[], hazards: Rect[], dt = 1 / 60, maxIters = 600) {
-    let captured = 0, spilled = 0, hazardHit = false;
+    let captured = 0, spilled = 0, hazardVolume = 0, hazardHit = false;
     for (let i = 0; i < maxIters && pool.aliveCount > 0; i++) {
       const r = integrate(pool, containers, hazards, dt);
       captured += r.capturedVolume;
       spilled += r.spilledVolume;
+      hazardVolume += r.hazardVolume;
       hazardHit = hazardHit || r.hazardHit;
     }
-    return { captured, spilled, hazardHit };
+    return { captured, spilled, hazardVolume, hazardHit };
   }
 
   it('captures a droplet that crosses the rim inside the radius', () => {
@@ -81,12 +105,14 @@ describe('integrate', () => {
     expect(pool.aliveCount).toBe(0);
   });
 
-  it('a floor hit inside a hazard rect flags hazardHit', () => {
+  it('a floor hit inside a hazard rect flags hazardHit and reports its volume', () => {
     const pool = new DropletPool(8);
     const rug: Rect = { x0: -1, z0: 0.5, x1: 1, z1: 1.5 };
     pool.spawn({ px: 0, py: 0.05, pz: 1, vx: 0, vy: -2, vz: 0, vol: 4, scale: 1 });
     const res = settle(pool, [], [rug]);
     expect(res.hazardHit).toBe(true);
+    expect(res.hazardVolume).toBe(4);
+    expect(res.spilled).toBe(4); // hazard drops are wasted spill too
   });
 
   it('applies gravity (a level-launched droplet falls)', () => {

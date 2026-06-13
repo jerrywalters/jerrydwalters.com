@@ -6,8 +6,9 @@ import {
 
 export interface IntegrateResult {
   capturedVolume: number;
-  spilledVolume: number; // floor + overflow (hazard hits set hazardHit instead — the level fails, so their volume is not accounted)
-  hazardHit: boolean;
+  spilledVolume: number; // floor + overflow + hazard (all wasted)
+  hazardVolume: number;  // subset of spill that landed on a hazard rect this step
+  hazardHit: boolean;    // true if any droplet hit a hazard this step
 }
 
 const DEG = Math.PI / 180;
@@ -32,6 +33,21 @@ export function predictLanding(pressure: number, yaw: number, origin: Vec3): Vec
   return { x, y: 0, z };
 }
 
+/** Collision-free trajectory sampled from nozzle to floor — for the aim-preview line. */
+export function predictArc(pressure: number, yaw: number, origin: Vec3, sampleEvery = 5, maxSamples = 90): Vec3[] {
+  const v = launchVelocity(pressure, yaw);
+  let { x, y, z } = origin;
+  const dt = 1 / 120;
+  const pts: Vec3[] = [{ x, y, z }];
+  for (let i = 0; i < maxSamples * sampleEvery && y > 0; i++) {
+    v.y -= GRAVITY * dt;
+    x += v.x * dt; y += v.y * dt; z += v.z * dt;
+    if (i % sampleEvery === 0) pts.push({ x, y: Math.max(0, y), z });
+  }
+  pts.push({ x, y: 0, z }); // exact landing point
+  return pts;
+}
+
 function inRect(x: number, z: number, r: Rect): boolean {
   return x >= r.x0 && x <= r.x1 && z >= r.z0 && z <= r.z1;
 }
@@ -49,6 +65,7 @@ export function integrate(
 ): IntegrateResult {
   let capturedVolume = 0;
   let spilledVolume = 0;
+  let hazardVolume = 0;
   let hazardHit = false;
 
   const drops = pool.droplets;
@@ -90,15 +107,12 @@ export function integrate(
       const fz = d.pz - d.vz * dt * (1 - t);
       let onHazard = false;
       for (let h = 0; h < hazards.length; h++) if (inRect(fx, fz, hazards[h])) { onHazard = true; break; }
-      if (onHazard) {
-        hazardHit = true;
-      } else {
-        spilledVolume += d.vol;
-        onSpill?.(fx, fz, d.vol);
-      }
+      if (onHazard) { hazardHit = true; hazardVolume += d.vol; }
+      spilledVolume += d.vol; // hazard hits are wasted spill too
+      onSpill?.(fx, fz, d.vol);
       pool.kill(i);
     }
   }
 
-  return { capturedVolume, spilledVolume, hazardHit };
+  return { capturedVolume, spilledVolume, hazardVolume, hazardHit };
 }
