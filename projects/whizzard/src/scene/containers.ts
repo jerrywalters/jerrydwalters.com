@@ -15,6 +15,13 @@ export class ContainerViews {
   readonly group = new THREE.Group();
   private entries = new Map<string, Entry>();
   private geometries: THREE.BufferGeometry[] = [];
+  private materials: THREE.Material[] = [];
+
+  /** Track a material so it's disposed on level reload (factories make one per container). */
+  private mat<T extends THREE.Material>(m: T): T {
+    this.materials.push(m);
+    return m;
+  }
 
   constructor(level: Level) {
     for (const c of level.containers) {
@@ -32,7 +39,7 @@ export class ContainerViews {
     for (const [id, path] of Object.entries(movers)) {
       const e = this.entries.get(id);
       const con = containers.find((c) => c.id === id);
-      if (!e || !con) continue;
+      if (!e || !con || path.period <= 0) continue; // period 0 would divide-by-zero → NaN position
       const k = 0.5 - 0.5 * Math.cos((2 * Math.PI * time) / path.period); // smooth ping-pong 0..1
       const p = path.from + (path.to - path.from) * k;
       if (path.axis === 'x') { con.px = p; e.root.position.x = p; }
@@ -54,12 +61,16 @@ export class ContainerViews {
 
   dispose() {
     for (const g of this.geometries) g.dispose();
+    for (const m of this.materials) m.dispose();
     this.geometries.length = 0;
+    this.materials.length = 0;
   }
 
   private buildContainer(c: Container): { body: THREE.Object3D; fill: THREE.Mesh; innerDepth: number } {
     const innerDepth = c.rimHeight;
-    const fillRadius = c.rimRadius * 0.85;
+    // Inset below the narrowest (bottom) inner radius — bodies taper to ~0.7–0.8·rimRadius,
+    // so a wider disc would poke through the lower wall when the fill is shallow.
+    const fillRadius = c.rimRadius * 0.65;
     let body: THREE.Object3D = new THREE.Group();
 
     switch (c.kind) {
@@ -67,13 +78,13 @@ export class ContainerViews {
       case 'roomba-cup': {
         const geo = new THREE.CylinderGeometry(c.rimRadius, c.rimRadius * 0.8, c.rimHeight, 24, 1, true);
         this.geometries.push(geo);
-        const cup = new THREE.Mesh(geo, PORCELAIN());
+        const cup = new THREE.Mesh(geo, this.mat(PORCELAIN()));
         cup.position.y = c.rimHeight / 2;
         if (c.kind === 'roomba-cup') {
           const grp = new THREE.Group();
           const rg = new THREE.CylinderGeometry(c.rimRadius * 2.4, c.rimRadius * 2.4, 0.06, 24);
           this.geometries.push(rg);
-          const disc = new THREE.Mesh(rg, ROOMBA());
+          const disc = new THREE.Mesh(rg, this.mat(ROOMBA()));
           disc.position.y = 0.03;
           grp.add(disc, cup);
           body = grp;
@@ -87,9 +98,9 @@ export class ContainerViews {
         const bowlGeo = new THREE.CylinderGeometry(c.rimRadius, c.rimRadius * 0.7, c.rimHeight, 24, 1, true);
         const tankGeo = new THREE.BoxGeometry(c.rimRadius * 2.2, c.rimHeight * 1.2, 0.18);
         this.geometries.push(bowlGeo, tankGeo);
-        const bowl = new THREE.Mesh(bowlGeo, PORCELAIN());
+        const bowl = new THREE.Mesh(bowlGeo, this.mat(PORCELAIN()));
         bowl.position.y = c.rimHeight / 2;
-        const tank = new THREE.Mesh(tankGeo, PORCELAIN());
+        const tank = new THREE.Mesh(tankGeo, this.mat(PORCELAIN()));
         tank.position.set(0, c.rimHeight * 0.6, c.rimRadius + 0.09);
         grp.add(bowl, tank);
         body = grp;
@@ -100,9 +111,9 @@ export class ContainerViews {
         const shaftGeo = new THREE.CylinderGeometry(c.rimRadius, c.rimRadius, c.rimHeight, 20, 1, true);
         const footGeo = new THREE.BoxGeometry(c.rimRadius * 2, c.rimRadius * 1.4, c.rimRadius * 3.2);
         this.geometries.push(shaftGeo, footGeo);
-        const shaft = new THREE.Mesh(shaftGeo, LEATHER());
+        const shaft = new THREE.Mesh(shaftGeo, this.mat(LEATHER()));
         shaft.position.y = c.rimHeight / 2;
-        const foot = new THREE.Mesh(footGeo, LEATHER());
+        const foot = new THREE.Mesh(footGeo, this.mat(LEATHER()));
         foot.position.set(0, c.rimRadius * 0.7, c.rimRadius * 1.0);
         grp.add(shaft, foot);
         body = grp;
@@ -112,7 +123,7 @@ export class ContainerViews {
 
     const fillGeo = new THREE.CylinderGeometry(fillRadius, fillRadius, innerDepth, 24);
     this.geometries.push(fillGeo);
-    const fill = new THREE.Mesh(fillGeo, LIQUID());
+    const fill = new THREE.Mesh(fillGeo, this.mat(LIQUID()));
     fill.position.y = innerDepth / 2;
     fill.scale.y = 0.0001;
     fill.visible = false;

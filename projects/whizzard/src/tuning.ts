@@ -1,7 +1,8 @@
 // All feel constants in one place. Expect heavy revision during playtest.
 // LAUNCH_SPEED_MAX is set so a full-charge shot at LAUNCH_PITCH from NOZZLE_HEIGHT
 // lands ~6 m out: R = (v·cosθ/g)·(v·sinθ + √((v·sinθ)² + 2·g·h)).
-// v=7, θ=35°, h=1.0, g=9.81 → R ≈ 5.8 m. (See ballistics.predictLanding test.)
+// v=7, θ=35°, h=1.0, g=9.81 → R ≈ 5.8 m from the foot, ~6.1 m from the nozzle origin
+// (which sits NOZZLE_FORWARD ahead). (See ballistics.predictLanding test.)
 
 export const GRAVITY = 9.81;
 
