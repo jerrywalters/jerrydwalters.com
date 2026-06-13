@@ -1,7 +1,8 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
-import { EffectComposer, Outline, Select, Selection } from '@react-three/postprocessing';
+import { EffectComposer, Outline, Select, Selection, ToneMapping } from '@react-three/postprocessing';
+import { ToneMappingMode } from 'postprocessing';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import type { Project } from '../lib/projects';
@@ -285,9 +286,9 @@ export default function Scene({ projects = [], initialSection }: { projects?: Pr
       >
         <Selection>
           <StudioEnv />
-          <ambientLight intensity={0.07} />
-          <directionalLight position={[-7, 4, 2]} intensity={2.9} />
-          <directionalLight position={[6, 1, -2]} intensity={0.35} color="#9bb4d6" />
+          <ambientLight intensity={0.04} />
+          <directionalLight position={[-7, 4, 2]} intensity={2.0} />
+          <directionalLight position={[6, 1, -2]} intensity={0.25} color="#9bb4d6" />
 
           <Suspense fallback={null}>
             {SECTIONS.map((def, i) => (
@@ -306,6 +307,7 @@ export default function Scene({ projects = [], initialSection }: { projects?: Pr
 
           <EffectComposer autoClear={false} multisampling={4}>
             <Outline blur edgeStrength={6} pulseSpeed={0} visibleEdgeColor={0xcf9bf0} hiddenEdgeColor={0x4a2f63} xRay={false} />
+            <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
           </EffectComposer>
         </Selection>
       </Canvas>
