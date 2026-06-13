@@ -44,6 +44,12 @@ function stars(n: number): string {
   return '★★★'.slice(0, n) + '☆☆☆'.slice(0, 3 - n);
 }
 
+function ctl(key: string, desc: string): HTMLDivElement {
+  const row = el('div', 'wz-ctl');
+  row.append(el('span', 'wz-key', key), el('span', 'wz-cdesc', desc));
+  return row;
+}
+
 /**
  * DOM overlay: always-on play HUD (bladder, pressure, censor) plus a single-card
  * overlay for level-select / intro / results / fail. Pure presentation — it fires
@@ -55,6 +61,7 @@ export class Hud {
   private bladderFill: SVGRectElement;
   private pressure: HTMLDivElement;
   private pressureFill: HTMLDivElement;
+  private censor: HTMLDivElement;
 
   constructor(private root: HTMLElement, private cb: HudCallbacks) {
     this.gameLayer = el('div', 'wz-game');
@@ -77,7 +84,19 @@ export class Hud {
     this.pressure.appendChild(this.pressureFill);
     this.gameLayer.appendChild(this.pressure);
 
-    this.gameLayer.appendChild(el('div', 'wz-censor'));
+    this.censor = el('div', 'wz-censor');
+    this.gameLayer.appendChild(this.censor);
+
+    // Fixed "how to play" panel, top-left — these are prototypes, so teach the controls inline.
+    const controls = el('div', 'wz-controls');
+    controls.append(
+      el('div', 'wz-ctitle', 'How to play'),
+      ctl('Hold', 'build pressure'),
+      ctl('Release', 'fire the stream'),
+      ctl('← →  ·  drag', 'aim left / right'),
+      ctl('Tap while flowing', 'clench to stop'),
+    );
+    this.gameLayer.appendChild(controls);
 
     this.overlay = el('div', 'wz-overlay');
 
@@ -97,6 +116,15 @@ export class Hud {
     const f = Math.max(0, Math.min(1, fraction));
     this.pressureFill.style.height = `${Math.round(f * 100)}%`;
     this.pressure.classList.toggle('red', overcharge);
+  }
+
+  /** Position the censor blur over the nozzle's current screen rect (pixels). */
+  setCensor(left: number, top: number, width: number, height: number) {
+    const s = this.censor.style;
+    s.left = `${left}px`;
+    s.top = `${top}px`;
+    s.width = `${width}px`;
+    s.height = `${height}px`;
   }
 
   private showCard(node: HTMLElement) {

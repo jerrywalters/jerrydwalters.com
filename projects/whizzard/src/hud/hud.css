@@ -10,7 +10,7 @@
 .wz-bladder {
   position: fixed;
   top: 16px;
-  left: 16px;
+  right: 16px;
   width: 46px;
   height: 60px;
   filter: drop-shadow(0 1px 3px #0008);
@@ -47,17 +47,55 @@
   to { opacity: 0.5; }
 }
 
+/* Position/size are set per-frame from JS (setCensor) to track the nozzle on screen. */
 .wz-censor {
   position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 150px;
-  backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
-  border-radius: 10px 10px 0 0;
-  background: #ffffff08;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  border-radius: 12px 12px 0 0;
+  background: #ffffff0a;
+}
+
+.wz-controls {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: #14141bcc;
+  border: 1px solid #ffffff1a;
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  font-size: 12px;
+  line-height: 1.4;
+  max-width: 14rem;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.wz-ctitle {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c9b88a;
+  margin-bottom: 0.4rem;
+}
+.wz-ctl {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 0.22rem;
+}
+.wz-key {
+  flex: 0 0 auto;
+  min-width: 5.4rem;
+  font-weight: 600;
+  color: #f3f3ef;
+}
+.wz-cdesc {
+  color: #a7a7a2;
 }
 
 .wz-overlay {
