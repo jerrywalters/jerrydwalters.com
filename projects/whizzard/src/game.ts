@@ -3,11 +3,12 @@ import type { Container, PressureInput, PressureState, Vec3 } from './sim/types'
 import { DropletPool } from './sim/pool';
 import { makeRng, type Rng } from './sim/rng';
 import { initialPressure, stepPressure, isFlowing } from './sim/pressure';
-import { integrate } from './sim/ballistics';
+import { integrate, predictArc } from './sim/ballistics';
 import { emit, initialEmit, type EmitState } from './sim/stream';
 import { CameraRig } from './scene/camera';
 import { ContainerViews } from './scene/containers';
 import { StreamView } from './scene/stream-view';
+import { TrajectoryView } from './scene/trajectory';
 import { Input, type Intents } from './input';
 import { Hud } from './hud/hud';
 import type { Level } from './levels';
@@ -37,6 +38,8 @@ const NEUTRAL: PressureInput = { pressed: false, released: false, held: false };
 export class Game {
   private readonly d: GameDeps;
   private readonly pool = new DropletPool(PARTICLE_CAP);
+  private readonly trajectory = new TrajectoryView();
+  private readonly proj = new THREE.Vector3(); // reused for nozzle→screen projection
   private emitState: EmitState = initialEmit();
   private rng: Rng = makeRng(1);
 
@@ -52,6 +55,7 @@ export class Game {
   private bladder = 0;
   private captured = 0;
   private spilled = 0;
+  private hazardVolume = 0; // accumulated volume landed on hazards this level
 
   // Edges carried across frames where no fixed sub-step ran (so a press/release is never lost).
   private pendingPressed = false;
@@ -60,6 +64,16 @@ export class Game {
   constructor(deps: GameDeps) {
     this.d = deps;
     this.d.scene.add(this.d.stream.group);
+    this.d.scene.add(this.trajectory.group);
+  }
+
+  /** The stream/preview origin: the nozzle tip, orbited by the current aim yaw. */
+  private nozzleOrigin(): Vec3 {
+    return {
+      x: Math.sin(this.yaw) * NOZZLE_FORWARD,
+      y: NOZZLE_HEIGHT,
+      z: Math.cos(this.yaw) * NOZZLE_FORWARD,
+    };
   }
 
   /** Build a level's scene + reset all sim state, then show its intro card. */
@@ -70,6 +84,7 @@ export class Game {
     this.bladder = level.bladder;
     this.captured = 0;
     this.spilled = 0;
+    this.hazardVolume = 0;
     this.time = 0;
     this.acc = 0;
     this.yaw = 0;
@@ -85,6 +100,7 @@ export class Game {
     this.setContainerViews(new ContainerViews(level));
     this.d.rig.setYaw(0);
     this.d.nozzle.rotation.y = 0;
+    this.trajectory.setVisible(false);
 
     this.phase = 'intro';
     this.d.hud.showIntro(level.name, level.flavor, level.stars[0]);
@@ -138,9 +154,29 @@ export class Game {
           this.pressure.panicTimer > 0;
         this.d.hud.setPressure(this.pressure.pressure, overcharge);
       }
+      this.updateAimPreview();
+      this.updateCensor();
     }
 
     this.d.renderer.render(this.d.scene, this.d.rig.camera);
+  }
+
+  /** Show the predicted arc + landing ring while aiming/charging (hidden once flowing). */
+  private updateAimPreview() {
+    const show = this.phase === 'playing' && (this.pressure.phase === 'idle' || this.pressure.phase === 'charging');
+    this.trajectory.setVisible(show);
+    if (show) this.trajectory.update(predictArc(this.pressure.pressure, this.yaw, this.nozzleOrigin()));
+  }
+
+  /** Keep the censor blur over the nozzle wherever it lands on screen as the aim yaws. */
+  private updateCensor() {
+    const o = this.nozzleOrigin();
+    this.proj.set(o.x, o.y + 0.22, o.z).project(this.d.rig.camera); // tip a touch above the origin
+    const sx = (this.proj.x * 0.5 + 0.5) * window.innerWidth;
+    const sy = (-this.proj.y * 0.5 + 0.5) * window.innerHeight;
+    const w = 210;
+    const top = Math.max(0, sy - 46);
+    this.d.hud.setCensor(sx - w / 2, top, w, window.innerHeight - top);
   }
 
   private tick(dt: number, edge: PressureInput, intents: Intents) {
@@ -170,11 +206,7 @@ export class Game {
 
     // 4. Emission.
     if (isFlowing(this.pressure) && this.bladder > 0) {
-      const origin: Vec3 = {
-        x: Math.sin(this.yaw) * NOZZLE_FORWARD,
-        y: NOZZLE_HEIGHT,
-        z: Math.cos(this.yaw) * NOZZLE_FORWARD,
-      };
+      const origin = this.nozzleOrigin();
       const panic = Math.max(0, Math.min(1, this.pressure.panicTimer / PANIC_TIME));
       const seeds = emit({ pressure: this.pressure.pressure, panic, yaw: this.yaw, origin, dt }, this.rng, this.emitState);
       for (const s of seeds) {
@@ -188,7 +220,9 @@ export class Game {
     const r = integrate(this.pool, this.containers, level.hazards, dt, (x, z, vol) => this.d.stream.addPuddle(x, z, vol));
     this.captured += r.capturedVolume;
     this.spilled += r.spilledVolume;
-    if (r.hazardHit) {
+    this.hazardVolume += r.hazardVolume;
+    // Fail only once too much has hit the hazard — a single stray drop shouldn't end the run.
+    if (this.hazardVolume > (level.hazardTolerance ?? 0) * level.bladder) {
       this.enterFailed();
       return;
     }
@@ -233,13 +267,15 @@ export class Game {
     const [a, b, c] = level.stars;
     const starCount = starPct >= c ? 3 : starPct >= b ? 2 : starPct >= a ? 1 : 0;
     this.phase = 'results';
+    this.trajectory.setVisible(false);
     this.d.hud.showResults(this.captured / level.bladder, this.spilled / level.bladder, starCount);
     this.onComplete?.(level.id, starCount);
   }
 
   private enterFailed() {
     this.phase = 'failed';
-    this.d.hud.showFail('A drop hit the forbidden zone. The whizzard has shamed the order.');
+    this.trajectory.setVisible(false);
+    this.d.hud.showFail('Too much hit the rug. The whizzard has shamed the order.');
   }
 
   /** Set by the bootstrap to persist results (kept out of the HUD so the loop stays pure). */
