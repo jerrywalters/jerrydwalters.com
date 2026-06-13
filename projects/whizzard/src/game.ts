@@ -222,12 +222,18 @@ export class Game {
 
   private finish() {
     const level = this.level!;
-    const capturedPct = this.captured / level.bladder;
-    const spilledPct = this.spilled / level.bladder;
+    // Score stars against what's actually catchable — min(bladder, total capacity) — so the
+    // thresholds stay reachable no matter how bladder/capacity are tuned. (Scoring against
+    // bladder alone makes ★★/★★★ impossible whenever the containers hold less than the
+    // bladder, which is most levels.) The displayed bar stays in bladder terms, so
+    // captured% + spilled% = 100% of the bladder you actually used.
+    const capacity = level.containers.reduce((s, con) => s + con.capacity, 0);
+    const catchable = Math.max(1, Math.min(level.bladder, capacity));
+    const starPct = this.captured / catchable;
     const [a, b, c] = level.stars;
-    const starCount = capturedPct >= c ? 3 : capturedPct >= b ? 2 : capturedPct >= a ? 1 : 0;
+    const starCount = starPct >= c ? 3 : starPct >= b ? 2 : starPct >= a ? 1 : 0;
     this.phase = 'results';
-    this.d.hud.showResults(capturedPct, spilledPct, starCount);
+    this.d.hud.showResults(this.captured / level.bladder, this.spilled / level.bladder, starCount);
     this.onComplete?.(level.id, starCount);
   }
 
