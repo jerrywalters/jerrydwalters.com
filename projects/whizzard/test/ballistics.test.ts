@@ -30,13 +30,26 @@ describe('integrate', () => {
     return { id: 'c', kind: 'cup', px: 0, py: 0, pz: 2, rimRadius: 0.3, rimHeight: 0.4, capacity: 100, fill: 0, ...over };
   }
 
+  // integrate() advances exactly dt per call, just like the game loop. Drive a droplet
+  // through successive frames until the pool drains (or a guard trips), accumulating results.
+  function settle(pool: DropletPool, containers: Container[], hazards: Rect[], dt = 1 / 60, maxIters = 600) {
+    let captured = 0, spilled = 0, hazardHit = false;
+    for (let i = 0; i < maxIters && pool.aliveCount > 0; i++) {
+      const r = integrate(pool, containers, hazards, dt);
+      captured += r.capturedVolume;
+      spilled += r.spilledVolume;
+      hazardHit = hazardHit || r.hazardHit;
+    }
+    return { captured, spilled, hazardHit };
+  }
+
   it('captures a droplet that crosses the rim inside the radius', () => {
     const pool = new DropletPool(8);
     const c = cup();
-    // start just above the rim, moving straight down, directly over the cup
+    // released above the rim, straight down, directly over the cup
     pool.spawn({ px: 0, py: 0.5, pz: 2, vx: 0, vy: -2, vz: 0, vol: 5, scale: 1 });
-    const r = integrate(pool, [c], [], 1 / 60);
-    expect(r.capturedVolume).toBe(5);
+    const res = settle(pool, [c], []);
+    expect(res.captured).toBe(5);
     expect(c.fill).toBe(5);
     expect(pool.aliveCount).toBe(0);
   });
@@ -45,8 +58,8 @@ describe('integrate', () => {
     const pool = new DropletPool(8);
     const c = cup();
     pool.spawn({ px: 1.0, py: 0.5, pz: 2, vx: 0, vy: -2, vz: 0, vol: 5, scale: 1 });
-    const r = integrate(pool, [c], [], 1 / 60);
-    expect(r.capturedVolume).toBe(0);
+    const res = settle(pool, [c], []);
+    expect(res.captured).toBe(0);
     expect(c.fill).toBe(0);
   });
 
@@ -54,17 +67,17 @@ describe('integrate', () => {
     const pool = new DropletPool(8);
     const c = cup({ capacity: 3, fill: 0 });
     pool.spawn({ px: 0, py: 0.5, pz: 2, vx: 0, vy: -2, vz: 0, vol: 10, scale: 1 });
-    const r = integrate(pool, [c], [], 1 / 60);
+    const res = settle(pool, [c], []);
     expect(c.fill).toBe(3);
-    expect(r.capturedVolume).toBe(3);
-    expect(r.spilledVolume).toBe(7);
+    expect(res.captured).toBe(3);
+    expect(res.spilled).toBe(7);
   });
 
   it('a droplet reaching the floor is spilled', () => {
     const pool = new DropletPool(8);
     pool.spawn({ px: 3, py: 0.1, pz: 1, vx: 0, vy: -2, vz: 0, vol: 4, scale: 1 });
-    const r = integrate(pool, [], [], 1 / 60);
-    expect(r.spilledVolume).toBe(4);
+    const res = settle(pool, [], []);
+    expect(res.spilled).toBe(4);
     expect(pool.aliveCount).toBe(0);
   });
 
@@ -72,8 +85,8 @@ describe('integrate', () => {
     const pool = new DropletPool(8);
     const rug: Rect = { x0: -1, z0: 0.5, x1: 1, z1: 1.5 };
     pool.spawn({ px: 0, py: 0.05, pz: 1, vx: 0, vy: -2, vz: 0, vol: 4, scale: 1 });
-    const r = integrate(pool, [], [rug], 1 / 60);
-    expect(r.hazardHit).toBe(true);
+    const res = settle(pool, [], [rug]);
+    expect(res.hazardHit).toBe(true);
   });
 
   it('applies gravity (a level-launched droplet falls)', () => {
